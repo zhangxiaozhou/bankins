@@ -45,10 +45,10 @@
         <el-form label-width="120px" :inline="true" :model="form">
           <el-form-item label="交易科目">
             <el-select v-model="form.transCode" placeholder="请选择科目">
-              <el-option label="新契约投保" value="realTransApply"></el-option>
-              <el-option label="缴费确认" value="payConfirm"></el-option>
-              <el-option label="试算" value="calc"></el-option>
-              <el-option label="非实时投保" value="apply"></el-option>
+              <el-option label="新契约投保" value="apply"></el-option>
+              <el-option label="缴费确认" value="payment"></el-option>
+              <el-option label="试算" value="proposal"></el-option>
+              <el-option label="非实时投保" value="manualApply"></el-option>
               <el-option label="反交易" value="cancel"></el-option>
               <el-option label="保单查询" value="polQuery"></el-option>
               <el-option label="退保申请" value="cancellation"></el-option>
@@ -96,7 +96,6 @@
         <el-table :data="tableData" style="width: 100%" max-height="500">
           <el-table-column prop="transNo" label="流水号"> </el-table-column>
           <el-table-column prop="bankCode" label="银行"> </el-table-column>
-          <el-table-column prop="childBankCode" label="网点"> </el-table-column>
           <el-table-column prop="childCompany" label="地区"> </el-table-column>
           <el-table-column prop="sendCode" label="投保单号"> </el-table-column>
           <el-table-column prop="transDate" label="交易日期"> </el-table-column>
