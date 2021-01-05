@@ -17,15 +17,7 @@
               ></el-option>
             </el-select>
             <span class="space"></span>
-            <el-select v-model="form.childBankCode" placeholder="请选择分行">
-              <el-option
-                v-for="bank in childBanks"
-                :key="bank.bankCode"
-                :label="bank.bankName"
-                :value="bank.bankCode"
-              ></el-option>
-            </el-select>
-
+          
             <span class="space"></span>
             <el-select v-model="form.company" @change="getChildCompanys" placeholder="请选择分公司">
               <el-option
@@ -132,7 +124,6 @@ export default {
       labelPosition: "right",
       form: {
         bankCode: "",
-        childBankCode: "",
         company: "",
         childCompany: "",
         transCode: "",
