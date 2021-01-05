@@ -17,9 +17,12 @@
               ></el-option>
             </el-select>
             <span class="space"></span>
-          
-            <span class="space"></span>
-            <el-select v-model="form.company" @change="getChildCompanys" placeholder="请选择分公司">
+
+            <el-select
+              v-model="form.company"
+              @change="getChildCompanys"
+              placeholder="请选择分公司"
+            >
               <el-option
                 v-for="com in companys"
                 :key="com.organId"
@@ -82,7 +85,6 @@
             <span class="space"></span>
             <span class="space"></span>
             <span class="space"></span>
-            <span class="space"></span>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
         </el-form>
@@ -130,15 +132,13 @@ export default {
         transState: "",
         sendCode: "",
         beginTransDate: "",
-        endTransDate: ""
+        endTransDate: "",
       },
       banks: [],
       childBanks: [],
       companys: [],
       childCompanys: [],
-      tableData: [
-        
-      ],
+      tableData: [],
     };
   },
   methods: {
@@ -184,7 +184,7 @@ export default {
         method: "post",
         url: "/buss-process/api/companyOrgan/v1/find",
         data: {
-          parentId: this.form.company
+          parentId: this.form.company,
         },
       }).then((res) => {
         console.log(res.data);
