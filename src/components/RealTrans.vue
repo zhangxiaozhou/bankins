@@ -62,7 +62,7 @@
 
 		<el-main>
 			<div>
-				<el-table :data="tableData" style="width: 100%" max-height="500">
+				<el-table :data="tableData" style="width: 100%" max-height="500" height="500">
 					<el-table-column prop="transNo" label="流水号"> </el-table-column>
 					<el-table-column prop="bankCode" label="银行"> </el-table-column>
 					<el-table-column prop="childCompany" label="地区"> </el-table-column>
@@ -171,11 +171,12 @@
 			onSubmit() {
 				this.$http({
 					method: "post",
-					url: "/buss-process/api/realTrans/v1/query",
+					url: "/buss-process/api/admin/v1/realTrans",
 					data: this.form,
 				}).then((res) => {
 					console.log(res.data);
-					this.tableData = res.data;
+					this.tableData = res.data.content;
+					this.total = res.data.totalElements
 				});
 			},
 			handleSizeChange(val) {
