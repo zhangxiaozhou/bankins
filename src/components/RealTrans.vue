@@ -70,7 +70,7 @@
 					<el-table-column prop="sendCode" label="投保单号"> </el-table-column>
 					<el-table-column prop="transDate" label="交易日期"> </el-table-column>
 					<el-table-column prop="transCode" label="交易类别"> </el-table-column>
-					<el-table-column prop="transState" label="状态" > </el-table-column>
+					<el-table-column prop="transState" label="状态" :formatter="stateConvert"> </el-table-column>
 					<el-table-column prop="errMsg" label="错误原因"> </el-table-column>
 				</el-table>
 				<div class="block" style="margin-left:30%">
