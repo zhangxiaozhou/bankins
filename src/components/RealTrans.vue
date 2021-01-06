@@ -2,7 +2,6 @@
 	<el-container>
 		<el-header height="100" class="my-header">
 			<div>
-				<!-- <el-alert type="error" title="错误提示的文案" center show-icon effect="dark"></el-alert> -->
 				<el-form label-width="120px" :inline="true" :model="form">
 					<el-form-item label="统计对象">
 						<el-select v-model="form.bankCode" @change="getChildBank" placeholder="请选择总行">
@@ -36,9 +35,8 @@
 
 					<el-form-item label="交易状态">
 						<el-select v-model="form.transState" placeholder="请选择状态">
-							<el-option label="未处理" value="0"></el-option>
-							<el-option label="成功" value="1"></el-option>
-							<el-option label="失败" value="2"></el-option>
+							<el-option label="成功" value="success"></el-option>
+							<el-option label="失败" value="fail"></el-option>
 						</el-select>
 					</el-form-item>
 
@@ -49,7 +47,7 @@
 
 				<el-form label-width="120px" :inline="true" :model="form">
 					<el-form-item label="交易日期">
-						<el-date-picker type="date" placeholder="开始日期" v-model="form.beginTransDate"></el-date-picker>
+						<el-date-picker type="date" placeholder="开始日期" v-model="form.begenTransDate"></el-date-picker>
 						<span class="space"></span>
 						<el-date-picker type="date" placeholder="截止日期" v-model="form.endTransDate"></el-date-picker>
 
@@ -61,6 +59,7 @@
 				</el-form>
 			</div>
 		</el-header>
+
 		<el-main>
 			<div>
 				<el-table :data="tableData" style="width: 100%" max-height="500">
@@ -70,7 +69,7 @@
 					<el-table-column prop="sendCode" label="投保单号"> </el-table-column>
 					<el-table-column prop="transDate" label="交易日期"> </el-table-column>
 					<el-table-column prop="transCode" label="交易类别"> </el-table-column>
-					<el-table-column prop="transState" label="状态" :formatter="stateConvert"> </el-table-column>
+					<el-table-column prop="transState" label="状态"> </el-table-column>
 					<el-table-column prop="errMsg" label="错误原因"> </el-table-column>
 				</el-table>
 				<div class="block" style="margin-left:30%">
@@ -87,6 +86,7 @@
 	.space {
 		margin-right: 50px;
 	}
+
 	.my-header {
 		border-bottom: 1px solid #d7dae0;
 	}
@@ -166,28 +166,6 @@
 				});
 			},
 			onSubmit() {
-				if (this.form.transCode == '' || this.form.transCode == null) {
-					this.$message({
-						type: 'error',
-						message: '请选择交易科目'
-					})
-					return;
-				}
-				if (this.form.beginTransDate == '' || this.form.beginTransDate == null) {
-					this.$message({
-						type: 'error',
-						message: '请选择交易开始日期'
-					})
-					return;
-				}
-				if (this.form.endTransDate == '' || this.form.endTransDate == null) {
-					this.$message({
-						type: 'error',
-						message: '请选择交易截止日期'
-					})
-					return;
-				}
-
 				this.$http({
 					method: "post",
 					url: "/buss-process/api/realTrans/v1/query",
@@ -196,15 +174,6 @@
 					console.log(res.data);
 					this.tableData = res.data;
 				});
-			},
-			stateConvert(row) {
-				if (row.transState == '0') {
-					return "未处理";
-				} else if (row.transState == '1') {
-					return "成功";
-				} else if(row.transState == '2'){
-					return "失败";
-				}
 			},
 			handleSizeChange(val) {
 				this.size = val
