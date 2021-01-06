@@ -132,6 +132,8 @@ export default {
         sendCode: "",
         beginTransDate: "",
         endTransDate: "",
+        currentPage: 0,
+        pageSize: 10
       },
       banks: [],
       childBanks: [],
@@ -193,7 +195,7 @@ export default {
     onSubmit() {
       this.$http({
         method: "post",
-        url: "/buss-process/api/realTrans/v1/query",
+        url: "/buss-process/api/admin/v1/realTrans",
         data: this.form,
       }).then((res) => {
         console.log(res.data);
