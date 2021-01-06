@@ -74,7 +74,7 @@
 				</el-table>
 				<div class="block" style="margin-left:30%">
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" background :current-page="currentPage"
-					:page-sizes="[10, 15, 20]" :page-size="size" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length">
+					:page-sizes="[10, 15, 20]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
 					</el-pagination>
 				</div>
 			</div>
@@ -97,6 +97,9 @@
 		name: "RealTrans",
 		data() {
 			return {
+        // eslint-disable-next-line no-mixed-spaces-and-tabs
+			  pageSize: 10,
+        total: 0,
 				labelPosition: "right",
 				form: {
 					bankCode: "",
