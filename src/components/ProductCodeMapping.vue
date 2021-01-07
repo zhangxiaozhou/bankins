@@ -10,12 +10,10 @@
             </el-select>
           </el-form-item>
           <el-form-item label="类别">
-            <el-select v-model="form.type"
-                       placeholder="请选择类别">
-              <el-option label="险种"
-                         value="1"></el-option>
-              <el-option label="险种组合"
-                         value="2"></el-option>
+            <el-select v-model="form.type" placeholder="请选择类别">
+              <el-option label="险种" value="1"></el-option>
+              <el-option label="险种组合" value="2"></el-option>
+              <el-option label="险种组合(银保通)" value="3"></el-option>
             </el-select>
           </el-form-item>
         </el-form>
@@ -116,22 +114,20 @@ export default {
       });
     },
     getList(){
+      let data={
+           page:this.page,
+           size:this.pageSize,
+           object:this.form
+      }
       this.$http({
         method: "post",
         url: "/buss-process/api/productConvert/v1/findAll",
-        data:{
-           page:this.page,
-           size:this.pageSize,
-           bank:this.form.bank,
-           type:this.form.type,
-           innerCode:this.form.innerCode,
-           outerCode:this.form.outerCode,
-           name:this.form.name 
-        } 
+        data:data
       }).then((res) => {
         console.log(res.data);
         this.tableData = res.data;
-        this.total=this.tableData.length
+        this.total=Object.keys(this.tableData).length
+        console.log(this.total)
       });
     },
     handleCurrentChange(val){
