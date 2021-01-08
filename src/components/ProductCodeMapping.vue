@@ -72,7 +72,7 @@
     </el-main>
 
     <!-- 新增和修改的dialog -->
-    <el-dialog title="产品代码转换" :visible.sync="dialogForm">
+    <el-dialog title="产品代码转换" :visible.sync="dialogForm" :closeOnClickModal="false">
         <el-form label-width="120px" :inline="true" :model="form" ref="form" :rules="rule">
           <el-form-item label="银行代码" prop="bank" >
             <el-select v-model="form.bank" clearable placeholder="请选择银行">
@@ -100,7 +100,7 @@
         <el-form>
           <el-form-item>
             <el-button type="primary" @click="saveProdConvert()">确定</el-button>
-            <el-button type="primary" @click="dialogForm=false">取消</el-button>
+            <el-button type="primary" @click="cancheProdConvert()">取消</el-button>
           </el-form-item>
         </el-form>
     </el-dialog>
@@ -214,6 +214,10 @@ export default {
          }
        }) 
     },
+    cancheProdConvert(){
+      this.clear();
+      this.dialogForm=false
+    },
     updateProdConvert(val){
       console.log(val)
       this.form=val
@@ -241,6 +245,12 @@ export default {
           }else{
             this.$message.console.error("删除失败");
           }
+        }).catch(()=>{
+          this.$message({
+            type: 'info',
+            message: '已取消删除'
+          });
+          this.clear();
         });  
       });  
     },
