@@ -40,7 +40,7 @@
       <div>
         <el-table :data="tableData" style="width:100%" max-height="500">
           <el-table-column prop="bank" label="银行代码"> </el-table-column>
-          <el-table-column prop="type" label="类别"> </el-table-column>
+          <el-table-column prop="type" label="类别"><template slot-scope="scope">{{scope.row.type=== 1 ? "PRODUCT":scope.row.type===2?"PACKAGE":"BANKINS_PACKAGE"}}</template></el-table-column>
           <el-table-column prop="innerCode" label="内部险种代码"> </el-table-column>
           <el-table-column prop="outerCode" label="外部险种代码"> </el-table-column>
           <el-table-column prop="name"  label="名称"> </el-table-column>
@@ -86,7 +86,7 @@
             <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
           <el-input v-model="ruleForm.id" class="pid"></el-input>
-        </el-form> 
+        </el-form>
         <el-form>
           <el-form-item>
             <el-button type="primary" @click="saveProdConvert()">确定</el-button>
