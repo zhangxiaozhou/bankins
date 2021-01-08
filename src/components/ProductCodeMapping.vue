@@ -206,6 +206,7 @@ export default {
     },
     cancheProdConvert(){
       this.clear();
+      this.getList();
       this.dialogForm=false
     },
     updateProdConvert(val){
