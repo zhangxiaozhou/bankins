@@ -87,14 +87,14 @@ export default {
   data () {
     return {
       form: {
+        page:1,
+        pageSize:10,
         bank: "",
         type: "",
         innerCode: "",
         outerCode: "",
         name: ""
       },
-      page:1,
-      pageSize:10,
       total:1,
       tableData: [],
       banks: []
@@ -114,20 +114,15 @@ export default {
       });
     },
     getList(){
-      let data={
-           page:this.page,
-           size:this.pageSize,
-           object:this.form
-      }
       this.$http({
         method: "post",
         url: "/buss-process/api/productConvert/v1/findAll",
-        data:data
+        data:this.form
       }).then((res) => {
         console.log(res.data);
         this.tableData = res.data;
-        this.total=Object.keys(this.tableData).length
-        console.log(this.total)
+        //this.total=Object.keys(this.tableData).length
+        //console.log(this.total)
       });
     },
     handleCurrentChange(val){
