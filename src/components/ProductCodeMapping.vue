@@ -66,8 +66,8 @@
         <el-pagination background
                        layout="prev, pager, next"
                        @current-change="handleCurrentChange"
-                       :current-page="page"
-                       :page-size="pageSize"
+                       :current-page="form.page"
+                       :page-size="form.size"
                        :total="total">
         </el-pagination>
       </div>
@@ -88,7 +88,7 @@ export default {
     return {
       form: {
         page:1,
-        pageSize:10,
+        size:10,
         bank: "",
         type: "",
         innerCode: "",
@@ -120,14 +120,14 @@ export default {
         data:this.form
       }).then((res) => {
         console.log(res.data);
-        this.tableData = res.data;
-        //this.total=Object.keys(this.tableData).length
-        //console.log(this.total)
+        this.tableData = res.data.content;
+        this.total=res.data.totalElements
+        console.log(this.total)
       });
     },
     handleCurrentChange(val){
         console.log(val);
-        this.page=val;
+        this.form.page=val;
         this.getList()
     },
     onSubmit () {
