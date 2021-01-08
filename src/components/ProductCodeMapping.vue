@@ -195,16 +195,17 @@ export default {
     },
     saveProdConvert(){
        this.$http({
-         methods:"post",
+         method:"post",
          url:"/buss-process/api/productConvert/v1/save",
          data:this.form
        }).then((res)=>{
          console.log(res);
-         if(res.success){
+         if(res.status===200){
            this.$message({
              message:"保存成功",
              type:"success"
            });
+           this.getList();
            this.dialogForm=false
          }else{
            this.$message.console.error("保存失败");
@@ -216,6 +217,30 @@ export default {
       console.log(val)
       this.form=val
       this.dialogForm=true; 
+    },
+    deleteProdConvert(val){
+      console.log(val)
+      this.$confirm("此操作将永久删除该数据,是否继续?","提示",{
+        confirmButtonText:"确定",
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then((res)=>{
+        this.$http({
+          method:"post",
+          url:"/buss-process/api/productConvert/v1/delete",
+          data:val
+        }).then((res)=>{
+          if(res.status===200){
+             this.$message({
+             message:"删除成功",
+             type:"success"
+           });
+           this.getList();
+          }else{
+            this.$message.console.error("删除失败");
+          }
+        });  
+      });  
     }
   },
   mounted () {
