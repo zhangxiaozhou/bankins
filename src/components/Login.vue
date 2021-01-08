@@ -49,6 +49,17 @@ export default {
     }
   },
   methods: {
+    showErrLogin(msg){
+      this.$alert(msg, '登录失败', {
+        confirmButtonText: '确定',
+        callback: action => {
+          this.$message({
+            type: 'info',
+            message: `action: ${ action }`
+          });
+        }
+      });
+    },
     doLogin() {
       /* json格式提交： */
       let formData = qs.stringify(this.user);
@@ -64,17 +75,23 @@ export default {
 
         console.log(res);
 
-        let token = res.data.token;
-        sessionStorage.setItem("token", token);
+        if(res.status==200 && res.data.resultCode=='0000'){
+          let token = res.data.token;
+          sessionStorage.setItem("token", token);
 
-        let userInfo = jwtDecode(token);
-        sessionStorage.setItem("user", userInfo.sub);
+          let userInfo = jwtDecode(token);
+          sessionStorage.setItem("user", userInfo.sub);
 
-        console.log(userInfo)
+          console.log(userInfo)
 
-        this.$router.push("/");
-      });
-
+          this.$router.push("/");
+        }else {
+          this.showErrLogin(res.data.errMsg)
+        }
+      }).catch((response) => {
+        this.showErrLogin('系统错误')
+        Promise.reject(response);
+      })
     }
   }
 }
