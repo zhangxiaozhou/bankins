@@ -86,7 +86,7 @@
             <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
           <el-input v-model="ruleForm.id" class="pid"></el-input>
-        </el-form>
+        </el-form> 
         <el-form>
           <el-form-item>
             <el-button type="primary" @click="saveProdConvert()">确定</el-button>
