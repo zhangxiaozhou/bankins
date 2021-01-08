@@ -205,6 +205,7 @@ export default {
              message:"保存成功",
              type:"success"
            });
+           this.clear();
            this.getList();
            this.dialogForm=false
          }else{
@@ -235,12 +236,21 @@ export default {
              message:"删除成功",
              type:"success"
            });
+           this.clear();
            this.getList();
           }else{
             this.$message.console.error("删除失败");
           }
         });  
       });  
+    },
+    clear(){
+      this.form.id="";
+      this.form.bank="";
+      this.form.type="";
+      this.form.innerCode="";
+      this.form.outerCode="";
+      this.form.name="";
     }
   },
   mounted () {
