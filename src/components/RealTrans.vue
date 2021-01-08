@@ -35,8 +35,8 @@
 
 					<el-form-item label="交易状态">
 						<el-select v-model="form.transState" placeholder="请选择状态">
-							<el-option label="成功" value="success"></el-option>
-							<el-option label="失败" value="fail"></el-option>
+							<el-option label="成功" value=true></el-option>
+							<el-option label="失败" value=false></el-option>
 						</el-select>
 					</el-form-item>
 
@@ -47,7 +47,7 @@
 
 				<el-form label-width="120px" :inline="true" :model="form">
 					<el-form-item label="交易日期">
-						<el-date-picker type="date" placeholder="开始日期" v-model="form.begenTransDate"></el-date-picker>
+						<el-date-picker type="date" placeholder="开始日期" v-model="form.beginTransDate"></el-date-picker>
 						<span class="space"></span>
 						<el-date-picker type="date" placeholder="截止日期" v-model="form.endTransDate"></el-date-picker>
 
@@ -62,19 +62,19 @@
 
 		<el-main>
 			<div>
-				<el-table :data="tableData" style="width: 100%" max-height="500">
+				<el-table :data="tableData" style="width: 100%" max-height="530" height="530">
 					<el-table-column prop="transNo" label="流水号"> </el-table-column>
 					<el-table-column prop="bankCode" label="银行"> </el-table-column>
 					<el-table-column prop="childCompany" label="地区"> </el-table-column>
 					<el-table-column prop="sendCode" label="投保单号"> </el-table-column>
 					<el-table-column prop="transDate" label="交易日期"> </el-table-column>
-					<el-table-column prop="transCode" label="交易类别"> </el-table-column>
-					<el-table-column prop="transState" label="状态"> </el-table-column>
+					<el-table-column prop="transCode" label="交易类别" :formatter="formatTransCode"> </el-table-column>
+					<el-table-column prop="transState" label="状态" :formatter="formatTransState"> </el-table-column>
 					<el-table-column prop="errMsg" label="错误原因"> </el-table-column>
 				</el-table>
 				<div class="block" style="margin-left:30%">
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" background :current-page="currentPage"
-					:page-sizes="[10, 15, 20]" :page-size="size" layout="total, sizes, prev, pager, next, jumper" :total="tableData.length">
+					:page-sizes="[10, 15, 20]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
 					</el-pagination>
 				</div>
 			</div>
@@ -97,6 +97,9 @@
 		name: "RealTrans",
 		data() {
 			return {
+        // eslint-disable-next-line no-mixed-spaces-and-tabs
+			  pageSize: 10,
+        total: 0,
 				labelPosition: "right",
 				form: {
 					bankCode: "",
@@ -115,7 +118,25 @@
 				tableData: [],
 			};
 		},
+
 		methods: {
+      // eslint-disable-next-line no-unused-vars
+      formatTransCode (row){
+        let transCode = row.transCode
+        if(transCode == 'apply'){
+          return '投保';
+        }else if(transCode == 'payment'){
+          return '缴费'
+        }
+      },
+      formatTransState(row){
+        let transState = row.transState;
+        if(transState === true){
+          return '成功';
+        }else {
+          return '失败'
+        }
+      },
 			getFirstLevelBank() {
 				this.$http({
 					method: "post",
@@ -168,11 +189,12 @@
 			onSubmit() {
 				this.$http({
 					method: "post",
-					url: "/buss-process/api/realTrans/v1/query",
+					url: "/buss-process/api/admin/v1/realTrans",
 					data: this.form,
 				}).then((res) => {
 					console.log(res.data);
-					this.tableData = res.data;
+					this.tableData = res.data.content;
+					this.total = res.data.totalElements
 				});
 			},
 			handleSizeChange(val) {
