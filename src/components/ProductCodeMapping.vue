@@ -30,7 +30,7 @@
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="insert('form')">新增</el-button>
+            <el-button type="primary" @click="insert('ruleForm')">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -63,7 +63,7 @@
 
     <!-- 新增和修改的dialog -->
     <el-dialog title="产品代码转换" :visible.sync="dialogForm" :closeOnClickModal="false">
-        <el-form label-width="120px" :inline="true" :model="form" ref="form" :rules="rule">
+        <el-form label-width="120px" :inline="true" :model="ruleForm" ref="ruleForm" :rules="rule">
           <el-form-item label="银行代码" prop="bank" >
             <el-select v-model="form.bank" clearable placeholder="请选择银行">
               <el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
@@ -114,6 +114,14 @@ export default {
       form: {
         page:1,
         size:10,
+        id:"",
+        bank: "",
+        type: "",
+        innerCode: "",
+        outerCode: "",
+        name: ""
+      },
+      ruleForm:{
         id:"",
         bank: "",
         type: "",
@@ -187,7 +195,7 @@ export default {
        this.$http({
          method:"post",
          url:"/buss-process/api/productConvert/v1/save",
-         data:this.form
+         data:this.ruleForm
        }).then((res)=>{
          console.log(res);
          if(res.status===200){
@@ -195,7 +203,6 @@ export default {
              message:"保存成功",
              type:"success"
            });
-           this.clear();
            this.getList();
            this.dialogForm=false
          }else{
@@ -205,13 +212,12 @@ export default {
        }) 
     },
     cancheProdConvert(){
-      this.clear();
       this.getList();
       this.dialogForm=false
     },
     updateProdConvert(val){
       console.log(val)
-      this.form=val
+      this.ruleForm=val
       this.dialogForm=true; 
     },
     deleteProdConvert(val){
@@ -231,7 +237,6 @@ export default {
              message:"删除成功",
              type:"success"
            });
-           this.clear();
            this.getList();
           }else{
             this.$message.console.error("删除失败");
@@ -241,17 +246,16 @@ export default {
             type: 'info',
             message: '已取消删除'
           });
-          this.clear();
         });  
       });  
     },
     clear(){
-      this.form.id="";
-      this.form.bank="";
-      this.form.type="";
-      this.form.innerCode="";
-      this.form.outerCode="";
-      this.form.name="";
+      this.ruleForm.id="";
+      this.ruleForm.bank="";
+      this.ruleForm.type="";
+      this.ruleForm.innerCode="";
+      this.ruleForm.outerCode="";
+      this.ruleForm.name="";
     }
   },
   mounted () {
