@@ -65,27 +65,27 @@
     <el-dialog title="产品代码转换" :visible.sync="dialogForm" :closeOnClickModal="false">
         <el-form label-width="120px" :inline="true" :model="ruleForm" ref="ruleForm" :rules="rule">
           <el-form-item label="银行代码" prop="bank" >
-            <el-select v-model="form.bank" clearable placeholder="请选择银行">
+            <el-select v-model="ruleForm.bank" clearable placeholder="请选择银行">
               <el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="类别" prop="type">
-            <el-select v-model="form.type" placeholder="请选择类别" clearable>
+            <el-select v-model="ruleForm.type" placeholder="请选择类别" clearable>
               <el-option label="险种" value="1"></el-option>
               <el-option label="险种组合" value="2"></el-option>
               <el-option label="险种组合(银保通)" value="3"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="内部险种代码" prop="innerCode">
-            <el-input v-model="form.innerCode"></el-input>
+            <el-input v-model="ruleForm.innerCode"></el-input>
           </el-form-item>
           <el-form-item label="外部险种代码" prop="outerCode">
-            <el-input v-model="form.outerCode"></el-input>
+            <el-input v-model="ruleForm.outerCode"></el-input>
           </el-form-item>
           <el-form-item label="名称"  prop="name">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="ruleForm.name"></el-input>
           </el-form-item>
-          <el-input v-model="form.id" class="pid"></el-input>
+          <el-input v-model="ruleForm.id" class="pid"></el-input>
         </el-form>
         <el-form>
           <el-form-item>
