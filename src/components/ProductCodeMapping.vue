@@ -1,9 +1,8 @@
 <template>
   <el-container>
-    <el-header height="100"
-               class="my-header">
+    <el-header height="100" class="my-header">
       <div>
-        <el-form label-width="120px" :inline="true" :model="form">
+        <el-form label-width="120px" :model="form">
           <el-form-item label="银行代码">
             <el-select v-model="form.bank" clearable placeholder="请选择银行">
               <el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
@@ -16,26 +15,17 @@
               <el-option label="险种组合(银保通)" value="3"></el-option>
             </el-select>
           </el-form-item>
-        </el-form>
-        <el-form label-width="120px"
-                 :inline="true"
-                 :model="form">
           <el-form-item label="内部险种代码">
             <el-input v-model="form.innerCode"></el-input>
           </el-form-item>
           <el-form-item label="外部险种代码">
             <el-input v-model="form.outerCode"></el-input>
           </el-form-item>
-        </el-form>
-        <el-form label-width="120px"
-                 :inline="true"
-                 :model="form">
           <el-form-item label="名称">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
         </el-form>
-        <el-form label-width="120px"
-                 :inline="true">
+        <el-form label-width="120px" :inline="true">
           <el-form-item>
             <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
