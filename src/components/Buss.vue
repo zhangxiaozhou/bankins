@@ -147,7 +147,7 @@
 					data: this.form
 				}).then((res) => {
 					this.tableData = res.data.content;
-					this.total=res.data.totalElements
+					this.total=res.data.totalElements;
 				}).catch(err =>{
 					Message.error('查询失败'+err);
 				});
