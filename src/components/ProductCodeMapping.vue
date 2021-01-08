@@ -224,7 +224,7 @@ export default {
         confirmButtonText:"确定",
         cancelButtonText: '取消',
         type: 'warning'
-      }).then((res)=>{
+      }).then(()=>{
         this.$http({
           method:"post",
           url:"/buss-process/api/productConvert/v1/delete",
