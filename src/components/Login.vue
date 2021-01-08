@@ -16,7 +16,8 @@
           <tr>
             <td>密码</td>
             <td>
-              <el-input type="password" v-model="user.password" placeholder="请输入密码" @keydown.enter.native="doLogin"></el-input>
+              <el-input type="password" v-model="user.password" placeholder="请输入密码"
+                        @keydown.enter.native="doLogin"></el-input>
               <!-- @keydown.enter.native="doLogin"当按下enter键的时候也会执行doLogin方法-->
             </td>
           </tr>
@@ -34,23 +35,47 @@
   </div>
 </template>
 <script>
-  export default {
-    //单页面中不支持前面的data:{}方式
-    data() {
-      return{
-        user:{
-          username:'',
-          password:'',
-          //为了登录方便，可以直接在这里写好用户名和密码的值
-        }
-      }
-    },
-    methods:{
-      doLogin(){//一点击登录按钮，这个方法就会执行
-        console.log(JSON.stringify(this.user))
-        
-        this.$route.push()
+import jwtDecode from 'jwt-decode'
+import qs from 'qs'
+
+export default {
+  //单页面中不支持前面的data:{}方式
+  data() {
+    return {
+      user: {
+        username: 'shengbo@tpl.cntaiping.com',
+        password: '6:0TvEly'
       }
     }
+  },
+  methods: {
+    doLogin() {
+      /* json格式提交： */
+      let formData = qs.stringify(this.user);
+
+      this.$http({
+        method: "post",
+        url: "/login",
+        headers: {
+          'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
+        },
+        data: formData
+      }).then((res) => {
+
+        console.log(res);
+
+        let token = res.data.token;
+        sessionStorage.setItem("token", token);
+
+        let userInfo = jwtDecode(token);
+        sessionStorage.setItem("user", userInfo.sub);
+
+        console.log(userInfo)
+
+        this.$router.push("/");
+      });
+
+    }
   }
+}
 </script>
