@@ -5,12 +5,12 @@
       <div>
         <el-form label-width="120px" :inline="true" :model="form">
           <el-form-item label="银行代码">
-            <el-select v-model="form.bank"  placeholder="请选择银行">
+            <el-select v-model="form.bank" clearable placeholder="请选择银行">
               <el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item label="类别">
-            <el-select v-model="form.type" placeholder="请选择类别">
+            <el-select v-model="form.type" placeholder="请选择类别" clearable>
               <el-option label="险种" value="1"></el-option>
               <el-option label="险种组合" value="2"></el-option>
               <el-option label="险种组合(银保通)" value="3"></el-option>
@@ -37,12 +37,10 @@
         <el-form label-width="120px"
                  :inline="true">
           <el-form-item>
-            <el-button type="primary"
-                       @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary"
-                       @click="insert">新增</el-button>
+            <el-button type="primary" @click="insert('form')">新增</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -58,8 +56,8 @@
           <el-table-column prop="name"  label="名称"> </el-table-column>
           <el-table-column label="操作" fixed="right" width="100">
             <template slot-scope="scope">
-              <el-button @click="update(scope.row)" type="text" size="small">查看</el-button>
-              <el-button type="text" size="small"></el-button>
+              <el-button @click="updateProdConvert(scope.row)" type="text" size="small">修改</el-button>
+              <el-button @click="deleteProdConvert(scope.row)" type="text" size="small">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -72,12 +70,49 @@
         </el-pagination>
       </div>
     </el-main>
+
+    <!-- 新增和修改的dialog -->
+    <el-dialog title="产品代码转换" :visible.sync="dialogForm">
+        <el-form label-width="120px" :inline="true" :model="form" ref="form" :rules="rule">
+          <el-form-item label="银行代码" prop="bank" >
+            <el-select v-model="form.bank" clearable placeholder="请选择银行">
+              <el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="类别" prop="type">
+            <el-select v-model="form.type" placeholder="请选择类别" clearable>
+              <el-option label="险种" value="1"></el-option>
+              <el-option label="险种组合" value="2"></el-option>
+              <el-option label="险种组合(银保通)" value="3"></el-option>
+            </el-select>
+          </el-form-item>
+          <el-form-item label="内部险种代码" prop="innerCode">
+            <el-input v-model="form.innerCode"></el-input>
+          </el-form-item>
+          <el-form-item label="外部险种代码" prop="outerCode">
+            <el-input v-model="form.outerCode"></el-input>
+          </el-form-item>
+          <el-form-item label="名称"  prop="name">
+            <el-input v-model="form.name"></el-input>
+          </el-form-item>
+          <el-input v-model="form.id" class="pid"></el-input>
+        </el-form>
+        <el-form>
+          <el-form-item>
+            <el-button type="primary" @click="saveProdConvert()">确定</el-button>
+            <el-button type="primary" @click="dialogForm=false">取消</el-button>
+          </el-form-item>
+        </el-form>
+    </el-dialog>
   </el-container>
 </template>
 
 <style scoped>
 .my-header {
   border-bottom: 1px solid #d7dae0;
+}
+.pid{
+  display: none;
 }
 </style>
 
@@ -89,15 +124,34 @@ export default {
       form: {
         page:1,
         size:10,
+        id:"",
         bank: "",
         type: "",
         innerCode: "",
         outerCode: "",
         name: ""
       },
+      rule:{
+        bank:[
+          { required:true, message:"请选择银行", trigger:'change'}
+        ],
+        type:[
+          { required:true, message:"请选择类别", trigger:"change"}
+        ],
+        innerCode:[
+          { required:true, message:"请输入内部险种代码", trigger:"blur"}
+        ],
+        outerCode:[
+          { required:true, message:"请输入外部险种代码", trigger:"blur"}
+        ],
+        name:[
+          { required:true, message:"请输入产品名称", trigger:"blur"}
+        ]  
+      },
       total:1,
       tableData: [],
-      banks: []
+      banks: [],
+      dialogForm:false
     }
   },
   methods: {
@@ -133,9 +187,35 @@ export default {
     onSubmit () {
        this.getList(); 
     },
-    
-    insert(){
-
+    insert(form){
+      if(this.$refs[form]!==undefined){
+        this.$refs[form].resetFields()
+      }
+        this.dialogForm=true; 
+    },
+    saveProdConvert(){
+       this.$http({
+         methods:"post",
+         url:"/buss-process/api/productConvert/v1/save",
+         data:this.form
+       }).then((res)=>{
+         console.log(res);
+         if(res.success){
+           this.$message({
+             message:"保存成功",
+             type:"success"
+           });
+           this.dialogForm=false
+         }else{
+           this.$message.console.error("保存失败");
+           this.dialogForm=false
+         }
+       }) 
+    },
+    updateProdConvert(val){
+      console.log(val)
+      this.form=val
+      this.dialogForm=true; 
     }
   },
   mounted () {
