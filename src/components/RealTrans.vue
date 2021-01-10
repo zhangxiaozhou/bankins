@@ -62,8 +62,12 @@
 
 		<el-main>
 			<div>
-				<el-table :data="tableData" style="width: 100%" max-height="530" height="530">
-					<el-table-column prop="transNo" label="流水号"> </el-table-column>
+				<el-table :data="tableData" style="width: 100%" max-height="530" height="530" row-key="transNo">
+					<el-table-column label="流水号">
+            <template slot-scope="scope">
+              <el-button @click="showDetails(scope.row)" type="text" size="small">{{scope.row.transNo}}</el-button>
+            </template>
+          </el-table-column>
 					<el-table-column prop="bankCode" label="银行"> </el-table-column>
 					<el-table-column prop="childCompany" label="地区"> </el-table-column>
 					<el-table-column prop="sendCode" label="投保单号"> </el-table-column>
@@ -78,6 +82,30 @@
 					</el-pagination>
 				</div>
 			</div>
+
+      <el-dialog
+          title="交易详情"
+          :visible.sync="dialogVisible"
+          width="80%" >
+
+        <el-collapse>
+          <el-collapse-item title="投保单" name="1">
+            <div>投保单详情</div>
+          </el-collapse-item>
+          <el-collapse-item title="投保人" name="2">
+            <div>投保人详情；</div>
+          </el-collapse-item>
+          <el-collapse-item title="被保人" name="3">
+            <div>被保人详情；</div>
+          </el-collapse-item>
+          <el-collapse-item title="受益人" name="4">
+            <div>受益人详情；</div>
+          </el-collapse-item>
+          <el-collapse-item title="险种" name="5">
+            <div>险种信息；</div>
+          </el-collapse-item>
+        </el-collapse>
+      </el-dialog>
 		</el-main>
 	</el-container>
 </template>
@@ -99,6 +127,7 @@
 			return {
         // eslint-disable-next-line no-mixed-spaces-and-tabs
 			  pageSize: 10,
+        dialogVisible: false,
         total: 0,
 				labelPosition: "right",
 				form: {
@@ -115,7 +144,8 @@
 				childBanks: [],
 				companys: [],
 				childCompanys: [],
-				tableData: [],
+				tableData: [
+        ],
 			};
 		},
 
@@ -128,6 +158,10 @@
         }else if(transCode == 'payment'){
           return '缴费'
         }
+      },
+      showDetails(row){
+        this.dialogVisible = true;
+        console.log(row)
       },
       formatTransState(row){
         let transState = row.transState;
