@@ -61,6 +61,9 @@ export default {
       });
     },
     doLogin() {
+      //登录前清理本地sessionStorage中token
+      sessionStorage.removeItem("token")
+
       /* json格式提交： */
       let formData = qs.stringify(this.user);
 

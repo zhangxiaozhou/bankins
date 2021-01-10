@@ -7,19 +7,22 @@
 						<el-select v-model="form.bankCode" @change="getChildBank" placeholder="请选择总行">
 							<el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
 						</el-select>
-						<span class="space"></span>
-
 						<el-select v-model="form.company" @change="getChildCompanys" placeholder="请选择分公司">
 							<el-option v-for="com in companys" :key="com.organId" :label="com.abbrName" :value="com.organId"></el-option>
 						</el-select>
-						<span class="space"></span>
 						<el-select v-model="form.childCompany" placeholder="请选择机构">
 							<el-option v-for="com in childCompanys" :key="com.organId" :label="com.abbrName" :value="com.organId"></el-option>
 						</el-select>
 					</el-form-item>
+
+          <el-form-item label="单号">
+            <el-input v-model="form.sendCode"></el-input>
+          </el-form-item>
+
+          <el-button type="primary" @click="onSubmit">查询</el-button>
 				</el-form>
 
-				<el-form label-width="120px" :inline="true" :model="form">
+				<el-form label-width="100px" :inline="true" :model="form">
 					<el-form-item label="交易科目">
 						<el-select v-model="form.transCode" placeholder="请选择科目">
 							<el-option label="新契约投保" value="apply"></el-option>
@@ -40,32 +43,25 @@
 						</el-select>
 					</el-form-item>
 
-					<el-form-item label="单号">
-						<el-input v-model="form.sendCode"></el-input>
-					</el-form-item>
+          <el-form-item label="交易日期">
+            <el-date-picker type="date" placeholder="开始日期" v-model="form.beginTransDate"></el-date-picker>
+            <el-date-picker type="date" placeholder="截止日期" v-model="form.endTransDate"></el-date-picker>
+
+          </el-form-item>
 				</el-form>
 
-				<el-form label-width="120px" :inline="true" :model="form">
-					<el-form-item label="交易日期">
-						<el-date-picker type="date" placeholder="开始日期" v-model="form.beginTransDate"></el-date-picker>
-						<span class="space"></span>
-						<el-date-picker type="date" placeholder="截止日期" v-model="form.endTransDate"></el-date-picker>
+				<!--<el-form label-width="120px" :inline="true" :model="form">
 
-						<span class="space"></span>
-						<span class="space"></span>
-						<span class="space"></span>
-						<el-button type="primary" @click="onSubmit">查询</el-button>
-					</el-form-item>
-				</el-form>
+				</el-form>-->
 			</div>
 		</el-header>
 
 		<el-main>
 			<div>
-				<el-table :data="tableData" style="width: 100%" max-height="530" height="530" row-key="transNo">
+				<el-table :data="tableData" style="width: 100%" max-height="600"  :row-style="{height: '35px'}" :cell-style="{padding: '7px'}" row-key="transNo">
 					<el-table-column label="流水号">
             <template slot-scope="scope">
-              <el-button @click="showDetails(scope.row)" type="text" size="small">{{scope.row.transNo}}</el-button>
+              <el-button @click="showDetails(scope.row)" type="text" size="mini">{{scope.row.transNo}}</el-button>
             </template>
           </el-table-column>
 					<el-table-column prop="bankCode" label="银行"> </el-table-column>
@@ -78,7 +74,7 @@
 				</el-table>
 				<div class="block" style="margin-left:30%">
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" background :current-page="currentPage"
-					:page-sizes="[10, 15, 20]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+                         :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
 					</el-pagination>
 				</div>
 			</div>

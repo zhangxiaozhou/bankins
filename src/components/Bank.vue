@@ -5,7 +5,7 @@
         <el-row >
           <el-col :span="8">
             <div class="grid-content bg-purple">
-              <img :src="logo" class="logo"/> 
+              <img :src="logo" class="logo"/>
               <h1 class="sys-name">太平人寿银保通系统</h1>
             </div></el-col>
           <el-col :span="6" :offset="10">
@@ -20,7 +20,7 @@
             <el-col :span="24">
               <el-menu default-active="2" class="el-menu-vertical-demo" router>
                 <el-menu-item index="/realTrans" >
-                  <i class="el-icon-arrow-right"></i> 
+                  <i class="el-icon-arrow-right"></i>
                   <span slot="title">实时交易</span>
                 </el-menu-item>
                 <el-menu-item index="/trans">
@@ -34,7 +34,7 @@
               <el-menu-item index="/code">
                   <i class="el-icon-arrow-right"></i>
                   <span slot="title">产品代码转换</span>
-                </el-menu-item> 
+                </el-menu-item>
                 <el-menu-item index="/verifyRecord">
                   <i class="el-icon-arrow-right"></i>
                   <span slot="title">日终对账</span>

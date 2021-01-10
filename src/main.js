@@ -9,10 +9,9 @@ import routerConfig from './router.config.js'
 
 import axios from 'axios';
 
-const whiteList = ['/login']
-
 axios.defaults.baseURL = "/admin";
 
+const whiteList = ['/login']
 axios.interceptors.request.use(
     config => {
 
