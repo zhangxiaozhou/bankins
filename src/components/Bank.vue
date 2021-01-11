@@ -8,7 +8,7 @@
               <img :src="logo" class="logo"/>
               <h1 class="sys-name">太平人寿银保通系统</h1>
             </div></el-col>
-          <el-col :span="6" :offset="10">
+          <el-col :span="6"  :offset="10">
             <div class="user-info">张三</div>
           </el-col>
         </el-row>

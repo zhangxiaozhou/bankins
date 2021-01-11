@@ -70,7 +70,7 @@ router.beforeEach(async (to, from, next) => {
             next();
         }
     } else { // 如果token
-        next("/login"); // 跳转到登录页面
+        next("/login"); //  跳转到登录页面
     }
 });
 

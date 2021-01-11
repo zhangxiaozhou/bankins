@@ -92,7 +92,7 @@
             <div>投保人详情；</div>
           </el-collapse-item>
           <el-collapse-item title="被保人" name="3">
-            <div>被保人详情；</div>
+            <div>被保人详情1；</div>
           </el-collapse-item>
           <el-collapse-item title="受益人" name="4">
             <div>受益人详情；</div>
