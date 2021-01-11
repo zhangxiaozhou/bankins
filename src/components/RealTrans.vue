@@ -7,19 +7,22 @@
 						<el-select v-model="form.bankCode" @change="getChildBank" placeholder="请选择总行">
 							<el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
 						</el-select>
-						<span class="space"></span>
-
 						<el-select v-model="form.company" @change="getChildCompanys" placeholder="请选择分公司">
 							<el-option v-for="com in companys" :key="com.organId" :label="com.abbrName" :value="com.organId"></el-option>
 						</el-select>
-						<span class="space"></span>
 						<el-select v-model="form.childCompany" placeholder="请选择机构">
 							<el-option v-for="com in childCompanys" :key="com.organId" :label="com.abbrName" :value="com.organId"></el-option>
 						</el-select>
 					</el-form-item>
+
+          <el-form-item label="单号">
+            <el-input v-model="form.sendCode"></el-input>
+          </el-form-item>
+
+          <el-button type="primary" @click="onSubmit">查询</el-button>
 				</el-form>
 
-				<el-form label-width="120px" :inline="true" :model="form">
+				<el-form label-width="100px" :inline="true" :model="form">
 					<el-form-item label="交易科目">
 						<el-select v-model="form.transCode" placeholder="请选择科目">
 							<el-option label="新契约投保" value="apply"></el-option>
@@ -40,30 +43,27 @@
 						</el-select>
 					</el-form-item>
 
-					<el-form-item label="单号">
-						<el-input v-model="form.sendCode"></el-input>
-					</el-form-item>
+          <el-form-item label="交易日期">
+            <el-date-picker type="date" placeholder="开始日期" v-model="form.beginTransDate"></el-date-picker>
+            <el-date-picker type="date" placeholder="截止日期" v-model="form.endTransDate"></el-date-picker>
+
+          </el-form-item>
 				</el-form>
 
-				<el-form label-width="120px" :inline="true" :model="form">
-					<el-form-item label="交易日期">
-						<el-date-picker type="date" placeholder="开始日期" v-model="form.beginTransDate"></el-date-picker>
-						<span class="space"></span>
-						<el-date-picker type="date" placeholder="截止日期" v-model="form.endTransDate"></el-date-picker>
+				<!--<el-form label-width="120px" :inline="true" :model="form">
 
-						<span class="space"></span>
-						<span class="space"></span>
-						<span class="space"></span>
-						<el-button type="primary" @click="onSubmit">查询</el-button>
-					</el-form-item>
-				</el-form>
+				</el-form>-->
 			</div>
 		</el-header>
 
 		<el-main>
 			<div>
-				<el-table :data="tableData" style="width: 100%" max-height="530" height="530">
-					<el-table-column prop="transNo" label="流水号"> </el-table-column>
+				<el-table :data="tableData" style="width: 100%" max-height="600"  :row-style="{height: '35px'}" :cell-style="{padding: '7px'}" row-key="transNo">
+					<el-table-column label="流水号">
+            <template slot-scope="scope">
+              <el-button @click="showDetails(scope.row)" type="text" size="mini">{{scope.row.transNo}}</el-button>
+            </template>
+          </el-table-column>
 					<el-table-column prop="bankCode" label="银行"> </el-table-column>
 					<el-table-column prop="childCompany" label="地区"> </el-table-column>
 					<el-table-column prop="sendCode" label="投保单号"> </el-table-column>
@@ -74,10 +74,34 @@
 				</el-table>
 				<div class="block" style="margin-left:30%">
 					<el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" background :current-page="currentPage"
-					:page-sizes="[10, 15, 20]" :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+                         :page-size="pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
 					</el-pagination>
 				</div>
 			</div>
+
+      <el-dialog
+          title="交易详情"
+          :visible.sync="dialogVisible"
+          width="80%" >
+
+        <el-collapse>
+          <el-collapse-item title="投保单" name="1">
+            <div>投保单详情</div>
+          </el-collapse-item>
+          <el-collapse-item title="投保人" name="2">
+            <div>投保人详情；</div>
+          </el-collapse-item>
+          <el-collapse-item title="被保人" name="3">
+            <div>被保人详情；</div>
+          </el-collapse-item>
+          <el-collapse-item title="受益人" name="4">
+            <div>受益人详情；</div>
+          </el-collapse-item>
+          <el-collapse-item title="险种" name="5">
+            <div>险种信息；</div>
+          </el-collapse-item>
+        </el-collapse>
+      </el-dialog>
 		</el-main>
 	</el-container>
 </template>
@@ -99,6 +123,7 @@
 			return {
         // eslint-disable-next-line no-mixed-spaces-and-tabs
 			  pageSize: 10,
+        dialogVisible: false,
         total: 0,
 				labelPosition: "right",
 				form: {
@@ -115,7 +140,8 @@
 				childBanks: [],
 				companys: [],
 				childCompanys: [],
-				tableData: [],
+				tableData: [
+        ],
 			};
 		},
 
@@ -128,6 +154,10 @@
         }else if(transCode == 'payment'){
           return '缴费'
         }
+      },
+      showDetails(row){
+        this.dialogVisible = true;
+        console.log(row)
       },
       formatTransState(row){
         let transState = row.transState;
