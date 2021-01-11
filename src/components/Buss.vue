@@ -24,6 +24,7 @@
 
 				<el-form label-width="120px" :inline="true" :model="form">
 					<el-form-item label="投保单号">
+
 						<el-input v-model="form.sendCode"></el-input>
 					</el-form-item>
 
