@@ -91,7 +91,7 @@ export default {
           this.showErrLogin(res.data.errMsg)
         }
       }).catch((response) => {
-        this.showErrLogin('系统错误')
+        this.showErrLogin('系统错误!')
         Promise.reject(response);
       })
     }
