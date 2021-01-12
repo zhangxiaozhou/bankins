@@ -187,7 +187,9 @@ export default {
     },
     insert(form){
       if(this.$refs[form]!==undefined){
-        this.$refs[form].resetFields()
+        this.ruleForm = Object.assign({}, '')
+        this.$refs[form].resetFields();
+        
       }
         this.dialogForm=true; 
     },
