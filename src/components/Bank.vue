@@ -19,7 +19,7 @@
           <el-row class="menu">
             <el-col :span="24">
               <el-menu default-active="2" class="el-menu-vertical-demo" router>
-                <el-menu-item index="/realTrans" >
+                <!-- <el-menu-item index="/realTrans" >
                   <i class="el-icon-arrow-right"></i>
                   <span slot="title">实时交易</span>
                 </el-menu-item>
@@ -42,7 +42,11 @@
                 <el-menu-item index="/policyOfService">
                   <i class="el-icon-arrow-right"></i>
                   <span slot="title">保全回传</span>
-                </el-menu-item>
+                </el-menu-item> -->
+				<el-menu-item v-for="menu in menus" :index="menu.path">
+					<i class="el-icon-arrow-right"></i>
+					<span v-slot="title">{{menu.name}}</span>
+				</el-menu-item>
               </el-menu>
             </el-col>
           </el-row>
@@ -64,8 +68,19 @@ export default {
   data() {
     return {
       logo: logo,
+	  menus:[]
     };
   },
+  mounted() {
+  	this.$http({
+		method:"get",
+		url:"/buss-process/api/rolePrimission/v1/rolePrimission",
+		data:{}
+	}).then((res)=>{
+		console.log(res.data);
+		this.menus=res.data;
+	});
+  }
 };
 </script>
 
@@ -108,3 +123,4 @@ export default {
   height: 100%;
 }
 </style>
+
