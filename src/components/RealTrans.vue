@@ -7,10 +7,10 @@
 						<el-select v-model="form.bankCode" @change="getChildBank" placeholder="请选择总行">
 							<el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
 						</el-select>
-						<el-select v-model="form.company" @change="getChildCompanys" placeholder="请选择分公司">
+						<el-select v-model="form.company" @change="getChildCompanys" :disabled="disabled" clearable placeholder="请选择分公司">
 							<el-option v-for="com in companys" :key="com.organId" :label="com.abbrName" :value="com.organId"></el-option>
 						</el-select>
-						<el-select v-model="form.childCompany" placeholder="请选择机构">
+						<el-select v-model="form.childCompany" :disabled="childDisabled" clearable placeholder="请选择机构">
 							<el-option v-for="com in childCompanys" :key="com.organId" :label="com.abbrName" :value="com.organId"></el-option>
 						</el-select>
 					</el-form-item>
@@ -199,6 +199,8 @@
 				dialogVisible: false,
 				total: 0,
 				loading: false,
+				disabled:false,
+				childDisabled:false,
 				labelPosition: "right",
 				requestMsg: '',
 				responseMsg: '',
@@ -361,6 +363,51 @@
 				const diffDate = diff / (24 * 60 * 60 * 1000);// eslint-disable-line no-unused-vars	
 				return	diffDate;
 			},
+			findCompanyOrgan(){
+				this.$http({
+					method:"post",
+					url:"/buss-process/api/companyOrgan/v1/findByOrganId"
+				}).then((res) =>{
+					console.log(res.data);
+					if(res.data.classId===1){
+						this.getCompanys();	
+					}else if(res.data.classId===2){
+						this.disabled=true;
+						this.companys=[res.data];
+						this.findAllCompanyOrgan();
+					}else{
+						this.disabled=true;
+						this.childDisabled=true;
+						this.childCompanys=[res.data];
+						this.findByParentId(res.data.parentId);
+					}
+					
+				})	
+			},
+			findByParentId(parentId){
+				this.$http({
+					method:"post",
+					url:"/buss-process/api/companyOrgan/v1/findByParentId",
+					params:{
+						parentId:parentId
+					}
+				}).then((res) =>{
+					console.log(res.data);
+					this.companys=[res.data]
+				})
+			},
+			findAllCompanyOrgan(organId){
+				this.$http({
+					method:"post",
+					url:"/buss-process/api/companyOrgan/v1/find",
+					data:{
+						parentId:organId
+					}
+				}).then((res) =>{
+					console.log(res.data);
+					this.childCompanys=[res.data];
+				})	
+			},
 			ale(){
 				alert(1);
 			}
@@ -368,7 +415,8 @@
 		mounted() {
 			console.log("mounted");
 			this.getFirstLevelBank();
-			this.getCompanys();
+			//this.getCompanys();
+			this.findCompanyOrgan();
 		},
 	};
 </script>
