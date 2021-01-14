@@ -50,9 +50,7 @@
 					</el-form-item>
 				</el-form>
 
-				<!--<el-form label-width="120px" :inline="true" :model="form">
 
-				</el-form>-->
 			</div>
 		</el-header>
 
@@ -74,8 +72,8 @@
 					<el-table-column prop="errMsg" label="错误原因"> </el-table-column>
 				</el-table>
 				<div class="block" style="margin-left:30%">
-					<el-pagination  @current-change="handleCurrentChange" background :current-page="form.currentPage"
-					:page-sizes="[10]" :page-size="form.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+					<el-pagination @current-change="handleCurrentChange" background :current-page="form.currentPage" :page-sizes="[10]"
+					:page-size="form.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
 					</el-pagination>
 				</div>
 			</div>
@@ -105,8 +103,8 @@
 								<el-table-column prop="certiValidate" label="证件有效期"> </el-table-column>
 								<el-table-column prop="height" label="身高(cm)"> </el-table-column>
 								<el-table-column prop="weight" label="体重(kg)"> </el-table-column>
-								<el-table-column prop="income" label="年收入"> </el-table-column>
-								<el-table-column prop="nationalityName" label="国籍"> </el-table-column>
+								<el-table-column prop="income" label="年收入(万)" :formatter="convertIncome"> </el-table-column>
+								<el-table-column prop="nationality" label="国籍"> </el-table-column>
 								<el-table-column prop="address1" label="地址"> </el-table-column>
 								<el-table-column prop="zip1" label="邮编"> </el-table-column>
 								<el-table-column prop="tell" label="电话"> </el-table-column>
@@ -128,9 +126,9 @@
 								<el-table-column prop="certiValidate" label="证件有效期"> </el-table-column>
 								<el-table-column prop="height" label="身高(cm)"> </el-table-column>
 								<el-table-column prop="weight" label="体重(kg)"> </el-table-column>
-								<el-table-column prop="income" label="年收入"> </el-table-column>
-								<el-table-column prop="nationalityName" label="国籍"> </el-table-column>
-								<el-table-column prop="address1" label="地址"> </el-table-column>
+								<el-table-column prop="income" label="年收入(万元)" :formatter="convertIncome"> </el-table-column>
+								<el-table-column prop="nationality" label="国籍"> </el-table-column>
+								<el-table-column prop="relaAddress" label="地址"> </el-table-column>
 								<el-table-column prop="zip1" label="邮编"> </el-table-column>
 								<el-table-column prop="tell" label="电话"> </el-table-column>
 								<el-table-column prop="celler" label="手机"> </el-table-column>
@@ -138,7 +136,7 @@
 							</el-table>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="受益人" name="4">
+					<el-collapse-item title="身故受益人" name="4">
 						<div>
 							<el-table :data="policyDetail.beneDetail">
 								<el-table-column prop="realName" label="姓名"> </el-table-column>
@@ -147,8 +145,8 @@
 								<el-table-column prop="certiType" label="证件类型"> </el-table-column>
 								<el-table-column prop="certiCode" label="证件号码"> </el-table-column>
 								<el-table-column prop="certiValidate" label="证件有效期"> </el-table-column>
-								<el-table-column prop="bankCode" label="受益顺序"> </el-table-column>
-								<el-table-column prop="beneRate" label="受益比例"> </el-table-column>
+								<el-table-column prop="beneOrder" label="受益顺序" > </el-table-column>
+								<el-table-column prop="beneRate" label="受益比例" :formatter="convertRate"> </el-table-column>
 								<el-table-column prop="relationId" label="与被保人关系"> </el-table-column>
 							</el-table>
 						</div>
@@ -158,21 +156,24 @@
 							<el-table :data="policyDetail.productDetail">
 								<el-table-column prop="internalId" label="险种代码"> </el-table-column>
 								<el-table-column prop="unit" label="投保份数"> </el-table-column>
-								<el-table-column prop="payPeriod" label="缴费年期类型"> </el-table-column>
-								<el-table-column prop="payYear" label="缴费年期"> </el-table-column>
+								<el-table-column prop="chargePeriod" label="缴费年期类型"> </el-table-column>
+								<el-table-column prop="chargeYear" label="缴费年期"> </el-table-column>
 								<el-table-column prop="coveragePeriod" label="保障年期类型"> </el-table-column>
 								<el-table-column prop="coverageYear" label="保险年期"> </el-table-column>
 								<el-table-column prop="chargeType" label="领取年期类型"> </el-table-column>
-								<el-table-column prop="bankCode" label="起领年龄"> </el-table-column>
-								<el-table-column prop="bankCode" label="终领年龄"> </el-table-column>
+								<el-table-column prop="payYear" label="起领年龄"> </el-table-column>
+								<el-table-column prop="endYear" label="终领年龄"> </el-table-column>
 								<el-table-column prop="prem" label="期交保费"> </el-table-column>
 							</el-table>
 						</div>
 					</el-collapse-item>
-					<el-collapse-item title="银行报文" name="6" @current-change="ale">
-						请求报文<el-input :value="total" type="textarea"></el-input>
-						返回报文<el-input  type="textarea"></el-input>
-						</el-collapse-item>
+					<el-collapse-item title="银行报文" name="6" >
+						请求报文<el-input :value="this.requestMsg"  type="textarea" :rows="10"></el-input>
+						返回报文<el-input :value="this.responseMsg"  type="textarea" :rows="5"></el-input>
+					</el-collapse-item>
+					<el-collapse-item title="错误描述" name="7" >
+						{{this.errMsg}}
+					</el-collapse-item>
 				</el-collapse>
 			</el-dialog>
 		</el-main>
@@ -190,7 +191,9 @@
 </style>
 
 <script>
-	import { Message } from 'element-ui';
+	import {
+		Message
+	} from 'element-ui';
 	export default {
 		name: "RealTrans",
 		data() {
@@ -199,21 +202,19 @@
 				dialogVisible: false,
 				total: 0,
 				loading: false,
-				disabled:false,
-				childDisabled:false,
+				disabled: false,
+				childDisabled: false,
 				labelPosition: "right",
-				requestMsg: '',
-				responseMsg: '',
 				form: {
-					bankCode: "",
+					bankCode: "0008",
 					company: "",
 					childCompany: "",
 					transCode: "",
 					transState: "",
 					sendCode: "",
-					beginTransDate: "",
-					endTransDate: "",
-					currentPage:1,
+					beginTransDate: "2021-01-11",
+					endTransDate: "2021-01-13",
+					currentPage: 1,
 					pageSize: 10,
 				},
 				banks: [],
@@ -225,8 +226,11 @@
 					holderDetail: [],
 					insurantDetail: [],
 					beneDetail: [],
-					productDetail: []
+					productDetail: [],
 				}],
+				requestMsg: "",
+				responseMsg: "",
+				errMsg:""
 			};
 		},
 
@@ -241,34 +245,54 @@
 				}
 			},
 			showDetails(row) {
+				this.policyDetail=[];
+				this.requestMsg='';
+				this.responseMsg='';
 				this.dialogVisible = true;
+				this.errMsg=row.errMsg;
 				this.$http({
 					method: "get",
-					url: "/buss-process/api/admin/v1/realTrans/showDetail/" + row.sendCode
+					url: "/buss-process/api/admin/v1/realTrans/showDetail/",
+					params: {
+						sendCode: row.sendCode
+					}
 				}).then((res) => {
-					this.loading = true;
-					console.log(res.data)
 					this.policyDetail = [res.data];
-					this.policyDetail.holderDetail=[res.data.holder];
-					this.policyDetail.insurantDetail=res.data.insurants;
-					this.policyDetail.beneDetail=res.data.insurants[0].policyBenes;
-					this.policyDetail.productDetail=res.data.policyProducts;
-					this.loading = false;
+					this.policyDetail.holderDetail = [res.data.holder];
+					this.policyDetail.insurantDetail = res.data.insurants;
+					this.policyDetail.beneDetail = res.data.insurants[0].policyBenes;
+					this.policyDetail.productDetail = res.data.policyProducts;
+				}).catch(err=>{
+					Message.info('查询不到该投保单详情'+err);
+				});
+				
+				this.$http({
+					method: "get",
+					url: "/buss-process/api/admin/v1/realTrans/findMsg/",
+					params: {
+						transNo: row.transNo,
+						bank: row.bankCode
+					}
+				}).then((res) => {
+					this.responseMsg=res.data.responseMsg;
+					this.requestMsg=res.data.requestMsg;
+				}).catch(err=>{
+					Message.error('查询不到银行报文'+err);
 				});
 			},
-			formatTransState(row){
+			formatTransState(row) {
 				let transState = row.transState;
-				if (transState === true) {
+				if (transState) {
 					return '成功';
 				} else {
 					return '失败';
 				}
 			},
-			formatGender(row){
-				let gender=row.gender;
-				if(gender=='M'){
+			formatGender(row) {
+				let gender = row.gender;
+				if (gender == 'M') {
 					return '男';
-				}else{
+				} else {
 					return '女';
 				}
 			},
@@ -322,16 +346,17 @@
 				});
 			},
 			onSubmit() {
-				if(this.form.sendCode==null ||this.form.sendCode==''){
-					if(this.form.beginTransDate==null ||this.form.beginTransDate ==''){
+				this.tableData=[];
+				if (this.form.sendCode == null || this.form.sendCode == '') {
+					if (this.form.beginTransDate == null || this.form.beginTransDate == '') {
 						Message.error('请选择投保日期开始时间');
 						return;
 					}
-					if(this.form.endTransDate==null ||this.form.endTransDate ==''){
+					if (this.form.endTransDate == null || this.form.endTransDate == '') {
 						Message.error('请选择投保日期截止时间');
 						return;
 					}
-					if(this.dateDiffer(this.form.beginTransDate,this.form.endTransDate)>7){
+					if (this.dateDiffer(this.form.beginTransDate, this.form.endTransDate) > 7) {
 						Message.error('交易日期范围不能超过一周');
 						return;
 					}
@@ -352,7 +377,7 @@
 				this.form.currentPage = val;
 				this.onSubmit();
 			},
-			dateDiffer(d_begin,d_end){
+			dateDiffer(d_begin, d_end) {
 				//date1结束时间
 				let date1 = new Date(d_begin);
 				//date2当前时间
@@ -360,56 +385,59 @@
 				date1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
 				date2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
 				const diff = date2.getTime() - date1.getTime(); //目标时间减去当前时间
-				const diffDate = diff / (24 * 60 * 60 * 1000);// eslint-disable-line no-unused-vars	
-				return	diffDate;
+				const diffDate = diff / (24 * 60 * 60 * 1000); // eslint-disable-line no-unused-vars	
+				return diffDate;
 			},
-			findCompanyOrgan(){
+			findCompanyOrgan() {
 				this.$http({
-					method:"post",
-					url:"/buss-process/api/companyOrgan/v1/findByOrganId"
-				}).then((res) =>{
+					method: "post",
+					url: "/buss-process/api/companyOrgan/v1/findByOrganId"
+				}).then((res) => {
 					console.log(res.data);
-					if(res.data.classId===1){
-						this.getCompanys();	
-					}else if(res.data.classId===2){
-						this.disabled=true;
-						this.companys=[res.data];
+					if (res.data.classId === 1) {
+						this.getCompanys();
+					} else if (res.data.classId === 2) {
+						this.disabled = true;
+						this.companys = [res.data];
 						this.findAllCompanyOrgan();
-					}else{
-						this.disabled=true;
-						this.childDisabled=true;
-						this.childCompanys=[res.data];
+					} else {
+						this.disabled = true;
+						this.childDisabled = true;
+						this.childCompanys = [res.data];
 						this.findByParentId(res.data.parentId);
 					}
-					
-				})	
-			},
-			findByParentId(parentId){
-				this.$http({
-					method:"post",
-					url:"/buss-process/api/companyOrgan/v1/findByParentId",
-					params:{
-						parentId:parentId
-					}
-				}).then((res) =>{
-					console.log(res.data);
-					this.companys=[res.data]
+
 				})
 			},
-			findAllCompanyOrgan(organId){
+			findByParentId(parentId) {
 				this.$http({
-					method:"post",
-					url:"/buss-process/api/companyOrgan/v1/find",
-					data:{
-						parentId:organId
+					method: "post",
+					url: "/buss-process/api/companyOrgan/v1/findByParentId",
+					params: {
+						parentId: parentId
 					}
-				}).then((res) =>{
+				}).then((res) => {
 					console.log(res.data);
-					this.childCompanys=[res.data];
-				})	
+					this.companys = [res.data]
+				})
 			},
-			ale(){
-				alert(1);
+			findAllCompanyOrgan(organId) {
+				this.$http({
+					method: "post",
+					url: "/buss-process/api/companyOrgan/v1/find",
+					data: {
+						parentId: organId
+					}
+				}).then((res) => {
+					console.log(res.data);
+					this.childCompanys = [res.data];
+				})
+			},
+			convertIncome(row){
+				return row.income/10000;
+			},
+			convertRate(row){
+				return row.beneRate*100 +'%';
 			}
 		},
 		mounted() {
