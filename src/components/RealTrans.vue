@@ -184,7 +184,6 @@
 	.space {
 		margin-right: 50px;
 	}
-
 	.my-header {
 		border-bottom: 1px solid #d7dae0;
 	}
