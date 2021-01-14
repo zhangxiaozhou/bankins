@@ -387,27 +387,29 @@
 				const diffDate = diff / (24 * 60 * 60 * 1000); // eslint-disable-line no-unused-vars	
 				return diffDate;
 			},
-			findCompanyOrgan() {
-				this.$http({
-					method: "post",
-					url: "/buss-process/api/companyOrgan/v1/findByOrganId"
-				}).then((res) => {
-					console.log(res.data);
-					if (res.data.classId === 1) {
-						this.getCompanys();
-					} else if (res.data.classId === 2) {
-						this.disabled = true;
-						this.companys = [res.data];
-						this.findAllCompanyOrgan();
-					} else {
-						this.disabled = true;
-						this.childDisabled = true;
-						this.childCompanys = [res.data];
-						this.findByParentId(res.data.parentId);
-					}
+			findCompanyOrgan(){
+            	this.$http({
+            		method:"post",
+            		url:"/buss-process/api/companyOrgan/v1/findByOrganId"
+            	}).then((res) =>{
+            		console.log(res.data);
+            		if(res.data.classId===1){
+            			this.getCompanys();
+            		}else if(res.data.classId===2){
+            			this.companys=[res.data];
+            			this.form.company=res.data.organId;
+            			this.findAllCompanyOrgan(this.form.company);
+            			this.disabled=true;
+            		}else{
+            			this.form.childCompany=res.data.organId;
+            			this.childCompanys=[res.data];
+            			this.findByParentId(res.data.parentId);
+            			this.disabled=true;
+            			this.childDisabled=true;
+            		}
 
-				})
-			},
+            	})
+            },
 			findByParentId(parentId) {
 				this.$http({
 					method: "post",
@@ -417,6 +419,7 @@
 					}
 				}).then((res) => {
 					console.log(res.data);
+					this.form.company=res.data.organId
 					this.companys = [res.data]
 				})
 			},
@@ -440,7 +443,6 @@
 			}
 		},
 		mounted() {
-			console.log("mounted");
 			this.getFirstLevelBank();
 			//this.getCompanys();
 			this.findCompanyOrgan();
