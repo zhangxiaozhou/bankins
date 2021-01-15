@@ -27,6 +27,7 @@
             </el-select>
             <el-select v-model="form.childCompany"
                        :disabled="childDisabled"
+                       v-if="show"
                        clearable
                        placeholder="请选择机构">
               <el-option v-for="com in childCompanys"
@@ -170,6 +171,7 @@ export default {
     return {
       labelPosition: "right",
       dialogTableVisible: false,
+      show: false,
       total: 0,
       form: {
         bankCode: "",
@@ -290,6 +292,7 @@ export default {
       }).then((res) => {
         console.log(res.data);
         this.childCompanys = res.data;
+        this.show = true
       });
     },
     findCompanyOrgan () {
@@ -305,12 +308,14 @@ export default {
           this.form.company = res.data.organId;
           this.findAllCompanyOrgan(this.form.company);
           this.disabled = true;
+          this.show = true;
         } else {
           this.form.childCompany = res.data.organId;
           this.childCompanys = [res.data];
           this.findByParentId(res.data.parentId);
           this.disabled = true;
           this.childDisabled = true;
+          this.show = true;
         }
 
       })
