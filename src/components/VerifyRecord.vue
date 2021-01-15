@@ -1,8 +1,8 @@
 <template>
-  <div > 
+  <div>
     <p>
       日终对账
-    </p> 
+    </p>
   </div>
 </template>
 

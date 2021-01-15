@@ -1,8 +1,8 @@
 <template>
-  <div > 
+  <div>
     <p>
       保全回传
-    </p> 
+    </p>
   </div>
 </template>
 
