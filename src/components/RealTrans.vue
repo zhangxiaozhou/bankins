@@ -477,6 +477,7 @@ export default {
         },
       }).then((res) => {
         console.log(res.data);
+        this.form.childCompany = "";
         this.childCompanys = res.data;
       });
     },
