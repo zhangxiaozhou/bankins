@@ -1,25 +1,32 @@
 <template>
   <div class="my-con">
     <el-container class="my-con">
-      <el-header height="100" class="my-header">
-        <el-row >
+      <el-header height="100"
+                 class="my-header">
+        <el-row>
           <el-col :span="8">
             <div class="grid-content bg-purple">
-              <img :src="logo" class="logo"/>
+              <img :src="logo"
+                   class="logo" />
               <h1 class="sys-name">太平人寿银保通系统</h1>
-            </div></el-col>
-          <el-col :span="6"  :offset="10">
-            <div class="user-info">张三</div>
+            </div>
+          </el-col>
+          <el-col :span="6"
+                  :offset="10">
+            <div class="user-info">{{userName}}</div>
           </el-col>
         </el-row>
       </el-header>
 
       <el-container>
-        <el-aside width="220px"  class="bankins-menu">
+        <el-aside width="220px"
+                  class="bankins-menu">
           <el-row class="menu">
             <el-col :span="24">
-              <el-menu default-active="2" class="el-menu-vertical-demo" router>
-                 <!-- <el-menu-item index="/realTrans" >
+              <el-menu default-active="2"
+                       class="el-menu-vertical-demo"
+                       router>
+                <!-- <el-menu-item index="/realTrans" >
                   <i class="el-icon-arrow-right"></i>
                   <span slot="title">实时交易</span>
                 </el-menu-item>
@@ -43,11 +50,13 @@
                   <i class="el-icon-arrow-right"></i>
                   <span slot="title">保全回传</span>
                 </el-menu-item>  -->
-                <el-menu-item v-for="menu in menus" :key="menu.path" :index="menu.path">
+                <el-menu-item v-for="menu in menus"
+                              :key="menu.path"
+                              :index="menu.path">
                   <i class="el-icon-arrow-right"></i>
                   <span slot="title">{{menu.name}}</span>
                 </el-menu-item>
-                
+
               </el-menu>
             </el-col>
           </el-row>
@@ -66,58 +75,60 @@ import logo from "../assets/logo.png";
 
 export default {
   name: "Bank",
-  data() {
+  data () {
     return {
-      logo: logo,
-      menus:[]
+      logo:logo,
+      menus:[],
+      userName:""
     }
   },
-  mounted(){
+  mounted () {
+    this.userName=sessionStorage.getItem("userName")
     this.$http({
-		method:"get",
-		url:"/buss-process/api/rolePrimission/v1/rolePrimission"
-	}).then((res)=>{
-		console.log(res.data);
-		this.menus = res.data;
-	});
+              method:"get",
+              url:"/buss-process/api/rolePrimission/v1/rolePrimission"
+            }).then((res) => {
+              console.log(res.data);
+              this.menus=res.data;
+            });
   }
 };
 </script>
 
 <style scoped>
-.bankins-menu{
+.bankins-menu {
   margin-top: 3px;
   height: 100%;
   border-right: 1px solid #dfe4da;
 }
 
-.my-con{
+.my-con {
   height: 100%;
 }
 
- .my-header{
-   background-color:azure;
- }
+.my-header {
+  background-color: azure;
+}
 
- .logo{
-   float:left;
- }
+.logo {
+  float: left;
+}
 
- .sys-name{
-   line-height: 50px;
-   font-size: 24px;
-   color: #00479d;
-   margin-left: 210px;
-   padding-left: 10px;
-   margin: 10px 0 0 20px;
-   border-left: 2px solid #00479d;
- }
+.sys-name {
+  line-height: 50px;
+  font-size: 24px;
+  color: #00479d;
+  margin-left: 210px;
+  padding-left: 10px;
+  margin: 10px 0 0 20px;
+  border-left: 2px solid #00479d;
+}
 
- .user-info{
-   line-height: 50px;
-   font-size: 18px;
-   color:#222;
- }
+.user-info {
+  line-height: 50px;
+  font-size: 18px;
+  color: #222;
+}
 
 .menu {
   height: 100%;
