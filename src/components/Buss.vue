@@ -178,6 +178,7 @@ export default {
       form: {
         bankCode: "",
         company: "",
+        childCompany: "",
         sendCode: "",
         policyCode: "",
         sellPlatform: "",
