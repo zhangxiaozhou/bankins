@@ -280,7 +280,6 @@ export default {
           classId: "2",
         },
       }).then((res) => {
-        console.log(res.data);
         this.companys = res.data;
       });
     },
