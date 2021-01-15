@@ -3,7 +3,7 @@
 		<el-header height="100" class="my-header">
 			<div>
 				<el-form label-width="120px" :inline="true" :model="form">
-					<el-form-item label="统计对象">
+					<el-form-item label="统计对象1">
 						<el-select v-model="form.bankCode" @change="getChildBank" placeholder="请选择总行">
 							<el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
 						</el-select>
