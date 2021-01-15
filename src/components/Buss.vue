@@ -3,15 +3,15 @@
 		<el-header height="100" class="my-header">
 			<div>
 				<el-form label-width="120px" :inline="true" :model="form">
-					<el-form-item label="统计对象">
-						<el-select v-model="form.bankCode" placeholder="请选择银行">
-							<el-option label="区域一" value="1"></el-option>
-							<el-option label="区域二" value="2"></el-option>
+					<el-form-item label="统计对象1">
+						<el-select v-model="form.bankCode" @change="getChildBank" placeholder="请选择总行">
+							<el-option v-for="bank in banks" :key="bank.bankCode" :label="bank.bankName" :value="bank.bankCode"></el-option>
 						</el-select>
-
-						<el-select v-model="form.company" placeholder="请选择机构">
-							<el-option label="上海" value="shanghai"></el-option>
-							<el-option label="区域二" value="beijing"></el-option>
+						<el-select v-model="form.company" @change="getChildCompanys" :disabled="disabled" clearable placeholder="请选择分公司">
+							<el-option v-for="com in companys" :key="com.organId" :label="com.abbrName" :value="com.organId"></el-option>
+						</el-select>
+						<el-select v-model="form.childCompany" :disabled="childDisabled" clearable placeholder="请选择机构">
+							<el-option v-for="com in childCompanys" :key="com.organId" :label="com.abbrName" :value="com.organId"></el-option>
 						</el-select>
 					</el-form-item>
 
@@ -33,13 +33,13 @@
 					</el-form-item>
 
 					<el-form-item label="销售渠道">
-						<el-radio v-model="form.sellPlatform" label="1">全部</el-radio>
-						<el-radio v-model="form.sellPlatform" label="2">柜面</el-radio>
+						<el-radio v-model="form.sellPlatform" label="0">全部</el-radio>
+						<el-radio v-model="form.sellPlatform" label="1">柜面</el-radio>
 						<el-radio v-model="form.sellPlatform" label="3">网上银行</el-radio>
 						<el-radio v-model="form.sellPlatform" label="4">银行呼叫中心</el-radio>
 						<el-radio v-model="form.sellPlatform" label="5">自助终端</el-radio>
-						<el-radio v-model="form.sellPlatform" label="6">手机</el-radio>
-						<el-radio v-model="form.sellPlatform" label="7">移动营销</el-radio>
+						<el-radio v-model="form.sellPlatform" label="7">手机</el-radio>
+						<el-radio v-model="form.sellPlatform" label="8">移动营销</el-radio>
 					</el-form-item>
 				</el-form>
 
@@ -122,6 +122,10 @@
 				},
 				tableData: [],
 				productInfos: [],
+				banks: [],
+				childBanks: [],
+				companys: [],
+				childCompanys: []
 			};
 		},
 		methods: {
@@ -175,7 +179,84 @@
 				const diff = date2.getTime() - date1.getTime(); //目标时间减去当前时间
 				const diffDate = diff / (24 * 60 * 60 * 1000);// eslint-disable-line no-unused-vars	
 				return	diffDate;
+			},
+			getFirstLevelBank() {
+				this.$http({
+					method: "post",
+					url: "/buss-process/api/bank/v1/find",
+					data: {
+						bankClass: "1",
+					},
+				}).then((res) => {
+					console.log(res.data);
+					this.banks = res.data;
+				});
+			},
+			getChildBank() {
+				this.$http({
+					method: "post",
+					url: "/buss-process/api/bank/v1/find",
+					data: {
+						branchBank: this.form.bankCode,
+						bankClass: "2",
+					},
+				}).then((res) => {
+					console.log(res.data);
+					this.childBanks = res.data;
+				});
+			},
+			getCompanys() {
+				this.$http({
+					method: "post",
+					url: "/buss-process/api/companyOrgan/v1/find",
+					data: {
+						classId: "2",
+					},
+				}).then((res) => {
+					console.log(res.data);
+					this.companys = res.data;
+				});
+			},
+			getChildCompanys() {
+				this.$http({
+					method: "post",
+					url: "/buss-process/api/companyOrgan/v1/find",
+					data: {
+						parentId: this.form.company,
+					},
+				}).then((res) => {
+					console.log(res.data);
+					this.childCompanys = res.data;
+				});
+			},
+			findCompanyOrgan(){
+				this.$http({
+					method:"post",
+					url:"/buss-process/api/companyOrgan/v1/findByOrganId"
+				}).then((res) =>{
+					console.log(res.data);
+					if(res.data.classId===1){
+						this.getCompanys();
+					}else if(res.data.classId===2){
+						this.companys=[res.data];
+						this.form.company=res.data.organId;
+						this.findAllCompanyOrgan(this.form.company);
+						this.disabled=true;
+					}else{
+						this.form.childCompany=res.data.organId;
+						this.childCompanys=[res.data];
+						this.findByParentId(res.data.parentId);
+						this.disabled=true;
+						this.childDisabled=true;
+					}
+			
+				})
 			}
+		},
+		mounted() {
+			this.getFirstLevelBank();
+			//this.getCompanys();
+			this.findCompanyOrgan();
 		},
 	};
 </script>

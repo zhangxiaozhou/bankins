@@ -90,7 +90,11 @@ export default {
 
           let userInfo = jwtDecode(token);
           sessionStorage.setItem("user", userInfo.sub);
+<<<<<<< HEAD
           sessionStorage.setItem("userName",userInfo.realName);
+=======
+          sessionStorage.setItem("userName", userInfo.realName);
+>>>>>>> 26cbc3b827392b25c7a5b5455b89a28bfc8f83f6
           console.log(userInfo)
 
           this.$router.push("/");

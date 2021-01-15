@@ -9,10 +9,8 @@
               <img :src="logo"
                    class="logo" />
               <h1 class="sys-name">太平人寿银保通系统</h1>
-            </div>
-          </el-col>
-          <el-col :span="6"
-                  :offset="10">
+            </div></el-col>
+          <el-col :span="6"  :offset="10">
             <div class="user-info">{{userName}}</div>
           </el-col>
         </el-row>
@@ -77,13 +75,13 @@ export default {
   name: "Bank",
   data () {
     return {
-      logo:logo,
+      logo: logo,
       menus:[],
       userName:""
     }
   },
-  mounted () {
-    this.userName=sessionStorage.getItem("userName")
+  mounted(){
+    this.userName=sessionStorage.getItem("userName");
     this.$http({
               method:"get",
               url:"/buss-process/api/rolePrimission/v1/rolePrimission"
