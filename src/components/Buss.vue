@@ -316,7 +316,7 @@ export default {
       }).then((res) => {
         console.log(res.data);
         this.form.company = res.data.organId;
-        this.companys = [res.data]
+        this.companys = [res.data];
       })
     },
     findAllCompanyOrgan (organId) {
