@@ -171,6 +171,8 @@ export default {
     return {
       labelPosition: "right",
       dialogTableVisible: false,
+      disabled: false,
+      childDisabled: false,
       show: false,
       total: 0,
       form: {
@@ -291,8 +293,8 @@ export default {
         },
       }).then((res) => {
         console.log(res.data);
-        this.childCompanys = res.data;
         this.form.childCompany = "";
+        this.childCompanys = res.data;
         this.show = true
       });
     },
@@ -318,7 +320,31 @@ export default {
           this.childDisabled = true;
           this.show = true;
         }
-
+      })
+    },
+    findByParentId (parentId) {
+      this.$http({
+        method: "post",
+        url: "/buss-process/api/companyOrgan/v1/findByParentId",
+        params: {
+          parentId: parentId
+        }
+      }).then((res) => {
+        console.log(res.data);
+        this.form.company = res.data.organId
+        this.companys = [res.data]
+      })
+    },
+    findAllCompanyOrgan (organId) {
+      this.$http({
+        method: "post",
+        url: "/buss-process/api/companyOrgan/v1/find",
+        data: {
+          parentId: organId
+        }
+      }).then((res) => {
+        console.log(res.data);
+        this.childCompanys = res.data;
       })
     }
   },
