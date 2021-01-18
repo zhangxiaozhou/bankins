@@ -119,18 +119,7 @@ export default {
         resource: "",
         desc: "",
       },
-      tableData: [
-        {
-          trans: "1001",
-          bank: "中信银行",
-          zone: "  ",
-          polNo: "1000000311",
-          transDate: "2020-01-01",
-          transCode: "投保",
-          state: "成功",
-          errMsg: "",
-        }
-      ]
+      tableData: []
     };
   },
   methods: {

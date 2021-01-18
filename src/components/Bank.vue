@@ -13,7 +13,8 @@
           </el-col>
           <el-col :span="6"
                   :offset="10">
-            <div class="user-info">{{userName}}</div>
+            <div class="user-info">{{userName}}&nbsp;&nbsp;&nbsp;<el-link  :underline="false" @click="logout"><span style="font-size: medium;">[退出]</span></el-link></div>
+	
           </el-col>
         </el-row>
       </el-header>
@@ -81,6 +82,12 @@ export default {
       menus: [],
       userName: ""
     }
+  },
+  methods:{
+    logout(){
+		sessionStorage.removeItem("token");
+		this.$router.push("/login");
+	},
   },
   mounted () {
     this.userName = sessionStorage.getItem("userName");
