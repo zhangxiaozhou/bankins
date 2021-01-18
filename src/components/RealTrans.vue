@@ -19,10 +19,9 @@
 						<el-input v-model="form.sendCode"></el-input>
 					</el-form-item>
 
-					<el-button type="primary" @click="onSubmit">查询</el-button>
 				</el-form>
 
-				<el-form label-width="100px" :inline="true" :model="form">
+				<el-form label-width="120px" :inline="true" :model="form">
 					<el-form-item label="交易科目">
 						<el-select v-model="form.transCode" placeholder="请选择科目">
 							<el-option label="新契约投保" value="apply"></el-option>
@@ -46,8 +45,10 @@
 					<el-form-item label="交易日期">
 						<el-date-picker type="date" placeholder="开始日期" v-model="form.beginTransDate"></el-date-picker>
 						<el-date-picker type="date" placeholder="截止日期" v-model="form.endTransDate"></el-date-picker>
-
+						
 					</el-form-item>
+					
+					<el-button type="primary" @click="onSubmit">查询</el-button>
 				</el-form>
 
 
@@ -73,7 +74,7 @@
 				</el-table>
 				<div class="block" style="margin-left:30%">
 					<el-pagination @current-change="handleCurrentChange" background :current-page="form.currentPage" :page-sizes="[10]"
-					:page-size="form.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total">
+					:page-size="form.pageSize" layout="total, sizes, prev, pager, next, jumper" :total="total" v-if="total>0">
 					</el-pagination>
 				</div>
 			</div>

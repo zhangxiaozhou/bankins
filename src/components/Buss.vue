@@ -90,7 +90,7 @@
                       label="1">已承保</el-radio>
           </el-form-item>
           <span class="space"></span>
-          <el-button @click="onSubmit">查询</el-button>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
         </el-form>
       </div>
     </el-header>
@@ -129,7 +129,8 @@
                          :page-sizes="[10]"
                          :page-size="form.size"
                          layout="total, sizes, prev, pager, next, jumper"
-                         :total="total">
+                         :total="total"
+                         v-if="total>0">
           </el-pagination>
         </div>
       </div>

@@ -13,7 +13,10 @@
           </el-col>
           <el-col :span="6"
                   :offset="10">
-            <div class="user-info">{{userName}}&nbsp;&nbsp;&nbsp;<el-link  :underline="false" @click="logout"><span style="font-size: medium;">[退出]</span></el-link></div>
+            <div style="float: right;" >
+				<span style="margin-right: 30px;" class="user-info">{{userName}}，欢迎您</span>
+				<span @click="logout" class="user-info logout-btn" >[退出]</span>
+			</div>
 	
           </el-col>
         </el-row>
@@ -140,5 +143,10 @@ export default {
 .menu {
   height: 100%;
 }
+
+.logout-btn{
+	cursor: pointer;
+}
+
 </style>
 

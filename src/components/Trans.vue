@@ -61,7 +61,7 @@
               <el-input v-model="form.name"></el-input>
             </el-form-item>
 
-            <el-button @click="onSubmit">查询</el-button>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
           </el-form-item>
         </el-form>
       </div>
