@@ -84,7 +84,8 @@
                        @current-change="handleCurrentChange"
                        :current-page="form.page"
                        :page-size="form.size"
-                       :total="total">
+                       :total="total"
+                       v-if="total>0">
         </el-pagination>
       </div>
     </el-main>
@@ -163,6 +164,7 @@ export default {
   name: 'ProductCodeMapping',
   data () {
     return {
+      loading:false,
       form: {
         page: 1,
         size: 10,
@@ -223,10 +225,12 @@ export default {
         url: "/buss-process/api/productConvert/v1/findAll",
         data: this.form
       }).then((res) => {
+        this.loading=true;
         console.log(res.data);
         this.tableData = res.data.content;
         this.total = res.data.totalElements
         console.log(this.total)
+        this.loading=false;
       });
     },
     handleCurrentChange (val) {
