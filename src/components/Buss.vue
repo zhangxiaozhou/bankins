@@ -159,6 +159,7 @@ export default {
       childDisabled: false,
       show: false,
       total: 0,
+      loading: false,
       form: {
         bankCode: "",
         company: "",
@@ -167,8 +168,8 @@ export default {
         policyCode: "",
         sellPlatform: "",
         isAccept: "",
-        startTime: "2020-11-10",
-        endTime: "2020-11-15",
+        startTime: "",
+        endTime: "",
         size: 10,
         page: 1
       },
@@ -197,6 +198,7 @@ export default {
         Message.error('投保日期范围不能超过一周');
         return;
       }
+      this.loading=true;
       this.$http({
         method: "post",
         url: "/buss-process/api/buss/v1/query",
@@ -205,6 +207,7 @@ export default {
 		console.log(res.data.content);
         this.tableData = res.data.content;
         this.total = res.data.totalElements;
+        this.loading=false;
       }).catch(err => {
         Message.error('查询失败' + err);
       });
