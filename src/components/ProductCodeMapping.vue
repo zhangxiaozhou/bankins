@@ -147,7 +147,7 @@
       <el-form>
         <el-form-item>
           <el-button type="primary"
-                     @click="saveProdConvert()">确定</el-button>
+                     @click="saveProdConvert(ruleForm)">确定</el-button>
           <el-button type="primary"
                      @click="cancheProdConvert()">取消</el-button>
         </el-form-item>
@@ -262,24 +262,30 @@ export default {
       }
       this.dialogForm = true;
     },
-    saveProdConvert () {
-      this.$http({
-        method: "post",
-        url: "/buss-process/api/productConvert/v1/save",
-        data: this.ruleForm
-      }).then((res) => {
-        console.log(res);
-        if (res.data.code === "0") {
-          this.$message({
-            message: "保存成功",
-            type: "success"
-          });
-          this.getList();
-          this.dialogForm = false
-        } else if (res.data.code === "1") {
-          this.$message.error(res.data.msg);
+    saveProdConvert (formName) {
+      this.$$refs[formName].validate((valid) => {
+        if (valid) {
+          this.$http({
+            method: "post",
+            url: "/buss-process/api/productConvert/v1/save",
+            data: this.ruleForm
+          }).then((res) => {
+            console.log(res);
+            if (res.data.code === "0") {
+              this.$message({
+                message: "保存成功",
+                type: "success"
+              });
+              this.getList();
+              this.dialogForm = false
+            } else if (res.data.code === "1") {
+              this.$message.error(res.data.msg);
+            } else {
+              this.$message.error("系统内部异常");
+            }
+          })
         } else {
-          this.$message.error("系统内部异常");
+          return false;
         }
       })
     },
