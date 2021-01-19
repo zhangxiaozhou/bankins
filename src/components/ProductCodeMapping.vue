@@ -164,7 +164,7 @@ export default {
   name: 'ProductCodeMapping',
   data () {
     return {
-      loading:false,
+      loading: false,
       form: {
         page: 1,
         size: 10,
@@ -225,12 +225,12 @@ export default {
         url: "/buss-process/api/productConvert/v1/findAll",
         data: this.form
       }).then((res) => {
-        this.loading=true;
+        this.loading = true;
         console.log(res.data);
         this.tableData = res.data.content;
         this.total = res.data.totalElements
         console.log(this.total)
-        this.loading=false;
+        this.loading = false;
       });
     },
     handleCurrentChange (val) {
