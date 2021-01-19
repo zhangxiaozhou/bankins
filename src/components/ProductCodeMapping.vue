@@ -263,17 +263,17 @@ export default {
         data: this.ruleForm
       }).then((res) => {
         console.log(res);
-        if (res.status === 200) {
-
+        if (res.data.code === "0") {
           this.$message({
             message: "保存成功",
             type: "success"
           });
           this.getList();
           this.dialogForm = false
+        } else if (res.data.code === "1") {
+          this.$message.console.error(res.data.msg);
         } else {
-          this.$message.console.error("保存失败");
-          this.dialogForm = false
+          this.$message.console.error("系统内部异常");
         }
       })
     },
