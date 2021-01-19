@@ -4,6 +4,7 @@
                class="my-header">
       <div>
         <el-form label-width="120px"
+                 :inline="true"
                  :model="form">
           <el-form-item label="银行代码">
             <el-select v-model="form.bank"
@@ -26,7 +27,9 @@
             </el-select>
           </el-form-item>
         </el-form>
-        <el-form>
+        <el-form label-width="120px"
+                 :inline="true"
+                 v-model="form">
           <el-form-item label="内部险种代码">
             <el-input v-model="form.innerCode"></el-input>
           </el-form-item>
@@ -34,7 +37,9 @@
             <el-input v-model="form.outerCode"></el-input>
           </el-form-item>
         </el-form>
-        <el-form>
+        <el-form label-width="120px"
+                 :inline="true"
+                 v-model="form">
           <el-form-item label="名称">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
@@ -61,7 +66,8 @@
           <el-table-column prop="bank"
                            label="银行代码"> </el-table-column>
           <el-table-column prop="type"
-                           label="类别">{{getTypeName(scope.row.type)}}</el-table-column>
+                           label="类别"
+                           :formatter="getTypeName"></el-table-column>
           <el-table-column prop="innerCode"
                            label="内部险种代码"> </el-table-column>
           <el-table-column prop="outerCode"
@@ -315,10 +321,10 @@ export default {
         });
       });
     },
-    getTypeName (type) {
+    getTypeName (row) {
       for (const key in this.types) {
-        if (key.code == type) {
-          return key.name
+        if (this.types[key].code == row.type) {
+          return this.types[key].name
         }
       }
       return ""
