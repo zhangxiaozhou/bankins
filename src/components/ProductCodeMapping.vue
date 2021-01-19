@@ -29,7 +29,7 @@
         </el-form>
         <el-form label-width="120px"
                  :inline="true"
-                 v-model="form">
+                 :model="form">
           <el-form-item label="内部险种代码">
             <el-input v-model="form.innerCode"></el-input>
           </el-form-item>
@@ -39,7 +39,7 @@
         </el-form>
         <el-form label-width="120px"
                  :inline="true"
-                 v-model="form">
+                 :model="form">
           <el-form-item label="名称">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
