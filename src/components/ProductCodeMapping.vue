@@ -277,9 +277,9 @@ export default {
           this.getList();
           this.dialogForm = false
         } else if (res.data.code === "1") {
-          this.$message.console.error(res.data.msg);
+          this.$message.error(res.data.msg);
         } else {
-          this.$message.console.error("系统内部异常");
+          this.$message.error("系统内部异常");
         }
       })
     },
