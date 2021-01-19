@@ -19,20 +19,22 @@
             <el-select v-model="form.type"
                        placeholder="请选择类别"
                        clearable>
-              <el-option label="险种"
-                         value="1"></el-option>
-              <el-option label="险种组合"
-                         value="2"></el-option>
-              <el-option label="险种组合(银保通)"
-                         value="3"></el-option>
+              <el-option v-for="type in types"
+                         :key="type.code"
+                         :label="type.name"
+                         :value="type.code"></el-option>
             </el-select>
           </el-form-item>
+        </el-form>
+        <el-form>
           <el-form-item label="内部险种代码">
             <el-input v-model="form.innerCode"></el-input>
           </el-form-item>
           <el-form-item label="外部险种代码">
             <el-input v-model="form.outerCode"></el-input>
           </el-form-item>
+        </el-form>
+        <el-form>
           <el-form-item label="名称">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
@@ -59,7 +61,7 @@
           <el-table-column prop="bank"
                            label="银行代码"> </el-table-column>
           <el-table-column prop="type"
-                           label="类别"><template slot-scope="scope">{{scope.row.type=== 1 ? "PRODUCT":scope.row.type===2?"PACKAGE":"BANKINS_PACKAGE"}}</template></el-table-column>
+                           label="类别">{{getTypeName(scope.row.type)}}</el-table-column>
           <el-table-column prop="innerCode"
                            label="内部险种代码"> </el-table-column>
           <el-table-column prop="outerCode"
@@ -115,12 +117,10 @@
           <el-select v-model="ruleForm.type"
                      placeholder="请选择类别"
                      clearable>
-            <el-option label="险种"
-                       value="1"></el-option>
-            <el-option label="险种组合"
-                       value="2"></el-option>
-            <el-option label="险种组合(银保通)"
-                       value="3"></el-option>
+            <el-option v-for="type in types"
+                       :key="type.code"
+                       :label="type.name"
+                       :value="type.code"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="内部险种代码"
@@ -183,6 +183,13 @@ export default {
         outerCode: "",
         name: ""
       },
+      types: [{
+        code: 1, name: "险种"
+      }, {
+        code: 2, name: "险种组合"
+      }, {
+        code: 3, name: "险种组合(银保通)"
+      }],
       rule: {
         bank: [
           { required: true, message: "请选择银行", trigger: 'change' }
@@ -257,6 +264,7 @@ export default {
       }).then((res) => {
         console.log(res);
         if (res.status === 200) {
+
           this.$message({
             message: "保存成功",
             type: "success"
@@ -306,6 +314,14 @@ export default {
           });
         });
       });
+    },
+    getTypeName (type) {
+      for (const key in this.types) {
+        if (key.code == type) {
+          return key.name
+        }
+      }
+      return ""
     },
     clear () {
       this.ruleForm.id = "";
