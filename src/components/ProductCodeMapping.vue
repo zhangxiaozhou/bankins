@@ -147,7 +147,7 @@
       <el-form>
         <el-form-item>
           <el-button type="primary"
-                     @click="saveProdConvert(ruleForm)">确定</el-button>
+                     @click="saveProdConvert('ruleForm')">确定</el-button>
           <el-button type="primary"
                      @click="cancheProdConvert()">取消</el-button>
         </el-form-item>
@@ -263,7 +263,7 @@ export default {
       this.dialogForm = true;
     },
     saveProdConvert (formName) {
-      this.$$refs[formName].validate((valid) => {
+      this.$refs[formName].validate((valid) => {
         if (valid) {
           this.$http({
             method: "post",
