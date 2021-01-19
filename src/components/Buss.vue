@@ -7,14 +7,6 @@
                  :inline="true"
                  :model="form">
           <el-form-item label="统计对象1">
-            <el-select v-model="form.bankCode"
-                       @change="getChildBank"
-                       placeholder="请选择总行">
-              <el-option v-for="bank in banks"
-                         :key="bank.bankCode"
-                         :label="bank.bankName"
-                         :value="bank.bankCode"></el-option>
-            </el-select>
             <el-select v-model="form.company"
                        @change="getChildCompanys"
                        :disabled="disabled"
@@ -34,6 +26,14 @@
                          :key="com.organId"
                          :label="com.abbrName"
                          :value="com.organId"></el-option>
+            </el-select>
+            <el-select v-model="form.bankCode"
+                       @change="getChildBank"
+                       placeholder="请选择总行">
+              <el-option v-for="bank in banks"
+                         :key="bank.bankCode"
+                         :label="bank.bankName"
+                         :value="bank.bankCode"></el-option>
             </el-select>
           </el-form-item>
 
