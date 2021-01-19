@@ -40,11 +40,11 @@
           <el-form-item label="投保日期">
             <el-date-picker type="date"
                             placeholder="开始日期"
-                            v-model="form.beginTransDate"></el-date-picker>
+                            v-model="form.startTime"></el-date-picker>
 
             <el-date-picker type="date"
                             placeholder="截止日期"
-                            v-model="form.endTransDate"></el-date-picker>
+                            v-model="form.endTime"></el-date-picker>
           </el-form-item>
         </el-form>
 
@@ -62,7 +62,7 @@
 
           <el-form-item label="销售渠道">
             <el-radio v-model="form.sellPlatform"
-                      label="0">全部</el-radio>
+                      label="">全部</el-radio>
             <el-radio v-model="form.sellPlatform"
                       label="1">柜面</el-radio>
             <el-radio v-model="form.sellPlatform"
@@ -82,15 +82,16 @@
                  :inline="true"
                  :model="form">
           <el-form-item label="承保与否">
-            <el-radio v-model="form.isAccept"
-                      label="0">全部</el-radio>
-            <el-radio v-model="form.isAccept"
-                      label="2">未承保</el-radio>
-            <el-radio v-model="form.isAccept"
+            <el-radio v-model="form.policyStatus"
+                      label="">全部</el-radio>
+            <el-radio v-model="form.policyStatus"
+                      label="0">未承保</el-radio>
+            <el-radio v-model="form.policyStatus"
                       label="1">已承保</el-radio>
           </el-form-item>
           <span class="space"></span>
-          <el-button @click="onSubmit">查询</el-button>
+          <el-button type="primary"
+                     @click="onSubmit">查询</el-button>
         </el-form>
       </div>
     </el-header>
@@ -99,43 +100,27 @@
       <div>
         <el-table :data="tableData"
                   style="width: 100%">
-          <el-table-column prop="sendCode"
+          <el-table-column prop="applyCode"
                            label="投保单号"> </el-table-column>
           <el-table-column prop="policyCode"
                            label="保单号"> </el-table-column>
-          <el-table-column prop="realName"
+          <el-table-column prop="appName"
                            label="投保人"> </el-table-column>
-          <el-table-column prop="applyTime"
+          <el-table-column prop="appTime"
                            label="投保日期"> </el-table-column>
           <el-table-column prop="acceptTime"
                            label="承保日期"> </el-table-column>
-          <el-table-column label="险种信息"
-                           align="center"
-                           min-width="100">
-            <!-- eslint-disable-next-line -->
-            <template slot-scope="scope">
-              <el-button type="text"
-                         @click="showProductInfos(scope.$index, scope.row)">详情</el-button>
-            </template>
-          </el-table-column>
-          <el-table-column prop="prem"
+          <el-table-column prop="productAbbr"
+                           label="险种名称"> </el-table-column>
+          <el-table-column prop="periodPrem"
+                           label="险种保费"> </el-table-column>
+          <el-table-column prop="periodPrem"
                            label="保费"> </el-table-column>
-          <el-table-column prop="zone"
+          <el-table-column prop="bankCode"
                            label="网点代码"> </el-table-column>
-          <el-table-column prop="zoneName"
+          <el-table-column prop="bankName"
                            label="网点名称"> </el-table-column>
         </el-table>
-        <el-dialog title="险种详情"
-                   :visible.sync="dialogTableVisible">
-          <el-table :data="productInfos">
-            <el-table-column property="productName"
-                             label="险种名称"
-                             width="150"></el-table-column>
-            <el-table-column property="productPrem"
-                             label="险种保费"
-                             width="200"></el-table-column>
-          </el-table>
-        </el-dialog>
         <div class="block"
              style="margin-left:30%">
           <el-pagination @size-change="handleSizeChange"
@@ -145,7 +130,8 @@
                          :page-sizes="[10]"
                          :page-size="form.size"
                          layout="total, sizes, prev, pager, next, jumper"
-                         :total="total">
+                         :total="total"
+                         v-if="total>0">
           </el-pagination>
         </div>
       </div>
@@ -175,6 +161,7 @@ export default {
       childDisabled: false,
       show: false,
       total: 0,
+      loading: false,
       form: {
         bankCode: "",
         company: "",
@@ -183,13 +170,12 @@ export default {
         policyCode: "",
         sellPlatform: "",
         isAccept: "",
-        beginTransDate: "",
-        endTransDate: "",
+        startTime: "",
+        endTime: "",
         size: 10,
         page: 1
       },
       tableData: [],
-      productInfos: [],
       banks: [],
       childBanks: [],
       companys: [],
@@ -202,25 +188,28 @@ export default {
         Message.error('请选择机构');
         return;
       }
-      if (this.form.beginTransDate == null || this.form.beginTransDate == '') {
+      if (this.form.startTime == null || this.form.startTime == '') {
         Message.error('请选择投保日期开始时间');
         return;
       }
-      if (this.form.endTransDate == null || this.form.endTransDate == '') {
+      if (this.form.endTime == null || this.form.endTime == '') {
         Message.error('请选择投保日期截止时间');
         return;
       }
-      if (this.dateDiffer(this.form.beginTransDate, this.form.endTransDate) > 7) {
+      if (this.dateDiffer(this.form.startTime, this.form.endTime) > 7) {
         Message.error('投保日期范围不能超过一周');
         return;
       }
+      this.loading = true;
       this.$http({
         method: "post",
         url: "/buss-process/api/buss/v1/query",
         data: this.form
       }).then((res) => {
+        console.log(res.data.content);
         this.tableData = res.data.content;
         this.total = res.data.totalElements;
+        this.loading = false;
       }).catch(err => {
         Message.error('查询失败' + err);
       });
@@ -281,7 +270,6 @@ export default {
           classId: "2",
         },
       }).then((res) => {
-        console.log(res.data);
         this.companys = res.data;
       });
     },
@@ -332,8 +320,8 @@ export default {
         }
       }).then((res) => {
         console.log(res.data);
-        this.form.company = res.data.organId
-        this.companys = [res.data]
+        this.form.company = res.data.organId;
+        this.companys = [res.data];
       })
     },
     findAllCompanyOrgan (organId) {
@@ -351,7 +339,6 @@ export default {
   },
   mounted () {
     this.getFirstLevelBank();
-    //this.getCompanys();
     this.findCompanyOrgan();
   },
 };

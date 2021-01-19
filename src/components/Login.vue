@@ -49,8 +49,8 @@ export default {
   data () {
     return {
       user: {
-        username: 'shengbo@tpl.cntaiping.com',
-        password: '6:0TvEly'
+        username: '',
+        password: ''
       }
     }
   },

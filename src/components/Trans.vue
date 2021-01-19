@@ -61,7 +61,8 @@
               <el-input v-model="form.name"></el-input>
             </el-form-item>
 
-            <el-button @click="onSubmit">查询</el-button>
+            <el-button type="primary"
+                       @click="onSubmit">查询</el-button>
           </el-form-item>
         </el-form>
       </div>
@@ -119,18 +120,7 @@ export default {
         resource: "",
         desc: "",
       },
-      tableData: [
-        {
-          trans: "1001",
-          bank: "中信银行",
-          zone: "  ",
-          polNo: "1000000311",
-          transDate: "2020-01-01",
-          transCode: "投保",
-          state: "成功",
-          errMsg: "",
-        }
-      ]
+      tableData: []
     };
   },
   methods: {

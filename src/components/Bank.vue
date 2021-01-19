@@ -13,7 +13,11 @@
           </el-col>
           <el-col :span="6"
                   :offset="10">
-            <div class="user-info">{{userName}}</div>
+            <div style="float: right;" >
+				<span style="margin-right: 30px;" class="user-info">{{userName}}，欢迎您</span>
+				<span @click="logout" class="user-info logout-btn" >[退出]</span>
+			</div>
+	
           </el-col>
         </el-row>
       </el-header>
@@ -82,6 +86,12 @@ export default {
       userName: ""
     }
   },
+  methods:{
+    logout(){
+		sessionStorage.removeItem("token");
+		this.$router.push("/login");
+	},
+  },
   mounted () {
     this.userName = sessionStorage.getItem("userName");
     this.$http({
@@ -133,5 +143,10 @@ export default {
 .menu {
   height: 100%;
 }
+
+.logout-btn{
+	cursor: pointer;
+}
+
 </style>
 
