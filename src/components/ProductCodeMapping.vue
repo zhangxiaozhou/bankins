@@ -193,8 +193,6 @@ export default {
         code: 1, name: "险种"
       }, {
         code: 2, name: "险种组合"
-      }, {
-        code: 3, name: "险种组合(银保通)"
       }],
       rule: {
         bank: [
