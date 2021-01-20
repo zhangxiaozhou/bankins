@@ -213,7 +213,7 @@ export default {
           { required: true, message: "请输入产品名称", trigger: "blur" }
         ]
       },
-      total: 1,
+      total: 0,
       tableData: [],
       banks: [],
       dialogForm: false
@@ -290,7 +290,6 @@ export default {
       })
     },
     cancheProdConvert () {
-      this.getList();
       this.dialogForm = false
     },
     updateProdConvert (val) {
