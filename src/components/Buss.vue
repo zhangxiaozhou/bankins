@@ -213,12 +213,16 @@ export default {
              return;
            }
 		}
-
+      this.tableData=[];
       this.$http({
         method: "post",
         url: "/buss-process/api/buss/v1/query",
         data: this.form
       }).then((res) => {
+		if(res.data==''){
+			Message.info("查无数据");
+			return;
+		}
         this.tableData = res.data.content;
         this.total = res.data.totalElements;
       }).catch(err => {
@@ -256,7 +260,6 @@ export default {
           bankClass: "1",
         },
       }).then((res) => {
-        console.log(res.data);
         this.banks = res.data;
       });
     },
@@ -288,7 +291,6 @@ export default {
           parentId: this.form.company,
         },
       }).then((res) => {
-        console.log(res.data);
         this.form.childCompany = "";
         this.childCompanys = res.data;
         this.show = true
@@ -326,7 +328,6 @@ export default {
           parentId: parentId
         }
       }).then((res) => {
-        console.log(res.data);
         this.form.company = res.data.organId;
         this.companys = [res.data];
       })
@@ -339,7 +340,6 @@ export default {
           parentId: organId
         }
       }).then((res) => {
-        console.log(res.data);
         this.childCompanys = res.data;
       })
     }
