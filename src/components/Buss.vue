@@ -6,7 +6,7 @@
         <el-form label-width="120px"
                  :inline="true"
                  :model="form">
-          <el-form-item label="统计对象1">
+          <el-form-item label="统计对象">
             <el-select v-model="form.company"
                        @change="getChildCompanys"
                        :disabled="disabled"
@@ -35,6 +35,15 @@
                          :label="bank.bankName"
                          :value="bank.bankCode"></el-option>
             </el-select>
+            <el-select v-model="form.childBankCode"
+                       v-if="showChildBank"   
+                       clearable
+                       placeholder="请选择分行">
+              <el-option v-for="bank in childBanks"
+                         :key="bank.bankCode"
+                         :label="bank.bankName"
+                         :value="bank.bankCode"></el-option>
+			</el-select>
           </el-form-item>
 
           <el-form-item label="投保日期">
@@ -67,8 +76,6 @@
                       label="1">柜面</el-radio>
             <el-radio v-model="form.sellPlatform"
                       label="3">网上银行</el-radio>
-            <el-radio v-model="form.sellPlatform"
-                      label="4">银行呼叫中心</el-radio>
             <el-radio v-model="form.sellPlatform"
                       label="5">自助终端</el-radio>
             <el-radio v-model="form.sellPlatform"
@@ -110,6 +117,8 @@
                            label="投保日期"> </el-table-column>
           <el-table-column prop="acceptTime"
                            label="承保日期"> </el-table-column>
+          <el-table-column prop="policyStatus"
+                           label="保单状态"> </el-table-column>
           <el-table-column prop="productAbbr"
                            label="险种名称"> </el-table-column>
           <el-table-column prop="periodPrem"
@@ -160,6 +169,7 @@ export default {
       disabled: false,
       childDisabled: false,
       show: false,
+      showChildBank: false,
       total: 0,
       loading: false,
       form: {
@@ -172,6 +182,7 @@ export default {
         isAccept: "",
         startTime: "",
         endTime: "",
+        childBankCode:"",
         size: 10,
         page: 1
       },
@@ -184,32 +195,32 @@ export default {
   },
   methods: {
     onSubmit () {
-      if (this.form.company == null || this.form.company == '') {
-        Message.error('请选择机构');
-        return;
-      }
-      if (this.form.startTime == null || this.form.startTime == '') {
-        Message.error('请选择投保日期开始时间');
-        return;
-      }
-      if (this.form.endTime == null || this.form.endTime == '') {
-        Message.error('请选择投保日期截止时间');
-        return;
-      }
-      if (this.dateDiffer(this.form.startTime, this.form.endTime) > 7) {
-        Message.error('投保日期范围不能超过一周');
-        return;
-      }
-      this.loading = true;
+           if (this.form.company == null || this.form.company == '') {
+             Message.error('请选择机构');
+             return;
+           }
+       if(this.form.sendCode=='' && this.form.policyCode==''){
+           if (this.form.startTime == null || this.form.startTime == '') {
+             Message.error('请选择投保日期开始时间');
+             return;
+           }
+           if (this.form.endTime == null || this.form.endTime == '') {
+             Message.error('请选择投保日期截止时间');
+             return;
+           }
+           if (this.dateDiffer(this.form.startTime, this.form.endTime) > 7) {
+             Message.error('投保日期范围不能超过一周');
+             return;
+           }
+		}
+
       this.$http({
         method: "post",
         url: "/buss-process/api/buss/v1/query",
         data: this.form
       }).then((res) => {
-        console.log(res.data.content);
         this.tableData = res.data.content;
         this.total = res.data.totalElements;
-        this.loading = false;
       }).catch(err => {
         Message.error('查询失败' + err);
       });
@@ -251,14 +262,10 @@ export default {
     },
     getChildBank () {
       this.$http({
-        method: "post",
-        url: "/buss-process/api/bank/v1/find",
-        data: {
-          branchBank: this.form.bankCode,
-          bankClass: "2",
-        },
+        method: "get",
+        url: "/buss-process/api/bank/v1/find/getRangeBranch/"+this.form.bankCode,
       }).then((res) => {
-        console.log(res.data);
+        this.showChildBank=true;
         this.childBanks = res.data;
       });
     },
