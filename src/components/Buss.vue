@@ -35,25 +35,18 @@
                          :label="bank.bankName"
                          :value="bank.bankCode"></el-option>
             </el-select>
-            <el-select v-model="form.childBankCode"
-                       v-if="showChildBank"   
-                       clearable
-                       placeholder="请选择分行">
-              <el-option v-for="bank in childBanks"
-                         :key="bank.bankCode"
-                         :label="bank.bankName"
-                         :value="bank.bankCode"></el-option>
-			</el-select>
           </el-form-item>
 
           <el-form-item label="投保日期">
             <el-date-picker type="date"
                             placeholder="开始日期"
-                            v-model="form.startTime"></el-date-picker>
+                            v-model="form.startTime"
+                            v-elDateFormat></el-date-picker>
 
             <el-date-picker type="date"
                             placeholder="截止日期"
-                            v-model="form.endTime"></el-date-picker>
+                            v-model="form.endTime"
+                            v-elDateFormat></el-date-picker>
           </el-form-item>
         </el-form>
 
@@ -169,7 +162,6 @@ export default {
       disabled: false,
       childDisabled: false,
       show: false,
-      showChildBank: false,
       total: 0,
       loading: false,
       form: {
@@ -182,13 +174,11 @@ export default {
         isAccept: "",
         startTime: "",
         endTime: "",
-        childBankCode:"",
         size: 10,
         page: 1
       },
       tableData: [],
       banks: [],
-      childBanks: [],
       companys: [],
       childCompanys: []
     };
@@ -261,15 +251,6 @@ export default {
         },
       }).then((res) => {
         this.banks = res.data;
-      });
-    },
-    getChildBank () {
-      this.$http({
-        method: "get",
-        url: "/buss-process/api/bank/v1/find/getRangeBranch/"+this.form.bankCode,
-      }).then((res) => {
-        this.showChildBank=true;
-        this.childBanks = res.data;
       });
     },
     getCompanys () {

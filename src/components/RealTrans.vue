@@ -80,10 +80,12 @@
           <el-form-item label="交易日期">
             <el-date-picker type="date"
                             placeholder="开始日期"
-                            v-model="form.beginTransDate"></el-date-picker>
+                            v-model="form.beginTransDate"
+                            v-elDateFormat></el-date-picker>
             <el-date-picker type="date"
                             placeholder="截止日期"
-                            v-model="form.endTransDate"></el-date-picker>
+                            v-model="form.endTransDate"
+                            v-elDateFormat></el-date-picker>
 
           </el-form-item>
 

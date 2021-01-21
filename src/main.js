@@ -6,6 +6,7 @@ import App from './App.vue'
 
 import VueRouter from 'vue-router'
 import routerConfig from './router.config.js'
+import './directive'
 
 import axios from 'axios';
 
