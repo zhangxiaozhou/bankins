@@ -7,11 +7,9 @@ Vue.directive("elDateFormat", {
     const { context: that, data } = vnode;
     const { expression: key } = data.model;
     if (that && that._isVue) {
-      console.log(el);
       const $this = el.children[0];
       $this.onchange = function() {
         let value = $this.value; //中文日期
-        console.log(value);
         if (value.match(/\d{1,}/g) && value.length == 8) {
           value = value.replace(
             /^(\d{4})\D*(\d{1,2})\D*(\d{1,2})\D*/,
