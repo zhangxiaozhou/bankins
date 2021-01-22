@@ -4,7 +4,7 @@
       <el-header height="100"
                  class="my-header">
         <el-row>
-          <el-col :span="8">
+          <el-col :span="10">
             <div class="grid-content bg-purple">
               <img :src="logo"
                    class="logo" />
@@ -12,7 +12,7 @@
             </div>
           </el-col>
           <el-col :span="6"
-                  :offset="10">
+                  :offset="8">
             <div style="float: right;" >
 				<span style="margin-right: 30px;" class="user-info">{{userName}}，欢迎您</span>
 				<span @click="logout" class="user-info logout-btn" >[退出]</span>
@@ -126,10 +126,11 @@ export default {
 
 .sys-name {
   line-height: 50px;
+  font-family: Microsoft YaHei;
   font-size: 24px;
   color: #00479d;
   margin-left: 210px;
-  padding-left: 100px;
+  padding-left: 200px;
   margin: 10px 0 0 20px;
   border-left: 2px solid #00479d;
 }
