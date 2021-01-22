@@ -312,8 +312,11 @@
                       type="textarea"
                       :rows="5"></el-input>
           </el-collapse-item>
-          <el-collapse-item title="错误描述"
+          <el-collapse-item title="健康告知"
                             name="7">
+          </el-collapse-item>
+          <el-collapse-item title="错误描述"
+                            name="8">
             {{this.errMsg}}
           </el-collapse-item>
         </el-collapse>
