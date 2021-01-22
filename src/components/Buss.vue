@@ -90,7 +90,7 @@
           </el-form-item>
           <span class="space"></span>
           <el-button type="primary"
-                     @click="onSubmit">查询</el-button>
+                     @click="search">查询</el-button>
         </el-form>
       </div>
     </el-header>
@@ -183,6 +183,10 @@ export default {
     };
   },
   methods: {
+    search(){
+        this.form.page=1;
+        this.onSubmit();
+    },
     onSubmit () {
            if (this.form.company == null || this.form.company == '') {
              Message.error('请选择机构');

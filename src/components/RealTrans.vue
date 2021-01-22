@@ -90,7 +90,7 @@
           </el-form-item>
 
           <el-button type="primary"
-                     @click="onSubmit">查询</el-button>
+                     @click="search">查询</el-button>
         </el-form>
 
       </div>
@@ -493,6 +493,10 @@ export default {
         this.display = true;
       });
     },
+    search(){
+		this.form.currentPage=1;
+		this.onSubmit();
+	},
     onSubmit () {
       this.tableData = [];
       if (this.form.sendCode == null || this.form.sendCode == '') {
