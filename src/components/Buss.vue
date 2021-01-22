@@ -28,7 +28,6 @@
                          :value="com.organId"></el-option>
             </el-select>
             <el-select v-model="form.bankCode"
-                       @change="getChildBank"
                        placeholder="请选择总行">
               <el-option v-for="bank in banks"
                          :key="bank.bankCode"
@@ -180,7 +179,7 @@ export default {
       tableData: [],
       banks: [],
       companys: [],
-      childCompanys: []
+      childCompanys: [],
     };
   },
   methods: {

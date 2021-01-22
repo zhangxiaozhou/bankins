@@ -129,7 +129,7 @@ export default {
   font-size: 24px;
   color: #00479d;
   margin-left: 210px;
-  padding-left: 10px;
+  padding-left: 100px;
   margin: 10px 0 0 20px;
   border-left: 2px solid #00479d;
 }

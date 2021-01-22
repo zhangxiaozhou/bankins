@@ -113,9 +113,11 @@
             </template>
           </el-table-column>
           <el-table-column prop="bankCode"
-                           label="银行"> </el-table-column>
-          <el-table-column prop="childCompany"
-                           label="地区"> </el-table-column>
+                           label="银行代码"> </el-table-column>
+          <el-table-column prop="zone"
+                           label="地区代码"> </el-table-column>
+          <el-table-column prop="dept"
+                           label="网点代码"> </el-table-column>
           <el-table-column prop="sendCode"
                            label="投保单号"> </el-table-column>
           <el-table-column prop="transDate"
@@ -147,7 +149,7 @@
                  :visible.sync="dialogVisible"
                  width="80%">
 
-        <el-collapse>
+        <el-collapse v-model="activeNames">
           <el-collapse-item title="投保单"
                             name="1">
             <div>
@@ -370,7 +372,8 @@ export default {
       }],
       requestMsg: "",
       responseMsg: "",
-      errMsg: ""
+      errMsg: "",
+      activeNames:['1','2','3','5'] //折叠面板默认显示
     };
   },
 
