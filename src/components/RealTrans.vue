@@ -101,7 +101,7 @@
         <el-table :data="tableData"
                   v-loading="loading"
                   style="width: 100%"
-                  max-height="600"
+                  
                   :row-style="{height: '35px'}"
                   :cell-style="{padding: '7px'}"
                   row-key="transNo">
