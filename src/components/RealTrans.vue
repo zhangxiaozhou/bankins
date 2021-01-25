@@ -312,13 +312,11 @@
                       type="textarea"
                       :rows="5"></el-input>
           </el-collapse-item>
-          <el-collapse-item title="健康告知"
-                            name="7">
-          </el-collapse-item>
           <el-collapse-item title="错误描述"
                             name="8">
-            {{this.errMsg}}
+            {{this.errMsg =="" ? "无" :this.errMsg}}
           </el-collapse-item>
+          <el-row style="font-size: 13px;">健康告知：{{this.policyDetail.healthTag}}</el-row>
         </el-collapse>
       </el-dialog>
     </el-main>
@@ -372,6 +370,7 @@ export default {
         insurantDetail: [],
         beneDetail: [],
         productDetail: [],
+        healthTag:""
       }],
       requestMsg: "",
       responseMsg: "",
@@ -408,6 +407,7 @@ export default {
         this.policyDetail.insurantDetail = res.data.insurants;
         this.policyDetail.beneDetail = res.data.insurants[0].policyBenes;
         this.policyDetail.productDetail = res.data.policyProducts;
+		this.policyDetail.healthTag=res.data.healthNotice;
       }).catch(err => {
         Message.info('查询不到该投保单详情' + err);
       });
@@ -596,7 +596,14 @@ export default {
     },
     convertRate (row) {
       return row.beneRate * 100 + '%';
-    }
+    },
+	converHealthTag(val){
+		if(val =='y'){
+			return '是';
+		}else{
+			return '否';
+		}
+	}
   },
   mounted () {
     this.getFirstLevelBank();
