@@ -31,17 +31,17 @@
                  :inline="true"
                  :model="form">
           <el-form-item label="内部险种代码">
-            <el-input v-model="form.innerCode"></el-input>
+            <el-input v-model.trim="form.innerCode"></el-input>
           </el-form-item>
           <el-form-item label="外部险种代码">
-            <el-input v-model="form.outerCode"></el-input>
+            <el-input v-model.trim="form.outerCode"></el-input>
           </el-form-item>
         </el-form>
         <el-form label-width="120px"
                  :inline="true"
                  :model="form">
           <el-form-item label="名称">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model.trim="form.name"></el-input>
           </el-form-item>
         </el-form>
         <el-form label-width="120px"
@@ -131,15 +131,15 @@
         </el-form-item>
         <el-form-item label="内部险种代码"
                       prop="innerCode">
-          <el-input v-model="ruleForm.innerCode"></el-input>
+          <el-input v-model.trim="ruleForm.innerCode"></el-input>
         </el-form-item>
         <el-form-item label="外部险种代码"
                       prop="outerCode">
-          <el-input v-model="ruleForm.outerCode"></el-input>
+          <el-input v-model.trim="ruleForm.outerCode"></el-input>
         </el-form-item>
         <el-form-item label="名称"
                       prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model.trim="ruleForm.name"></el-input>
         </el-form-item>
         <el-input v-model="ruleForm.id"
                   class="pid"></el-input>
