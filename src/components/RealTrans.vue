@@ -81,10 +81,12 @@
             <el-date-picker type="date"
                             placeholder="开始日期"
                             v-model="form.beginTransDate"
+							:picker-options="pickerOptions0"
                             v-elDateFormat></el-date-picker>
             <el-date-picker type="date"
                             placeholder="截止日期"
                             v-model="form.endTransDate"
+							:picker-options="pickerOptions1"
                             v-elDateFormat></el-date-picker>
 
           </el-form-item>
@@ -316,7 +318,7 @@
                             name="8">
             {{this.errMsg =="" ? "无" :this.errMsg}}
           </el-collapse-item>
-          <el-row style="font-size: 13px;">健康告知：{{this.policyDetail.healthTag}}</el-row>
+          <el-row style="font-size: 13px;">健康告知：{{this.policyDetail.healthTag==null ?"N":this.policyDetail.healthTag}}</el-row>
         </el-collapse>
       </el-dialog>
     </el-main>
@@ -375,7 +377,21 @@ export default {
       requestMsg: "",
       responseMsg: "",
       errMsg: "",
-      activeNames:['1','2','3','5'] //折叠面板默认显示
+      activeNames:['1','2','3','5'] ,//折叠面板默认显示
+      pickerOptions0: {
+        disabledDate: (time) => {
+          if (this.form.endTransDate) {
+            return time.getTime() > Date.now() || time.getTime() > this.form.endTransDate;
+           } else {
+            return time.getTime() > Date.now();
+           }
+        }
+      },
+      pickerOptions1: {
+        disabledDate: (time) => {
+             return time.getTime() < this.form.beginTransDate || time.getTime() > Date.now();
+        }
+      },
     };
   },
 
@@ -500,18 +516,14 @@ export default {
     onSubmit () {
       this.tableData = [];
       if (this.form.sendCode == null || this.form.sendCode == '') {
-        if (this.form.beginTransDate == null || this.form.beginTransDate == '') {
-          Message.error('请选择投保日期开始时间');
-          return;
+        if (this.form.beginTransDate ==""|| this.form.endTransDate=="" || this.form.bankCode=="") {
+            Message.error("总行，投保开始日期，截止日期为必选项");
+            return;
         }
-        if (this.form.endTransDate == null || this.form.endTransDate == '') {
-          Message.error('请选择投保日期截止时间');
-          return;
-        }
-        if (this.dateDiffer(this.form.beginTransDate, this.form.endTransDate) > 7) {
-          Message.error('交易日期范围不能超过一周');
-          return;
-        }
+        if(this.dateDiffer(this.form.beginTransDate,this.form.endTransDate)>7){
+			Message.error("投保开始日期，截止日期范围不能超过一周");
+			return;
+		}
       }
       this.loading = true;
       this.$http({
