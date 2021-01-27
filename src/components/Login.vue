@@ -8,7 +8,7 @@
       <div class="login-form-title">
           <span>太平人寿银保通系统</span>
         </div>
-      <el-card style="width: 400px ;border-radius: 15px;padding-top: 40px;">
+      <el-card style="width: 400px ;border-radius: 15px;padding-top: 50px;font-size:14px">
         
         <table style="margin-left: 30px;border-collapse: collapse;">
           <tr style="border-bottom: 1px solid #419bff;">
@@ -185,15 +185,15 @@ export default {
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .login-btn{
     width: 120px;
     background-color: orange;
     color: #ffffff;
-    font-size: 15px;
+    font-size: 12px;
     border-radius: 25px;
 }
 </style>
