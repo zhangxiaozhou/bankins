@@ -177,6 +177,7 @@ export default {
     border: 0px;
     box-sizing: border-box;
     color: #606266;
+    background-color: #ffffff;
     display: inline-block;
     font-size: inherit;
     height: 40px;
