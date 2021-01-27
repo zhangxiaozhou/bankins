@@ -1,16 +1,17 @@
 <template>
   <div class="login-container">
-    <div class="header-background" :style="backgroundStyle">
+    <div class="login-background" :style="backgroundStyle">
     </div>
     <img :src="logo" class="logo"/>
     <!--flex弹性盒子模型，justify-content：主抽 -->
     <div class="login-form" >
-      <div class="login-form-title">
+      <div style="width: 100%;display: flex;justify-content: center;"><div class="login-form-title">
           <span>太平人寿银保通系统</span>
         </div>
-      <el-card style="width: 375px ;border-radius: 15px;padding-top: 50px;font-size:14px">
-        
-        <table style="margin-left: 15px;border-collapse: collapse;">
+      </div>
+      <el-card style="width: 375px ;border-radius: 15px;padding-top: 50px;font-size:14px;display: flex;justify-content: center;">
+      
+        <table style="border-collapse: collapse;">
           <tr style="border-bottom: 1px solid #419bff;">
             <td style="color:#419bff;">用户名</td>
             <td>
@@ -132,7 +133,7 @@ export default {
     padding-top: 55px;
     margin-left: -140px;
 }
-.header-background{
+.login-background{
     position: absolute;
     top: 0;
     left: 0;
@@ -164,7 +165,6 @@ export default {
     width: 300px;
     padding-top: 10px;
     font-size: 20px;
-    margin-left: 35px;
     margin-top: -25px;
 }
 .logo{
