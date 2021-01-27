@@ -61,8 +61,7 @@
     <el-main>
       <div>
         <el-table :data="tableData"
-                  style="width:100%"
-                  max-height="500">
+                  style="width:100%">
           <el-table-column prop="bank"
                            label="银行代码"> </el-table-column>
           <el-table-column prop="type"
