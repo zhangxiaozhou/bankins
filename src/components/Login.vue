@@ -11,15 +11,15 @@
         </div>
       <el-card style="width: 400px ;border-radius: 15px;padding-top: 30px;">
         
-        <table style="padding-left: 30px;">
-          <tr>
-            <td style="color:#419bff">用户名</td>
+        <table style="margin-left: 30px;border-collapse: collapse;">
+          <tr style="border-bottom: 1px solid #419bff;">
+            <td style="color:#419bff;">用户名</td>
             <td>
               <input v-model="user.username" class="login-input"
                         placeholder="请输入用户名"/>
             </td>
           </tr>
-          <tr>
+          <tr style="border-bottom: 1px solid #419bff;">
             <td style="color:#419bff">密码</td>
             <td >
               <input type="password" class="login-input"
@@ -142,7 +142,7 @@ export default {
   left:50%;
   top:50%;
   margin-top: -125px;
-  margin-left: 225px;
+  margin-left: 125px;
   /*display: flex;*/
   justify-content: center;
 }
