@@ -50,7 +50,7 @@
         </table>
       </el-card>
     </div>
-    <div class="flex-def flex-zCenter" style="font-size: 12px;position: absolute;width: 100%;">
+    <div class="flex-def flex-zCenter" style="font-size: 12px;position: fixed;bottom:15px;width: 100%;">
       <span class="footer">版权所有 © 2001-2021中国太平保险集团有限责任公司</span>
     </div>
   </div>
@@ -143,9 +143,6 @@ export default {
 }
 .login-container .footer {
   color: #fff;
-  position: fixed;
-  bottom: 15px;
-  padding-top: 55px;
 }
 .login-background {
   position: absolute;
