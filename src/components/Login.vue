@@ -7,12 +7,12 @@
          class="logo" />
     <!--flex弹性盒子模型，justify-content：主抽 -->
     <div class="login-form">
-      <div style="width: 100%;display: flex;justify-content: center;">
+      <div class="flex-def flex-zCenter" style="width: 100%;">
         <div class="login-form-title">
           <span>太平人寿银保通系统</span>
         </div>
       </div>
-      <el-card style="width: 375px ;border-radius: 15px;padding-top: 50px;font-size:14px;display: flex;justify-content: center;">
+      <el-card class="flex-def flex-zCenter" style="width: 375px ;border-radius: 15px;padding-top: 50px;font-size:14px;">
 
         <table style="border-collapse: collapse;">
           <tr style="border-bottom: 1px solid #419bff;">
@@ -50,7 +50,7 @@
         </table>
       </el-card>
     </div>
-    <div style="text-align: center; font-size: 12px;position: absolute;width: 100%;">
+    <div class="flex-def flex-zCenter" style="font-size: 12px;position: absolute;width: 100%;">
       <span class="footer">版权所有 © 2001-2021中国太平保险集团有限责任公司</span>
     </div>
   </div>
@@ -146,7 +146,6 @@ export default {
   position: fixed;
   bottom: 15px;
   padding-top: 55px;
-  margin-left: -140px;
 }
 .login-background {
   position: absolute;
@@ -211,5 +210,22 @@ export default {
   color: #ffffff;
   font-size: 16px;
   border-radius: 25px;
+}
+
+/* 定义 */
+.flex-def {
+    display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+    display: -moz-box; /* 老版本语法: Firefox (buggy) */
+    display: -ms-flexbox; /* 混合版本语法: IE 10 */
+    display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+    display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+}
+
+/* 主轴居中 */
+.flex-zCenter {
+    -webkit-box-pack: center;
+    -moz-justify-content: center;
+    -webkit-justify-content: center;
+    justify-content: center;
 }
 </style>
