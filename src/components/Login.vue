@@ -155,10 +155,10 @@ export default {
 
 .login-form {
   position: fixed;
-  left: 50%;
+  right: 10%;
   top: 50%;
   margin-top: -125px;
-  margin-left: 200px;
+  /*margin-right: -200px;*/
   /*display: flex;*/
   justify-content: center;
 }
