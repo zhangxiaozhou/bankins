@@ -1,7 +1,6 @@
 <template>
   <div class="login-container">
-    <div class="header-background">
-      <img :src="backgroundImage" width="100%" height="100%" />
+    <div class="header-background" :style="backgroundStyle">
     </div>
     <img :src="logo" class="logo"/>
     <!--flex弹性盒子模型，justify-content：主抽 -->
@@ -57,7 +56,12 @@ export default {
   data () {
     return {
       logo,
-      backgroundImage,
+      backgroundStyle:{
+          background: "url("+backgroundImage+") no-repeat",
+          "-o-background-size": "cover",
+          "background-size": "cover",
+          "background-position": "center"
+      },
       user: {
         username: '',
         password: ''
