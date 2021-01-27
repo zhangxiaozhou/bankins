@@ -9,7 +9,7 @@
       <div class="login-form-title">
           <span>太平人寿银保通系统</span>
         </div>
-      <el-card style="width: 400px ;border-radius: 15px;padding-top: 30px;">
+      <el-card style="width: 400px ;border-radius: 15px;padding-top: 40px;">
         
         <table style="margin-left: 30px;border-collapse: collapse;">
           <tr style="border-bottom: 1px solid #419bff;">
@@ -31,7 +31,7 @@
           </tr>
           <tr>
             <!-- 占两行-->
-            <td colspan="2" width="300px" style="padding-top: 30px;" align="center" valign="middle">
+            <td colspan="2" width="300px" style="padding-top: 60px;padding-bottom: 10px;" align="center" valign="middle">
               <!-- 点击事件的两种不同的写法v-on:click和 @click-->
               <!--<el-button style="width: 300px" type="primary" v-on:click="doLogin">登录</el-button>-->
               <el-button class="login-btn"
@@ -142,7 +142,7 @@ export default {
   left:50%;
   top:50%;
   margin-top: -125px;
-  margin-left: 125px;
+  margin-left: 175px;
   /*display: flex;*/
   justify-content: center;
 }
@@ -181,8 +181,8 @@ export default {
     padding: 0 15px;
     transition: border-color .2s cubic-bezier(.645,.045,.355,1);
     width: 100%;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
 }
 
 .login-btn{
