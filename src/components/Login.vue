@@ -7,14 +7,14 @@
          class="logo" />
     <!--flex弹性盒子模型，justify-content：主抽 -->
     <div class="login-form">
-      <div class="flex-def flex-zCenter" style="width: 100%;">
+      <div class="flex-def flex-zCenter" style="width: 100%;position: absolute;">
         <div class="login-form-title">
           <span>太平人寿银保通系统</span>
         </div>
       </div>
       <el-card class="flex-def flex-zCenter" style="width: 375px ;border-radius: 15px;padding-top: 50px;font-size:14px;">
 
-        <table style="border-collapse: collapse;">
+        <table style="border-collapse: collapse;">  
           <tr style="border-bottom: 1px solid #419bff;">
             <td style="color:#419bff;">用户名</td>
             <td>
@@ -166,7 +166,6 @@ export default {
   justify-content: center;
 }
 .login-form-title {
-  position: absolute;
   text-align: center;
   background: linear-gradient(135deg, transparent 30px, #419bff 0) top left,
     linear-gradient(-135deg, transparent 30px, #419bff 0) top right,
@@ -179,7 +178,7 @@ export default {
   width: 300px;
   padding-top: 10px;
   font-size: 20px;
-  margin-top: -25px;
+  margin-top: -26px;
 }
 .logo {
   width: 200px;
@@ -214,18 +213,20 @@ export default {
 
 /* 定义 */
 .flex-def {
-    display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
-    display: -moz-box; /* 老版本语法: Firefox (buggy) */
-    display: -ms-flexbox; /* 混合版本语法: IE 10 */
-    display: -webkit-flex; /* 新版本语法: Chrome 21+ */
-    display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
-}
+  display: -webkit-flex; /* 新版本语法: Chrome 21+ */
+  display: flex; /* 新版本语法: Opera 12.1, Firefox 22+ */
+  display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
+  display: -moz-box; /* 老版本语法: Firefox (buggy) */
+  display: -ms-flexbox; /* 混合版本语法: IE 10 */
+ }
+
 
 /* 主轴居中 */
 .flex-zCenter {
-    -webkit-box-pack: center;
-    -moz-justify-content: center;
-    -webkit-justify-content: center;
     justify-content: center;
-}
+    -webkit-box-pack: center;
+    -ms-justify-content: center;
+    -moz-justify-content: center;
+    -o-justify-content: center;
+    -webkit-justify-content: center;}
 </style>
