@@ -8,9 +8,9 @@
       <div class="login-form-title">
           <span>太平人寿银保通系统</span>
         </div>
-      <el-card style="width: 400px ;border-radius: 15px;padding-top: 50px;font-size:14px">
+      <el-card style="width: 375px ;border-radius: 15px;padding-top: 50px;font-size:14px">
         
-        <table style="margin-left: 30px;border-collapse: collapse;">
+        <table style="margin-left: 15px;border-collapse: collapse;">
           <tr style="border-bottom: 1px solid #419bff;">
             <td style="color:#419bff;">用户名</td>
             <td>
@@ -146,7 +146,7 @@ export default {
   left:50%;
   top:50%;
   margin-top: -125px;
-  margin-left: 175px;
+  margin-left: 200px;
   /*display: flex;*/
   justify-content: center;
 }
@@ -164,7 +164,7 @@ export default {
     width: 300px;
     padding-top: 10px;
     font-size: 20px;
-    margin-left: 50px;
+    margin-left: 35px;
     margin-top: -25px;
 }
 .logo{
@@ -193,7 +193,7 @@ export default {
     width: 120px;
     background-color: orange;
     color: #ffffff;
-    font-size: 12px;
+    font-size: 16px;
     border-radius: 25px;
 }
 </style>
