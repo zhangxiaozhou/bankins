@@ -81,10 +81,12 @@
             <el-date-picker type="date"
                             placeholder="开始日期"
                             v-model="form.beginTransDate"
+							:picker-options="pickerOptions0"
                             v-elDateFormat></el-date-picker>
             <el-date-picker type="date"
                             placeholder="截止日期"
                             v-model="form.endTransDate"
+							:picker-options="pickerOptions1"
                             v-elDateFormat></el-date-picker>
 
           </el-form-item>
@@ -119,9 +121,13 @@
           <el-table-column prop="dept"
                            label="网点代码"> </el-table-column>
           <el-table-column prop="sendCode"
-                           label="投保单号"> </el-table-column>
+                           label="投保单号"
+                           width="150px"
+                           header-align="center"> </el-table-column>
           <el-table-column prop="transDate"
-                           label="交易日期"> </el-table-column>
+                           label="交易日期"
+                           width="120px"
+                           header-align="center"> </el-table-column>
           <el-table-column prop="transCode"
                            label="交易类别"
                            :formatter="formatTransCode"> </el-table-column>
@@ -170,20 +176,25 @@
           <el-collapse-item title="投保人"
                             name="2">
             <div>
-              <el-table :data="policyDetail.holderDetail">
+              <el-table :data="policyDetail.holderDetail" >
                 <el-table-column prop="realName"
                                  label="姓名"> </el-table-column>
                 <el-table-column prop="gender"
                                  :formatter="formatGender"
                                  label="性别"> </el-table-column>
                 <el-table-column prop="birthday"
-                                 label="出生日期"> </el-table-column>
+                                 label="出生日期"
+                                 width="100px"> </el-table-column>
                 <el-table-column prop="certiType"
-                                 label="证件类型"> </el-table-column>
+                                 label="证件类型"
+                                 align="center"> </el-table-column>
                 <el-table-column prop="certiCode"
-                                 label="证件号码"> </el-table-column>
+                                 label="证件号码"
+                                 width="160px"
+                                 header-align="center"> </el-table-column>
                 <el-table-column prop="certiValidate"
-                                 label="证件有效期"> </el-table-column>
+                                 label="证件有效期"
+                                 width="100px"> </el-table-column>
                 <el-table-column prop="height"
                                  label="身高(cm)"> </el-table-column>
                 <el-table-column prop="weight"
@@ -194,13 +205,17 @@
                 <el-table-column prop="nationality"
                                  label="国籍"> </el-table-column>
                 <el-table-column prop="address1"
-                                 label="地址"> </el-table-column>
+                                 label="地址"
+                                 width="250px"
+                                 header-align="center"> </el-table-column>
                 <el-table-column prop="zip1"
                                  label="邮编"> </el-table-column>
                 <el-table-column prop="tell"
-                                 label="电话"> </el-table-column>
+                                 label="电话"
+                                 width="110px"> </el-table-column>
                 <el-table-column prop="celler"
-                                 label="手机"> </el-table-column>
+                                 label="手机"
+                                 width="110px"> </el-table-column>
                 <el-table-column prop="jobCode"
                                  label="职业类别"> </el-table-column>
                 <el-table-column prop="jobCom"
@@ -213,20 +228,24 @@
           <el-collapse-item title="被保人"
                             name="3">
             <div>
-              <el-table :data="policyDetail.insurantDetail">
+              <el-table :data="policyDetail.insurantDetail" >
                 <el-table-column prop="realName"
                                  label="姓名"> </el-table-column>
                 <el-table-column prop="gender"
                                  :formatter="formatGender"
                                  label="性别"> </el-table-column>
                 <el-table-column prop="birthday"
-                                 label="出生日期"> </el-table-column>
+                                 label="出生日期"
+                                 width="100px"> </el-table-column>
                 <el-table-column prop="certiType"
                                  label="证件类型"> </el-table-column>
                 <el-table-column prop="certiCode"
-                                 label="证件号码"> </el-table-column>
+                                 label="证件号码"
+                                 width="160px"
+                                 header-align="center"> </el-table-column>
                 <el-table-column prop="certiValidate"
-                                 label="证件有效期"> </el-table-column>
+                                 label="证件有效期"
+                                 width="100px"> </el-table-column>
                 <el-table-column prop="height"
                                  label="身高(cm)"> </el-table-column>
                 <el-table-column prop="weight"
@@ -237,13 +256,17 @@
                 <el-table-column prop="nationality"
                                  label="国籍"> </el-table-column>
                 <el-table-column prop="relaAddress"
-                                 label="地址"> </el-table-column>
+                                 label="地址"
+                                 width="250px"
+                                 header-align="center"> </el-table-column>
                 <el-table-column prop="zip1"
                                  label="邮编"> </el-table-column>
                 <el-table-column prop="tell"
-                                 label="电话"> </el-table-column>
+                                 label="电话"
+                                 width="110px"> </el-table-column>
                 <el-table-column prop="celler"
-                                 label="手机"> </el-table-column>
+                                 label="手机"
+                                 width="110px"> </el-table-column>
                 <el-table-column prop="jobCode"
                                  label="职业类别"> </el-table-column>
               </el-table>
@@ -316,7 +339,7 @@
                             name="8">
             {{this.errMsg =="" ? "无" :this.errMsg}}
           </el-collapse-item>
-          <el-row style="font-size: 13px;">健康告知：{{this.policyDetail.healthTag}}</el-row>
+          <el-row style="font-size: 13px;">健康告知：{{this.policyDetail.healthTag==null ?"N":this.policyDetail.healthTag}}</el-row>
         </el-collapse>
       </el-dialog>
     </el-main>
@@ -375,7 +398,21 @@ export default {
       requestMsg: "",
       responseMsg: "",
       errMsg: "",
-      activeNames:['1','2','3','5'] //折叠面板默认显示
+      activeNames:['1','2','3','5'] ,//折叠面板默认显示
+      pickerOptions0: {
+        disabledDate: (time) => {
+          if (this.form.endTransDate) {
+            return time.getTime() > Date.now() || time.getTime() > this.form.endTransDate;
+           } else {
+            return time.getTime() > Date.now();
+           }
+        }
+      },
+      pickerOptions1: {
+        disabledDate: (time) => {
+             return time.getTime() < this.form.beginTransDate || time.getTime() > Date.now();
+        }
+      },
     };
   },
 
@@ -500,18 +537,14 @@ export default {
     onSubmit () {
       this.tableData = [];
       if (this.form.sendCode == null || this.form.sendCode == '') {
-        if (this.form.beginTransDate == null || this.form.beginTransDate == '') {
-          Message.error('请选择投保日期开始时间');
-          return;
+        if (this.form.beginTransDate ==""|| this.form.endTransDate=="" || this.form.bankCode=="") {
+            Message.error("总行，投保开始日期，截止日期为必选项");
+            return;
         }
-        if (this.form.endTransDate == null || this.form.endTransDate == '') {
-          Message.error('请选择投保日期截止时间');
-          return;
-        }
-        if (this.dateDiffer(this.form.beginTransDate, this.form.endTransDate) > 7) {
-          Message.error('交易日期范围不能超过一周');
-          return;
-        }
+        if(this.dateDiffer(this.form.beginTransDate,this.form.endTransDate)>7){
+			Message.error("投保开始日期，截止日期范围不能超过一周");
+			return;
+		}
       }
       this.loading = true;
       this.$http({

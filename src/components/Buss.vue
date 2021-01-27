@@ -40,12 +40,14 @@
             <el-date-picker type="date"
                             placeholder="开始日期"
                             v-model="form.startTime"
-                            v-elDateFormat></el-date-picker>
+                            v-elDateFormat
+							:picker-options="pickerOptions0"></el-date-picker>
 
             <el-date-picker type="date"
                             placeholder="截止日期"
                             v-model="form.endTime"
-                            v-elDateFormat></el-date-picker>
+                            v-elDateFormat
+							:picker-options="pickerOptions1"></el-date-picker>
           </el-form-item>
         </el-form>
 
@@ -180,6 +182,20 @@ export default {
       banks: [],
       companys: [],
       childCompanys: [],
+      pickerOptions0: {
+        disabledDate: (time) => {
+          if (this.form.endTime) {
+            return time.getTime() > Date.now() || time.getTime() > this.form.endTime;
+           } else {
+            return time.getTime() > Date.now();
+           }
+        }
+      },
+      pickerOptions1: {
+        disabledDate: (time) => {
+             return time.getTime() < this.form.startTime || time.getTime() > Date.now();
+        }
+      },
     };
   },
   methods: {
@@ -188,23 +204,15 @@ export default {
         this.onSubmit();
     },
     onSubmit () {
-           if (this.form.company == null || this.form.company == '') {
-             Message.error('请选择机构');
-             return;
-           }
        if(this.form.sendCode=='' && this.form.policyCode==''){
-           if (this.form.startTime == null || this.form.startTime == '') {
-             Message.error('请选择投保日期开始时间');
+           if (this.form.startTime == ''|| this.form.endTime == ''|| this.form.company == '') {
+             Message.error("分公司，开始日期，结束日期为必选项");
              return;
            }
-           if (this.form.endTime == null || this.form.endTime == '') {
-             Message.error('请选择投保日期截止时间');
-             return;
-           }
-           if (this.dateDiffer(this.form.startTime, this.form.endTime) > 7) {
-             Message.error('投保日期范围不能超过一周');
-             return;
-           }
+        if(this.dateDiffer(this.form.startTime,this.form.endTime)>7){
+			Message.error("开始日期，截止日期范围不能超过一周");
+			return;
+			}
 		}
       this.tableData=[];
       this.$http({
