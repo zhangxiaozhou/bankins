@@ -1,5 +1,5 @@
 <template>
-  <div class="my-con">
+  <div class="body-bg">
     <el-container class="my-con">
       <el-header height="100"
                  class="my-header">
@@ -8,64 +8,43 @@
             <div class="grid-content bg-purple">
               <img :src="logo"
                    class="logo" />
-              <h1 class="sys-name">太平人寿银保通系统</h1>
+              <h3 class="sys-name">太平人寿银保通系统</h3>
             </div>
           </el-col>
           <el-col :span="6"
                   :offset="8">
-            <div style="float: right;" >
-				<span style="margin-right: 30px;" class="user-info">{{userName}}，欢迎您</span>
-				<span @click="logout" class="user-info logout-btn" >[退出]</span>
+            <div style="float: right;margin-top: 5px;width: 170px;"  >
+				<span style="margin-right: 25px" class="user-info">{{userName}}，欢迎你</span>
+				<span icon="el-icon-switch-button" @click="logout" class="user-info el-icon-switch-button" style="cursor: pointer;">退出</span>
 			</div>
 	
           </el-col>
         </el-row>
       </el-header>
-
+	
       <el-container>
-        <el-aside width="220px"
+       <div style="border: solid 0px #e6e6e6; height: 100%;">
+        <el-aside width="200px"
                   class="bankins-menu">
           <el-row class="menu">
             <el-col :span="24">
               <el-menu default-active="2"
                        class="el-menu-vertical-demo"
-                       router>
-                <!-- <el-menu-item index="/realTrans" >
-                  <i class="el-icon-arrow-right"></i>
-                  <span slot="title">实时交易</span>
-                </el-menu-item>
-                <el-menu-item index="/trans">
-                  <i class="el-icon-arrow-right"></i>
-                  <span slot="title">非实时交易</span>
-                </el-menu-item>
-                <el-menu-item index="/buss">
-                  <i class="el-icon-arrow-right"></i>
-                  <span slot="title">业务数据查询</span>
-                </el-menu-item>
-              <el-menu-item index="/code">
-                  <i class="el-icon-arrow-right"></i>
-                  <span slot="title">产品代码转换</span>
-                </el-menu-item>
-                <el-menu-item index="/verifyRecord">
-                  <i class="el-icon-arrow-right"></i>
-                  <span slot="title">日终对账</span>
-                </el-menu-item>
-                <el-menu-item index="/policyOfService">
-                  <i class="el-icon-arrow-right"></i>
-                  <span slot="title">保全回传</span>
-                </el-menu-item>  -->
+                       router
+                       style="border-right:0px;">
                 <el-menu-item v-for="menu in menus"
                               :key="menu.path"
-                              :index="menu.path">
-                  <i class="el-icon-arrow-right"></i>
-                  <span slot="title">{{menu.name}}</span>
+                              :index="menu.path"
+                              class="menu-font"
+                              style="padding: 0px;margin-bottom: 10px;border-radius: 30px;height: 40px;margin: 10px 20px 20px;width: 150px;">
+                  <!-- <i class="el-icon-arrow-right"></i> -->
+                  <span slot="title" style="position: inherit;top: -8px;">{{menu.name}}</span>
                 </el-menu-item>
-
               </el-menu>
             </el-col>
           </el-row>
         </el-aside>
-
+		</div>
         <el-main>
           <router-view></router-view>
         </el-main>
@@ -75,7 +54,7 @@
 </template>
 
 <script>
-import logo from "../assets/logo.png";
+import logo from "../assets/login-logo.png";
 
 export default {
   name: "Bank",
@@ -117,28 +96,32 @@ export default {
 }
 
 .my-header {
-  background-color: azure;
+  background-color: #66b1ff;
+  padding: 0 36px;
 }
 
 .logo {
   float: left;
+  height: 39px;
+  width: 117px;
 }
 
 .sys-name {
-  line-height: 50px;
-  font-family: Microsoft YaHei;
-  font-size: 24px;
-  color: #00479d;
+  line-height: 40px;
+  font-family: emoji;
+  color: #ffffff;
   margin-left: 210px;
-  padding-left: 200px;
+  padding-left: 170px;
   margin: 10px 0 0 20px;
-  border-left: 2px solid #00479d;
+  font-weight: inherit;
+  font-size: 18px;
+  width: 180px;
 }
 
 .user-info {
   line-height: 50px;
-  font-size: 18px;
-  color: #222;
+  font-size: 15px;
+  color: #fff;
 }
 
 .menu {
@@ -147,6 +130,27 @@ export default {
 
 .logout-btn{
 	cursor: pointer;
+}
+.body-bg{
+	display: flex;
+}
+.menu-font{
+	color: #66b1ff;
+	text-align: center;
+}
+.el-menu-item:hover{
+	color: #FFFFFF;
+	background: #66b1ff;
+}
+.is-active{
+	color: #FFFFFF;
+	background: #66b1ff;
+}
+.is-active:before{
+	content: "●";
+	margin-right: 10px;
+	position: inherit;
+	top: -7px;
 }
 
 </style>
