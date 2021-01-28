@@ -126,10 +126,15 @@ export default {
 
           this.$router.push("/");
         } else {
-          this.showErrLogin(res.data.errMsg)
+          this.showErrLogin(res.data.message)
         }
       }).catch((response) => {
-        this.showErrLogin('系统错误!')
+        let message = '系统异常'
+        if (response && response.message) {
+          message = response.message
+        }
+        console.log(message)
+        this.showErrLogin(message)
         Promise.reject(response);
       })
     }
