@@ -7,14 +7,16 @@
          class="logo" />
     <!--flex弹性盒子模型，justify-content：主抽 -->
     <div class="login-form">
-      <div class="flex-def flex-zCenter" style="width: 100%;position: absolute;">
+      <div class="flex-def flex-zCenter"
+           style="width: 100%;position: absolute;">
         <div class="login-form-title">
           <span>太平人寿银保通系统</span>
         </div>
       </div>
-      <el-card class="flex-def flex-zCenter" style="width: 375px ;border-radius: 15px;padding-top: 50px;font-size:14px;">
+      <el-card class="flex-def flex-zCenter"
+               style="width: 375px ;border-radius: 15px;padding-top: 50px;font-size:14px;">
 
-        <table style="border-collapse: collapse;">  
+        <table style="border-collapse: collapse;">
           <tr style="border-bottom: 1px solid #419bff;">
             <td style="color:#419bff;">用户名</td>
             <td>
@@ -50,7 +52,8 @@
         </table>
       </el-card>
     </div>
-    <div class="flex-def flex-zCenter" style="font-size: 12px;position: fixed;bottom:15px;width: 100%;">
+    <div class="flex-def flex-zCenter"
+         style="font-size: 12px;position: fixed;bottom:15px;width: 100%;">
       <span class="footer">版权所有 © 2001-2021中国太平保险集团有限责任公司</span>
     </div>
   </div>
@@ -126,10 +129,15 @@ export default {
 
           this.$router.push("/");
         } else {
-          this.showErrLogin(res.data.errMsg)
+          this.showErrLogin(res.data.message)
         }
       }).catch((response) => {
-        this.showErrLogin('系统错误!')
+        let message = '系统异常'
+        if (response && response.message) {
+          message = response.message
+        }
+        console.log(message)
+        this.showErrLogin(message)
         Promise.reject(response);
       })
     }
@@ -215,15 +223,15 @@ export default {
   display: -webkit-box; /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
   display: -moz-box; /* 老版本语法: Firefox (buggy) */
   display: -ms-flexbox; /* 混合版本语法: IE 10 */
- }
-
+}
 
 /* 主轴居中 */
 .flex-zCenter {
-    justify-content: center;
-    -webkit-box-pack: center;
-    -ms-justify-content: center;
-    -moz-justify-content: center;
-    -o-justify-content: center;
-    -webkit-justify-content: center;}
+  justify-content: center;
+  -webkit-box-pack: center;
+  -ms-justify-content: center;
+  -moz-justify-content: center;
+  -o-justify-content: center;
+  -webkit-justify-content: center;
+}
 </style>
