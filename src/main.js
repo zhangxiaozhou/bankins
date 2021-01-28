@@ -54,7 +54,13 @@ axios.interceptors.response.use(
           break
       }
     }
-    return Promise.reject(error.response.data) // 返回接口返回的错误信息
+	let data = {
+		message:'系统异常'
+	}
+	if(error&&error.response&&error.response.data){
+		data = error.response.data;
+	}
+    return Promise.reject(data) // 返回接口返回的错误信息
   }
 )
 
