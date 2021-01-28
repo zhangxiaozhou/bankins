@@ -108,7 +108,7 @@
         <el-row>
           <el-button type="primary"
                      @click="search"
-                     style="margin: 0px 0px 20px 420px;">查询</el-button>
+                     style="margin: 0px 40% 10px ;">查询</el-button>
 		</el-row>
       </div>
     </el-header>

@@ -26,10 +26,6 @@
                          :value="type.code"></el-option>
             </el-select>
           </el-form-item>
-        </el-form>
-        <el-form label-width="120px"
-                 :inline="true"
-                 :model="form">
           <el-form-item label="内部险种代码">
             <el-input v-model.trim="form.innerCode"></el-input>
           </el-form-item>
@@ -45,11 +41,12 @@
           </el-form-item>
         </el-form>
         <el-form label-width="120px"
-                 :inline="true">
+                 :inline="true"
+                 style="margin-left: 40%;">
           <el-form-item>
             <el-button type="primary"
                        @click="onSubmit"
-                       style="margin: 0px 0px 0px 380px;">查询</el-button>
+                       >查询</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary"
