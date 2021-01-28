@@ -96,7 +96,7 @@ export default {
 }
 
 .my-header {
-  background-color: #66b1ff;
+  background-color: #3296ff;
   padding: 0 36px;
 }
 
@@ -108,7 +108,7 @@ export default {
 
 .sys-name {
   line-height: 40px;
-  font-family: emoji;
+  font-family: STHeiti;
   color: #ffffff;
   margin-left: 210px;
   padding-left: 170px;

@@ -48,7 +48,8 @@
                  :inline="true">
           <el-form-item>
             <el-button type="primary"
-                       @click="onSubmit">查询</el-button>
+                       @click="onSubmit"
+                       style="margin: 0px 0px 0px 380px;">查询</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary"

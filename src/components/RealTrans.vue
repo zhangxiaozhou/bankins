@@ -36,8 +36,17 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="单号">
-            <el-input v-model="form.sendCode"></el-input>
+          <el-form-item label="交易日期">
+            <el-date-picker type="date"
+                            placeholder="开始日期"
+                            v-model="form.beginTransDate"
+                            :picker-options="pickerOptions0"
+                            v-elDateFormat></el-date-picker>
+            <el-date-picker type="date"
+                            placeholder="截止日期"
+                            v-model="form.endTransDate"
+                            :picker-options="pickerOptions1"
+                            v-elDateFormat></el-date-picker>
           </el-form-item>
 
         </el-form>
@@ -77,22 +86,14 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="交易日期">
-            <el-date-picker type="date"
-                            placeholder="开始日期"
-                            v-model="form.beginTransDate"
-							:picker-options="pickerOptions0"
-                            v-elDateFormat></el-date-picker>
-            <el-date-picker type="date"
-                            placeholder="截止日期"
-                            v-model="form.endTransDate"
-							:picker-options="pickerOptions1"
-                            v-elDateFormat></el-date-picker>
-
+          <el-form-item label="单号">
+            <el-input v-model="form.sendCode"></el-input>
           </el-form-item>
-
+		<el-row>
           <el-button type="primary"
-                     @click="search">查询</el-button>
+                     @click="search"
+                     style="margin: 0px 0px 20px 420px;">查询</el-button>
+		</el-row>
         </el-form>
 
       </div>

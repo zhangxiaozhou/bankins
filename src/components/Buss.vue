@@ -62,38 +62,54 @@
           <el-form-item label="保单号">
             <el-input v-model="form.policyCode"></el-input>
           </el-form-item>
-
-          <el-form-item label="销售渠道">
-            <el-radio v-model="form.sellPlatform"
-                      label="">全部</el-radio>
-            <el-radio v-model="form.sellPlatform"
-                      label="1">柜面</el-radio>
-            <el-radio v-model="form.sellPlatform"
-                      label="3">网上银行</el-radio>
-            <el-radio v-model="form.sellPlatform"
-                      label="5">自助终端</el-radio>
-            <el-radio v-model="form.sellPlatform"
-                      label="7">手机</el-radio>
-            <el-radio v-model="form.sellPlatform"
-                      label="8">移动营销</el-radio>
-          </el-form-item>
+        <el-form-item label="销售渠道">
+          <el-select v-model="form.sellPlatform"
+                     :disabled="disabled"
+                     clearable
+                     placeholder="请选择销售渠道">
+            <el-option label="全部"
+                       value="">
+			</el-option>
+			<el-option label="柜面"
+                       value="1">
+			</el-option>
+			<el-option label="网上银行"
+                       value="3">
+			</el-option>
+			<el-option label="自助终端"
+                       value="5">
+			</el-option>
+			<el-option label="手机"
+                       value="7">
+			</el-option>
+			<el-option label="移动营销"
+                       value="8">
+			</el-option>
+          </el-select>
+		</el-form-item>
+		<el-form-item label="承保与否">
+          <el-select v-model="form.isAccept"
+                      :disabled="disabled"
+                      clearable
+                      placeholder="请选择销售渠道">
+             <el-option label="全部"
+                        value="">
+                      </el-option>
+             <el-option label="未承保"
+                        value="0">
+                      </el-option>
+             <el-option label="已承保"
+                        value="1">
+                      </el-option>
+           </el-select>
+		</el-form-item>
         </el-form>
-
-        <el-form label-width="120px"
-                 :inline="true"
-                 :model="form">
-          <el-form-item label="承保与否">
-            <el-radio v-model="form.policyStatus"
-                      label="">全部</el-radio>
-            <el-radio v-model="form.policyStatus"
-                      label="0">未承保</el-radio>
-            <el-radio v-model="form.policyStatus"
-                      label="1">已承保</el-radio>
-          </el-form-item>
           <span class="space"></span>
+        <el-row>
           <el-button type="primary"
-                     @click="search">查询</el-button>
-        </el-form>
+                     @click="search"
+                     style="margin: 0px 0px 20px 420px;">查询</el-button>
+		</el-row>
       </div>
     </el-header>
 
