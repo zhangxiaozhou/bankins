@@ -45,8 +45,7 @@
                  style="margin-left: 40%;">
           <el-form-item>
             <el-button type="primary"
-                       @click="onSubmit"
-                       >查询</el-button>
+                       @click="onSubmit">查询</el-button>
           </el-form-item>
           <el-form-item>
             <el-button type="primary"
@@ -141,7 +140,9 @@
         <el-input v-model="ruleForm.id"
                   class="pid"></el-input>
       </el-form>
-      <el-form>
+      <el-form label-width="120px"
+               :inline="true"
+               style="margin-left: 40%;">
         <el-form-item>
           <el-button type="primary"
                      @click="saveProdConvert('ruleForm')">确定</el-button>
