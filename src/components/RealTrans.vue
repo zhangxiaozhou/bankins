@@ -121,6 +121,8 @@
                          size="medium">{{scope.row.transNo}}</el-button>
             </template>
           </el-table-column>
+          <el-table-column prop="requestId"
+                           v-if="false"> </el-table-column>
           <el-table-column prop="bankCode"
                            label="银行代码"
                            minwidth="80px"
@@ -483,11 +485,7 @@ export default {
 
       this.$http({
         method: "get",
-        url: "/buss-process/api/admin/v1/realTrans/findMsg/",
-        params: {
-          transNo: row.transNo,
-          bank: row.bankCode
-        }
+        url: "/buss-process/api/admin/v1/realTrans/findMsg/"+row.requestId
       }).then((res) => {
         this.responseMsg = res.data.responseMsg;
         this.requestMsg = res.data.requestMsg;
