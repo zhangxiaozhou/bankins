@@ -12,8 +12,9 @@
             </div>
           </el-col>
           <el-col :span="6"
-                  :offset="8">
-            <div style="float: right;margin-top: 5px;width: 170px;"  >
+                  :offset="8"
+				style="width: auto;margin-left: 40%;">
+            <div style="float: right;margin-top: 5px;"  >
 				<span style="margin-right: 25px" class="user-info">{{userName}}，欢迎你</span>
 				<span icon="el-icon-switch-button" @click="logout" class="user-info el-icon-switch-button" style="cursor: pointer;">退出</span>
 			</div>
@@ -132,7 +133,7 @@ export default {
 	cursor: pointer;
 }
 .body-bg{
-	display: flex;
+	min-width: 200px;
 }
 .menu-font{
 	color: #66b1ff;

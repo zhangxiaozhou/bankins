@@ -6,7 +6,7 @@
         <el-form label-width="120px"
                  :inline="true"
                  :model="form">
-          <el-form-item label="统计对象">
+          <el-form-item label="统计对象" :required="true">
             <el-select v-model="form.company"
                        @change="getChildCompanys"
                        :disabled="disabled"
@@ -36,7 +36,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="交易日期">
+          <el-form-item label="交易日期" :required="true">
             <el-date-picker type="date"
                             placeholder="开始日期"
                             v-model="form.beginTransDate"
@@ -57,9 +57,11 @@
           <el-form-item label="交易科目">
             <el-select v-model="form.transCode"
                        placeholder="请选择科目">
+              <el-option label="全部"
+                         value=""></el-option>
               <el-option label="新契约投保"
                          value="apply"></el-option>
-              <el-option label="缴费确认"
+              <el-option label="新契约缴费确认"
                          value="payment"></el-option>
               <el-option label="试算"
                          value="proposal"></el-option>
@@ -67,7 +69,7 @@
                          value="manualApply"></el-option>
               <el-option label="反交易"
                          value="cancel"></el-option>
-              <el-option label="保单查询"
+              <el-option label="保单基本资料查询"
                          value="polQuery"></el-option>
               <el-option label="退保申请"
                          value="cancellation"></el-option>
@@ -79,20 +81,22 @@
           <el-form-item label="交易状态">
             <el-select v-model="form.transState"
                        placeholder="请选择状态">
-              <el-option label="成功"
+              <el-option label="全部"
+                         value=""></el-option>
+              <el-option label="交易成功"
                          value=true></el-option>
-              <el-option label="失败"
+              <el-option label="交易失败"
                          value=false></el-option>
             </el-select>
           </el-form-item>
 
-          <el-form-item label="单号">
+          <el-form-item label="投保单号">
             <el-input v-model="form.sendCode"></el-input>
           </el-form-item>
 		<el-row>
           <el-button type="primary"
                      @click="search"
-                     style="margin: 0px 40% 10px ;">查询</el-button>
+                     style="margin: 0px 50% 10px ;">查询</el-button>
 		</el-row>
         </el-form>
 
@@ -103,40 +107,60 @@
       <div>
         <el-table :data="tableData"
                   v-loading="loading"
-                  style="width: 100%"
-                  
-                  :row-style="{height: '35px'}"
-                  :cell-style="{padding: '7px'}"
+                  style="width: 100%;"
+                  :row-style="{height: '20px'}"
+                  :cell-style="{padding: '0px'}"
                   row-key="transNo">
-          <el-table-column label="流水号">
+          <el-table-column label="请求记录号"
+                           width="180px"
+                           align="center"
+                           style="text-align: center;">
             <template slot-scope="scope">
               <el-button @click="showDetails(scope.row)"
                          type="text"
-                         size="mini">{{scope.row.transNo}}</el-button>
+                         size="medium">{{scope.row.transNo}}</el-button>
             </template>
           </el-table-column>
           <el-table-column prop="bankCode"
-                           label="银行代码"> </el-table-column>
+                           label="银行代码"
+                           minwidth="80px"
+                           align="center"> </el-table-column>
           <el-table-column prop="zone"
-                           label="地区代码"> </el-table-column>
+                           label="地区代码"
+                           width="80px"
+                           align="center"> </el-table-column>
           <el-table-column prop="dept"
-                           label="网点代码"> </el-table-column>
+                           label="网点代码"
+                           align="center"
+                           width="80px"> </el-table-column>
           <el-table-column prop="sendCode"
                            label="投保单号"
-                           width="150px"
-                           header-align="center"> </el-table-column>
+                           width="160px"
+                           align="center"
+                           > </el-table-column>
           <el-table-column prop="transDate"
                            label="交易日期"
                            width="120px"
-                           header-align="center"> </el-table-column>
+                           align="center"> </el-table-column>
           <el-table-column prop="transCode"
-                           label="交易类别"
-                           :formatter="formatTransCode"> </el-table-column>
+                           label="交易科目"
+                           :formatter="formatTransCode"
+                           align="center"
+                           width="80px"> </el-table-column>
           <el-table-column prop="transState"
-                           label="状态"
-                           :formatter="formatTransState"> </el-table-column>
+                           label="交易状态"
+                           :formatter="formatTransState"
+                           align="center"> </el-table-column>
+          <el-table-column prop="handlerTime"
+                           label="处理时间"
+                           width="180x"
+                           align="center"> </el-table-column>
+          <el-table-column prop="errCode"
+                           label="错误代码"
+                           align="center"> </el-table-column>
           <el-table-column prop="errMsg"
-                           label="错误原因"> </el-table-column>
+                           label="错误原因"
+                           width="150px"> </el-table-column>
         </el-table>
         <div class="block"
              style="margin-left:30%">
@@ -157,7 +181,7 @@
                  width="80%">
 
         <el-collapse v-model="activeNames">
-          <el-collapse-item title="投保单"
+          <el-collapse-item title="投保单详情"
                             name="1">
             <div>
               <el-table :data="policyDetail">
@@ -270,10 +294,12 @@
                                  width="110px"> </el-table-column>
                 <el-table-column prop="jobCode"
                                  label="职业类别"> </el-table-column>
+                <el-table-column prop="jobCom"
+                                 label="单位名称"> </el-table-column>
               </el-table>
             </div>
           </el-collapse-item>
-          <el-collapse-item title="身故受益人"
+          <el-collapse-item title="受益人"
                             name="4">
             <div>
               <el-table :data="policyDetail.beneDetail">
@@ -327,7 +353,7 @@
               </el-table>
             </div>
           </el-collapse-item>
-          <el-collapse-item title="银行报文"
+          <el-collapse-item title="银行交易报文详情"
                             name="6">
             请求报文<el-input :value="this.requestMsg"
                       type="textarea"
@@ -336,7 +362,7 @@
                       type="textarea"
                       :rows="5"></el-input>
           </el-collapse-item>
-          <el-collapse-item title="错误描述"
+          <el-collapse-item title="失败原因"
                             name="8">
             {{this.errMsg =="" ? "无" :this.errMsg}}
           </el-collapse-item>
@@ -372,6 +398,7 @@ export default {
       childDisabled: false,
       labelPosition: "right",
       display: false,
+      viewTable: false,
       form: {
         bankCode: "",
         company: "",
@@ -424,9 +451,13 @@ export default {
       if (transCode == 'apply') {
         return '投保';
       } else if (transCode == 'payment') {
-        return '缴费'
+        return '缴费';
+      } else if (transCode == 'cancel') {
+        return '撤件';
+      } else if(transCode == 'proposal'){
+        return '试算';
       }
-    },
+	},
     showDetails (row) {
       this.policyDetail = [];
       this.requestMsg = '';
@@ -476,9 +507,10 @@ export default {
       let gender = row.gender;
       if (gender == 'M') {
         return '男';
-      } else {
+      } else if(gender=='F'){
         return '女';
       }
+      return '';
     },
     getFirstLevelBank () {
       this.$http({
@@ -646,3 +678,19 @@ export default {
   },
 };
 </script>
+<style>
+.el-input__inner{
+	height: 35px;
+	text-align: left;
+}
+.el-form-item {
+    margin-bottom: 7px;
+}
+.el-main{
+	overflow: hidden;
+}
+.el-collapse-item__header{
+	color: #55a8ff;
+	font-weight: bolder;
+}
+</style>

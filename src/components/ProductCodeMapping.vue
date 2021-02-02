@@ -38,7 +38,7 @@
                  :model="form">
           <el-form-item label="名称">
             <el-input v-model.trim="form.name"></el-input>
-          </el-form-item>
+          </el-form-item>	
         </el-form>
         <el-form label-width="120px"
                  :inline="true"
@@ -144,7 +144,8 @@
       <el-form>
         <el-form-item>
           <el-button type="primary"
-                     @click="saveProdConvert('ruleForm')">确定</el-button>
+                     @click="saveProdConvert('ruleForm')"
+                     style="margin-left: 40%">确定</el-button>
           <el-button type="primary"
                      @click="cancheProdConvert()">取消</el-button>
         </el-form-item>

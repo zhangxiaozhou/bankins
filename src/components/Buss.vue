@@ -6,7 +6,7 @@
         <el-form label-width="120px"
                  :inline="true"
                  :model="form">
-          <el-form-item label="统计对象">
+          <el-form-item label="统计对象" :required="true">
             <el-select v-model="form.company"
                        @change="getChildCompanys"
                        :disabled="disabled"
@@ -36,7 +36,7 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="投保日期">
+          <el-form-item label="投保日期" :required="true">
             <el-date-picker type="date"
                             placeholder="开始日期"
                             v-model="form.startTime"
@@ -74,13 +74,13 @@
                        value="1">
 			</el-option>
 			<el-option label="网上银行"
-                       value="3">
+                       value="4">
 			</el-option>
 			<el-option label="自助终端"
                        value="5">
 			</el-option>
 			<el-option label="手机"
-                       value="7">
+                       value="21">
 			</el-option>
 			<el-option label="移动营销"
                        value="8">
@@ -108,7 +108,7 @@
         <el-row>
           <el-button type="primary"
                      @click="search"
-                     style="margin: 0px 40% 10px ;">查询</el-button>
+                     style="margin: 0px 50% 10px ;">查询</el-button>
 		</el-row>
       </div>
     </el-header>
@@ -116,29 +116,44 @@
     <el-main>
       <div>
         <el-table :data="tableData"
-                  style="width: 100%">
+                  style="width: 100%;"
+                  :row-style="{height: '20px'}"
+                  :cell-style="{padding: '0px'}">
           <el-table-column prop="applyCode"
-                           label="投保单号"> </el-table-column>
+                           label="投保单号"
+                           width="160px"
+                           header-align="center"> </el-table-column>
           <el-table-column prop="policyCode"
-                           label="保单号"> </el-table-column>
+                           label="保单号"
+                           width="160px"
+                           header-align="center"> </el-table-column>
           <el-table-column prop="appName"
                            label="投保人"> </el-table-column>
           <el-table-column prop="appTime"
-                           label="投保日期"> </el-table-column>
+                           label="投保日期"
+                           width="100px"> </el-table-column>
           <el-table-column prop="acceptTime"
-                           label="承保日期"> </el-table-column>
+                           label="承保日期"
+                           width="100px"> </el-table-column>
           <el-table-column prop="policyStatus"
                            label="保单状态"> </el-table-column>
+          <el-table-column prop="sellWay"
+                           label="销售渠道"> </el-table-column>
+          <el-table-column prop="typeName"
+                           label="保单领取方式"
+                           width="110px"> </el-table-column>
           <el-table-column prop="productAbbr"
                            label="险种名称"> </el-table-column>
           <el-table-column prop="periodPrem"
                            label="险种保费"> </el-table-column>
           <el-table-column prop="periodPrem"
-                           label="保费"> </el-table-column>
+                           label="保费"
+                           header-align="center"> </el-table-column>
           <el-table-column prop="bankCode"
                            label="网点代码"> </el-table-column>
           <el-table-column prop="bankName"
-                           label="网点名称"> </el-table-column>
+                           label="网点名称"
+                           width="160px"> </el-table-column>
         </el-table>
         <div class="block"
              style="margin-left:30%">
