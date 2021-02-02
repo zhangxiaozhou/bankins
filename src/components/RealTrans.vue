@@ -680,8 +680,8 @@ export default {
 </script>
 <style>
 .el-input__inner{
-	height: 35px;
-	text-align: left;
+	height: 30px;
+	line-height: 0px;
 }
 .el-form-item {
     margin-bottom: 7px;
