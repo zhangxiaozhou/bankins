@@ -568,7 +568,8 @@ export default {
     onSubmit () {
       this.tableData = [];
       if (this.form.sendCode == null || this.form.sendCode == '') {
-        if (this.form.beginTransDate ==""|| this.form.endTransDate=="" || this.form.bankCode=="") {
+        if (this.form.beginTransDate ==""|| this.form.endTransDate=="" || this.form.bankCode==""||
+		this.form.beginTransDate==null ||this.form.endTransDate==null ||this.form.bankCode==null) {
             Message.error("总行，投保开始日期，截止日期为必选项");
             return;
         }

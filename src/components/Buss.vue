@@ -236,7 +236,8 @@ export default {
     },
     onSubmit () {
        if(this.form.sendCode=='' && this.form.policyCode==''){
-           if (this.form.startTime == ''|| this.form.endTime == ''|| this.form.company == '') {
+           if (this.form.startTime == ''|| this.form.endTime == ''|| this.form.company == ''||
+          this.form.startTime == null ||this.form.endTime ==null ||this.form.company ==null) {
              Message.error("分公司，开始日期，结束日期为必选项");
              return;
            }
