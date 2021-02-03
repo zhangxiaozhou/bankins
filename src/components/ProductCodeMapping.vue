@@ -17,9 +17,11 @@
             </el-select>
           </el-form-item>
           <el-form-item label="类别">
-            <el-select v-model="form.type"
+            <el-select v-model="defaultValue"
                        placeholder="请选择类别"
                        clearable>
+              <el-option label="全部"
+                         value=""></el-option>
               <el-option v-for="type in types"
                          :key="type.code"
                          :label="type.name"
@@ -38,7 +40,7 @@
                  :model="form">
           <el-form-item label="名称">
             <el-input v-model.trim="form.name"></el-input>
-          </el-form-item>	
+          </el-form-item>
         </el-form>
         <el-form label-width="120px"
                  :inline="true"
@@ -140,13 +142,11 @@
         <el-input v-model="ruleForm.id"
                   class="pid"></el-input>
       </el-form>
-      <el-form label-width="120px"
-               :inline="true"
-               style="margin-left: 40%;">
+      <el-form label-width="120px">
         <el-form-item>
           <el-button type="primary"
                      @click="saveProdConvert('ruleForm')"
-                     style="margin-left: 40%">确定</el-button>
+                     style="margin-left: 20%">确定</el-button>
           <el-button type="primary"
                      @click="cancheProdConvert()">取消</el-button>
         </el-form-item>
@@ -189,9 +189,9 @@ export default {
         name: ""
       },
       types: [{
-        code: 1, name: "险种"
+        code: 1, name: "PRODUCT"
       }, {
-        code: 2, name: "险种组合"
+        code: 2, name: "PTPACK"
       }],
       rule: {
         bank: [
@@ -213,7 +213,8 @@ export default {
       total: 0,
       tableData: [],
       banks: [],
-      dialogForm: false
+      dialogForm: false,
+      defaultValue: ""
     }
   },
   methods: {
