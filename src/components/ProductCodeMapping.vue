@@ -5,7 +5,8 @@
       <div>
         <el-form label-width="120px"
                  :inline="true"
-                 :model="form">
+                 :model="form"
+                 @submit.native.prevent>
           <el-form-item label="银行代码">
             <el-select v-model="form.bank"
                        clearable
@@ -37,14 +38,16 @@
         </el-form>
         <el-form label-width="120px"
                  :inline="true"
-                 :model="form">
+                 :model="form"
+                 @submit.native.prevent>
           <el-form-item label="名称">
             <el-input v-model.trim="form.name"></el-input>
           </el-form-item>
         </el-form>
         <el-form label-width="120px"
                  :inline="true"
-                 style="margin-left: 40%;">
+                 style="margin-left: 40%;"
+                 @submit.native.prevent>
           <el-form-item>
             <el-button type="primary"
                        @click="onSubmit">查询</el-button>
@@ -104,7 +107,8 @@
                :inline="true"
                :model="ruleForm"
                ref="ruleForm"
-               :rules="rule">
+               :rules="rule"
+               @submit.native.prevent>
         <el-form-item label="银行代码"
                       prop="bank">
           <el-select v-model="ruleForm.bank"
@@ -142,7 +146,8 @@
         <el-input v-model="ruleForm.id"
                   class="pid"></el-input>
       </el-form>
-      <el-form label-width="120px">
+      <el-form label-width="120px"
+               @submit.native.prevent>
         <el-form-item>
           <el-button type="primary"
                      @click="saveProdConvert('ruleForm')"
