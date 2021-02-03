@@ -17,7 +17,7 @@
             </el-select>
           </el-form-item>
           <el-form-item label="类别">
-            <el-select v-model="defaultValue"
+            <el-select v-model="form.type"
                        placeholder="请选择类别"
                        clearable>
               <el-option label="全部"
@@ -213,8 +213,7 @@ export default {
       total: 0,
       tableData: [],
       banks: [],
-      dialogForm: false,
-      defaultValue: ""
+      dialogForm: false
     }
   },
   methods: {
@@ -250,6 +249,7 @@ export default {
       this.getList()
     },
     onSubmit () {
+      this.form.page = 1;
       this.getList();
     },
     insert (form) {
