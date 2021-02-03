@@ -138,8 +138,7 @@
           <el-table-column prop="sendCode"
                            label="投保单号"
                            width="160px"
-                           align="center"
-                           > </el-table-column>
+                           align="center"> </el-table-column>
           <el-table-column prop="transDate"
                            label="交易日期"
                            width="120px"
@@ -479,8 +478,6 @@ export default {
         this.policyDetail.beneDetail = res.data.insurants[0].policyBenes;
         this.policyDetail.productDetail = res.data.policyProducts;
 		this.policyDetail.healthTag=res.data.healthNotice;
-      }).catch(err => {
-        Message.info('查询不到该投保单详情' + err);
       });
 
       this.$http({

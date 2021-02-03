@@ -77,21 +77,20 @@
                        value="4">
 			</el-option>
 			<el-option label="自助终端"
-                       value="5">
+                       value="3">
 			</el-option>
 			<el-option label="手机"
                        value="21">
 			</el-option>
 			<el-option label="移动营销"
-                       value="8">
+                       value="2">
 			</el-option>
           </el-select>
 		</el-form-item>
 		<el-form-item label="承保与否">
-          <el-select v-model="form.isAccept"
+          <el-select v-model="form.policyStatus"
                       :disabled="disabled"
-                      clearable
-                      placeholder="请选择销售渠道">
+                      clearable>
              <el-option label="全部"
                         value="">
                       </el-option>
