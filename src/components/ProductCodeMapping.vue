@@ -366,8 +366,10 @@ export default {
         }
       }).then((res) => {
         console.log(res.data)
+        this.ruleForm.name = res.data
       }).catch((Response) => {
         console.log(Response)
+        this.$message.console.error(Response.message);
       });
     }
   },
