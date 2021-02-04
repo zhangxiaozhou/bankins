@@ -102,7 +102,8 @@
     <!-- 新增和修改的dialog -->
     <el-dialog title="产品代码转换"
                :visible.sync="dialogForm"
-               :closeOnClickModal="false">
+               :closeOnClickModal="false"
+               @close="closeDialog">
       <el-form label-width="120px"
                :inline="true"
                :model="ruleForm"
@@ -133,15 +134,15 @@
         </el-form-item>
         <el-form-item label="内部险种代码"
                       prop="innerCode">
-          <el-input v-model.trim="ruleForm.innerCode"></el-input>
+          <el-input style="width: 218px;" v-model.trim="ruleForm.innerCode"></el-input>
         </el-form-item>
         <el-form-item label="外部险种代码"
                       prop="outerCode">
-          <el-input v-model.trim="ruleForm.outerCode"></el-input>
+          <el-input style="width: 218px;" v-model.trim="ruleForm.outerCode"></el-input>
         </el-form-item>
         <el-form-item label="名称"
                       prop="name">
-          <el-input v-model.trim="ruleForm.name"></el-input>
+          <el-input style="width: 218px;" v-model.trim="ruleForm.name"></el-input>
         </el-form-item>
         <el-input v-model="ruleForm.id"
                   class="pid"></el-input>
@@ -234,6 +235,9 @@ export default {
         this.banks = res.data;
       });
     },
+	closeDialog(){
+		this.$refs.ruleForm.resetFields();
+	},
     getList () {
       this.$http({
         method: "post",
