@@ -148,10 +148,10 @@
       </el-form>
       <el-form label-width="120px"
                @submit.native.prevent>
-        <el-form-item>
+        <el-form-item style="margin-top: 20px;">
           <el-button type="primary"
                      @click="saveProdConvert('ruleForm')"
-                     style="margin-left: 20%">确定</el-button>
+                     style="margin 20px 50% 10px 0px">确定</el-button>
           <el-button type="primary"
                      @click="cancheProdConvert()">取消</el-button>
         </el-form-item>
@@ -283,8 +283,10 @@ export default {
               this.dialogForm = false
             } else if (res.data.code === "1") {
               this.$message.error(res.data.msg);
+              this.clear();
             } else {
               this.$message.error("系统内部异常");
+              this.clear();
             }
           })
         } else {
@@ -293,7 +295,8 @@ export default {
       })
     },
     cancheProdConvert () {
-      this.dialogForm = false
+      this.getList();
+      this.dialogForm = false;
     },
     updateProdConvert (val) {
       console.log(val)
@@ -352,3 +355,8 @@ export default {
   },
 };
 </script>
+<style>
+	.el-form-item__error {
+	line-height: 0px;
+		}
+</style>
