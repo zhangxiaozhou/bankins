@@ -134,15 +134,19 @@
         </el-form-item>
         <el-form-item label="内部险种代码"
                       prop="innerCode">
-          <el-input style="width: 218px;" v-model.trim="ruleForm.innerCode"></el-input>
+          <el-input style="width: 218px;"
+                    v-model.trim="ruleForm.innerCode"
+                    @blur="codeBlur()"></el-input>
         </el-form-item>
         <el-form-item label="外部险种代码"
                       prop="outerCode">
-          <el-input style="width: 218px;" v-model.trim="ruleForm.outerCode"></el-input>
+          <el-input style="width: 218px;"
+                    v-model.trim="ruleForm.outerCode"></el-input>
         </el-form-item>
         <el-form-item label="名称"
                       prop="name">
-          <el-input style="width: 218px;" v-model.trim="ruleForm.name"></el-input>
+          <el-input style="width: 218px;"
+                    v-model.trim="ruleForm.name"></el-input>
         </el-form-item>
         <el-input v-model="ruleForm.id"
                   class="pid"></el-input>
@@ -235,9 +239,9 @@ export default {
         this.banks = res.data;
       });
     },
-	closeDialog(){
-		this.$refs.ruleForm.resetFields();
-	},
+    closeDialog () {
+      this.$refs.ruleForm.resetFields();
+    },
     getList () {
       this.$http({
         method: "post",
@@ -351,6 +355,20 @@ export default {
       this.ruleForm.innerCode = "";
       this.ruleForm.outerCode = "";
       this.ruleForm.name = "";
+    },
+    codeBlur () {
+      console.log(this.ruleForm.innerCode);
+      this.$http({
+        method: "post",
+        url: "/buss-process/api/productConvert/v1/getProd",
+        params: {
+          productId: this.ruleForm.innerCode
+        }
+      }).then((res) => {
+        console.log(res.data)
+      }).catch((Response) => {
+        console.log(Response)
+      });
     }
   },
   mounted () {
@@ -360,7 +378,7 @@ export default {
 };
 </script>
 <style>
-	.el-form-item__error {
-	line-height: 0px;
-		}
+.el-form-item__error {
+  line-height: 0px;
+}
 </style>
