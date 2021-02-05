@@ -28,6 +28,7 @@
                          :value="com.organId"></el-option>
             </el-select>
             <el-select v-model="form.bankCode"
+                       clearable
                        placeholder="请选择总行">
               <el-option v-for="bank in banks"
                          :key="bank.bankCode"
@@ -64,7 +65,6 @@
           </el-form-item>
         <el-form-item label="销售渠道">
           <el-select v-model="form.sellPlatform"
-                     :disabled="disabled"
                      clearable
                      placeholder="请选择销售渠道">
             <el-option label="全部"
@@ -89,7 +89,6 @@
 		</el-form-item>
 		<el-form-item label="承保与否">
           <el-select v-model="form.policyStatus"
-                      :disabled="disabled"
                       clearable>
              <el-option label="全部"
                         value="">

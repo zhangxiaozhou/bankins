@@ -136,7 +136,7 @@
                       prop="innerCode">
           <el-input style="width: 218px;"
                     v-model.trim="ruleForm.innerCode"
-                    @blur="codeBlur()"></el-input>
+                    @blur="codeBlur"></el-input>
         </el-form-item>
         <el-form-item label="外部险种代码"
                       prop="outerCode">
@@ -305,6 +305,7 @@ export default {
     cancheProdConvert () {
       this.getList();
       this.dialogForm = false;
+      this.$refs.ruleForm.resetFields();
     },
     updateProdConvert (val) {
       console.log(val)
