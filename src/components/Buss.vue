@@ -6,8 +6,7 @@
         <el-form label-width="120px"
                  :inline="true"
                  :model="form">
-          <el-form-item label="统计对象"
-                        :required="true">
+          <el-form-item label="统计对象" :required="true">
             <el-select v-model="form.company"
                        @change="getChildCompanys"
                        :disabled="disabled"
@@ -38,19 +37,18 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="投保日期"
-                        :required="true">
+          <el-form-item label="投保日期" :required="true">
             <el-date-picker type="date"
                             placeholder="开始日期"
                             v-model="form.startTime"
                             v-elDateFormat
-                            :picker-options="pickerOptions0"></el-date-picker>
+							:picker-options="pickerOptions0"></el-date-picker>
 
             <el-date-picker type="date"
                             placeholder="截止日期"
                             v-model="form.endTime"
                             v-elDateFormat
-                            :picker-options="pickerOptions1"></el-date-picker>
+							:picker-options="pickerOptions1"></el-date-picker>
           </el-form-item>
         </el-form>
 
@@ -65,51 +63,51 @@
           <el-form-item label="保单号">
             <el-input v-model="form.policyCode"></el-input>
           </el-form-item>
-          <el-form-item label="销售渠道">
-            <el-select v-model="form.sellPlatform"
-                       clearable
-                       placeholder="请选择销售渠道">
-              <el-option label="全部"
-                         value="">
-              </el-option>
-              <el-option label="柜面"
-                         value="1">
-              </el-option>
-              <el-option label="网上银行"
-                         value="4">
-              </el-option>
-              <el-option label="自助终端"
-                         value="3">
-              </el-option>
-              <el-option label="手机"
-                         value="21">
-              </el-option>
-              <el-option label="移动营销"
-                         value="2">
-              </el-option>
-            </el-select>
-          </el-form-item>
-          <el-form-item label="承保与否">
-            <el-select v-model="form.policyStatus"
-                       clearable>
-              <el-option label="全部"
-                         value="">
-              </el-option>
-              <el-option label="未承保"
-                         value="0">
-              </el-option>
-              <el-option label="已承保"
-                         value="1">
-              </el-option>
-            </el-select>
-          </el-form-item>
+        <el-form-item label="销售渠道">
+          <el-select v-model="form.sellPlatform"
+                     clearable
+                     placeholder="请选择销售渠道">
+            <el-option label="全部"
+                       value="">
+			</el-option>
+			<el-option label="柜面"
+                       value="1">
+			</el-option>
+			<el-option label="网上银行"
+                       value="4">
+			</el-option>
+			<el-option label="自助终端"
+                       value="3">
+			</el-option>
+			<el-option label="手机"
+                       value="21">
+			</el-option>
+			<el-option label="移动营销"
+                       value="2">
+			</el-option>
+          </el-select>
+		</el-form-item>
+		<el-form-item label="承保与否">
+          <el-select v-model="form.policyStatus"
+                      clearable>
+             <el-option label="全部"
+                        value="">
+                      </el-option>
+             <el-option label="未承保"
+                        value="0">
+                      </el-option>
+             <el-option label="已承保"
+                        value="1">
+                      </el-option>
+           </el-select>
+		</el-form-item>
         </el-form>
-        <span class="space"></span>
+          <span class="space"></span>
         <el-row>
           <el-button type="primary"
                      @click="search"
                      style="margin: 0px 50% 10px ;">查询</el-button>
-        </el-row>
+		</el-row>
       </div>
     </el-header>
 
@@ -210,52 +208,52 @@ export default {
         page: 1
       },
       tableData: [],
-      banks: [{ bankCode: '0008', bankName: '中信银行' },],
+      banks: [{bankCode:'0008',bankName:'中信银行'},],
       companys: [],
       childCompanys: [],
       pickerOptions0: {
         disabledDate: (time) => {
           if (this.form.endTime) {
             return time.getTime() > Date.now() || time.getTime() > this.form.endTime;
-          } else {
+           } else {
             return time.getTime() > Date.now();
-          }
+           }
         }
       },
       pickerOptions1: {
         disabledDate: (time) => {
-          return time.getTime() < this.form.startTime || time.getTime() > Date.now();
+             return time.getTime() < this.form.startTime || time.getTime() > Date.now();
         }
       },
     };
   },
   methods: {
-    search () {
-      this.form.page = 1;
-      this.onSubmit();
+    search(){
+        this.form.page=1;
+        this.onSubmit();
     },
     onSubmit () {
-      if (this.form.sendCode == '' && this.form.policyCode == '') {
-        if (this.form.startTime == '' || this.form.endTime == '' || this.form.company == '' ||
-          this.form.startTime == null || this.form.endTime == null || this.form.company == null) {
-          Message.error("分公司，开始日期，结束日期为必选项");
-          return;
-        }
-        if (this.dateDiffer(this.form.startTime, this.form.endTime) > 7) {
-          Message.error("开始日期，截止日期范围不能超过一周");
-          return;
-        }
-      }
-      this.tableData = [];
+       if(this.form.sendCode=='' && this.form.policyCode==''){
+           if (this.form.startTime == ''|| this.form.endTime == ''|| this.form.company == ''||
+          this.form.startTime == null ||this.form.endTime ==null ||this.form.company ==null) {
+             Message.error("分公司，开始日期，结束日期为必选项");
+             return;
+           }
+        if(this.dateDiffer(this.form.startTime,this.form.endTime)>7){
+			Message.error("开始日期，截止日期范围不能超过一周");
+			return;
+			}
+		}
+      this.tableData=[];
       this.$http({
         method: "post",
         url: "/buss-process/api/buss/v1/query",
         data: this.form
       }).then((res) => {
-        if (res.data == '') {
-          Message.info("查无数据");
-          return;
-        }
+		if(res.data==''){
+			Message.info("查无数据");
+			return;
+		}
         this.tableData = res.data.content;
         this.total = res.data.totalElements;
       }).catch(err => {
