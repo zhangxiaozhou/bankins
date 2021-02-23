@@ -6,7 +6,8 @@
         <el-form label-width="120px"
                  :inline="true"
                  :model="form">
-          <el-form-item label="统计对象" :required="true">
+          <el-form-item label="统计对象"
+                        :required="true">
             <el-select v-model="form.company"
                        @change="getChildCompanys"
                        :disabled="disabled"
@@ -36,7 +37,8 @@
             </el-select>
           </el-form-item>
 
-          <el-form-item label="交易日期" :required="true">
+          <el-form-item label="交易日期"
+                        :required="true">
             <el-date-picker type="date"
                             placeholder="开始日期"
                             v-model="form.beginTransDate"
@@ -93,11 +95,11 @@
           <el-form-item label="投保单号">
             <el-input v-model="form.sendCode"></el-input>
           </el-form-item>
-		<el-row>
-          <el-button type="primary"
-                     @click="search"
-                     style="margin: 0px 50% 10px ;">查询</el-button>
-		</el-row>
+          <el-row>
+            <el-button type="primary"
+                       @click="search"
+                       style="margin: 0px 50% 10px ;">查询</el-button>
+          </el-row>
         </el-form>
 
       </div>
@@ -166,9 +168,10 @@
         <div class="block"
              style="margin-left:30%">
           <el-pagination @current-change="handleCurrentChange"
+                         @size-change="handleSizeChange"
                          background
                          :current-page="form.currentPage"
-                         :page-sizes="[10]"
+                         :page-sizes="[10,20,50,100]"
                          :page-size="form.pageSize"
                          layout="total, sizes, prev, pager, next, jumper"
                          :total="total"
@@ -202,7 +205,7 @@
           <el-collapse-item title="投保人"
                             name="2">
             <div>
-              <el-table :data="policyDetail.holderDetail" >
+              <el-table :data="policyDetail.holderDetail">
                 <el-table-column prop="realName"
                                  label="姓名"> </el-table-column>
                 <el-table-column prop="gender"
@@ -254,7 +257,7 @@
           <el-collapse-item title="被保人"
                             name="3">
             <div>
-              <el-table :data="policyDetail.insurantDetail" >
+              <el-table :data="policyDetail.insurantDetail">
                 <el-table-column prop="realName"
                                  label="姓名"> </el-table-column>
                 <el-table-column prop="gender"
@@ -367,7 +370,7 @@
                             name="8">
             {{this.errMsg =="" ? "无" :this.errMsg}}
           </el-collapse-item>
-          <el-row style="font-size: 13px;">健康告知：{{this.policyDetail.healthTag==null ?"N":this.policyDetail.healthTag}}</el-row>
+          <el-row style="font-size: 13px;color: #55a8ff;font-weight: bolder;">健康告知：{{this.policyDetail.healthTag==null ?"N":this.policyDetail.healthTag}}</el-row>
         </el-collapse>
       </el-dialog>
     </el-main>
@@ -412,7 +415,10 @@ export default {
         currentPage: 1,
         pageSize: 10,
       },
-      banks: [],
+      //目前只切换中信银行，因此不走数据库在此写死
+      banks: [
+        { bankCode: '0008', bankName: '中信银行' },
+      ],
       childBanks: [],
       companys: [],
       childCompanys: [],
@@ -422,24 +428,24 @@ export default {
         insurantDetail: [],
         beneDetail: [],
         productDetail: [],
-        healthTag:""
+        healthTag: ""
       }],
       requestMsg: "",
       responseMsg: "",
       errMsg: "",
-      activeNames:['1','2','3','5'] ,//折叠面板默认显示
+      activeNames: ['1', '2', '3', '5'],//折叠面板默认显示
       pickerOptions0: {
         disabledDate: (time) => {
           if (this.form.endTransDate) {
             return time.getTime() > Date.now() || time.getTime() > this.form.endTransDate;
-           } else {
+          } else {
             return time.getTime() > Date.now();
-           }
+          }
         }
       },
       pickerOptions1: {
         disabledDate: (time) => {
-             return time.getTime() < this.form.beginTransDate || time.getTime() > Date.now();
+          return time.getTime() < this.form.beginTransDate || time.getTime() > Date.now();
         }
       },
     };
@@ -455,10 +461,10 @@ export default {
         return '缴费';
       } else if (transCode == 'cancel') {
         return '撤件';
-      } else if(transCode == 'proposal'){
+      } else if (transCode == 'proposal') {
         return '试算';
       }
-	},
+    },
     showDetails (row) {
       this.policyDetail = [];
       this.requestMsg = '';
@@ -477,12 +483,12 @@ export default {
         this.policyDetail.insurantDetail = res.data.insurants;
         this.policyDetail.beneDetail = res.data.insurants[0].policyBenes;
         this.policyDetail.productDetail = res.data.policyProducts;
-		this.policyDetail.healthTag=res.data.healthNotice;
+        this.policyDetail.healthTag = res.data.healthNotice;
       });
 
       this.$http({
         method: "get",
-        url: "/buss-process/api/admin/v1/realTrans/findMsg/"+row.requestId
+        url: "/buss-process/api/admin/v1/realTrans/findMsg/" + row.requestId
       }).then((res) => {
         this.responseMsg = res.data.responseMsg;
         this.requestMsg = res.data.requestMsg;
@@ -502,7 +508,7 @@ export default {
       let gender = row.gender;
       if (gender == 'M') {
         return '男';
-      } else if(gender=='F'){
+      } else if (gender == 'F') {
         return '女';
       }
       return '';
@@ -558,22 +564,22 @@ export default {
         this.display = true;
       });
     },
-    search(){
-		this.form.currentPage=1;
-		this.onSubmit();
-	},
+    search () {
+      this.form.currentPage = 1;
+      this.onSubmit();
+    },
     onSubmit () {
       this.tableData = [];
       if (this.form.sendCode == null || this.form.sendCode == '') {
-        if (this.form.beginTransDate ==""|| this.form.endTransDate=="" || this.form.bankCode==""||
-		this.form.beginTransDate==null ||this.form.endTransDate==null ||this.form.bankCode==null) {
-            Message.error("总行，投保开始日期，截止日期为必选项");
-            return;
+        if (this.form.beginTransDate == "" || this.form.endTransDate == "" || this.form.bankCode == "" ||
+          this.form.beginTransDate == null || this.form.endTransDate == null || this.form.bankCode == null) {
+          Message.error("总行，投保开始日期，截止日期为必选项");
+          return;
         }
-        if(this.dateDiffer(this.form.beginTransDate,this.form.endTransDate)>7){
-			Message.error("投保开始日期，截止日期范围不能超过一周");
-			return;
-		}
+        if (this.dateDiffer(this.form.beginTransDate, this.form.endTransDate) > 7) {
+          Message.error("投保开始日期，截止日期范围不能超过一周");
+          return;
+        }
       }
       this.loading = true;
       this.$http({
@@ -589,6 +595,11 @@ export default {
     },
     handleCurrentChange (val) {
       this.form.currentPage = val;
+      this.onSubmit();
+    },
+    handleSizeChange (val) {
+      this.form.pageSize = val;
+      this.form.currentPage = 1;
       this.onSubmit();
     },
     dateDiffer (d_begin, d_end) {
@@ -659,34 +670,34 @@ export default {
     convertRate (row) {
       return row.beneRate * 100 + '%';
     },
-	converHealthTag(val){
-		if(val =='y'){
-			return '是';
-		}else{
-			return '否';
-		}
-	}
+    converHealthTag (val) {
+      if (val == 'y') {
+        return '是';
+      } else {
+        return '否';
+      }
+    }
   },
   mounted () {
-    this.getFirstLevelBank();
+    // this.getFirstLevelBank();
     //this.getCompanys();
     this.findCompanyOrgan();
   },
 };
 </script>
 <style>
-.el-input__inner{
-	height: 30px;
-	line-height: 0px;
+.el-input__inner {
+  height: 30px;
+  line-height: 0px;
 }
 .el-form-item {
-    margin-bottom: 7px;
+  margin-bottom: 7px;
 }
-.el-main{
-	overflow: hidden;
+.el-main {
+  overflow: hidden;
 }
-.el-collapse-item__header{
-	color: #55a8ff;
-	font-weight: bolder;
+.el-collapse-item__header {
+  color: #55a8ff;
+  font-weight: bolder;
 }
 </style>

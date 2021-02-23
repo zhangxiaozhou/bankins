@@ -136,7 +136,7 @@
                       prop="innerCode">
           <el-input style="width: 218px;"
                     v-model.trim="ruleForm.innerCode"
-                    @blur="codeBlur()"></el-input>
+                    @blur="codeBlur"></el-input>
         </el-form-item>
         <el-form-item label="外部险种代码"
                       prop="outerCode">
@@ -305,6 +305,7 @@ export default {
     cancheProdConvert () {
       this.getList();
       this.dialogForm = false;
+      this.$refs.ruleForm.resetFields();
     },
     updateProdConvert (val) {
       console.log(val)
@@ -330,7 +331,7 @@ export default {
             });
             this.getList();
           } else {
-            this.$message.console.error("删除失败");
+            this.$message.error("删除失败");
           }
         }).catch(() => {
           this.$message({
@@ -358,6 +359,9 @@ export default {
     },
     codeBlur () {
       console.log(this.ruleForm.innerCode);
+      if (this.ruleForm.innerCode == '') {
+        return;
+      }
       this.$http({
         method: "post",
         url: "/buss-process/api/productConvert/v1/getProd",
@@ -366,11 +370,16 @@ export default {
         }
       }).then((res) => {
         console.log(res.data)
-        this.ruleForm.name = res.data
-      }).catch((Response) => {
-        console.log(Response)
+        if (res.data.code === '0') {
+          this.ruleForm.name = res.data.msg;
+        } else {
+          this.ruleForm.name = "";
+          this.$message.error(res.data.msg);
+        }
+      }).catch((response) => {
+        console.log(response)
         this.ruleForm.name = ""
-        this.$message.console.error(Response.message);
+        this.$message.error(response.message);
       });
     }
   },
