@@ -359,9 +359,9 @@ export default {
     },
     codeBlur () {
       console.log(this.ruleForm.innerCode);
-     if(this.ruleForm.innerCode==''){
-		return;
-     }
+      if (this.ruleForm.innerCode == '') {
+        return;
+      }
       this.$http({
         method: "post",
         url: "/buss-process/api/productConvert/v1/getProd",
@@ -370,12 +370,12 @@ export default {
         }
       }).then((res) => {
         console.log(res.data)
-		if(res.data.code==='0'){
-			this.ruleForm.name = res.data.msg;
-		}else{
-			this.ruleForm.name="";
-			this.$message.error(res.data.msg);
-		}
+        if (res.data.code === '0') {
+          this.ruleForm.name = res.data.msg;
+        } else {
+          this.ruleForm.name = "";
+          this.$message.error(res.data.msg);
+        }
       }).catch((response) => {
         console.log(response)
         this.ruleForm.name = ""
