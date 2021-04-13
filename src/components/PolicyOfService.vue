@@ -263,5 +263,9 @@ export default {
       })
     }
   },
+  mounted () {
+    // this.getFirstLevelBank();
+    this.findCompanyOrgan();
+  }
 };
 </script>
