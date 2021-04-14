@@ -308,6 +308,7 @@ export default {
       labelPosition: "right",
       dialogTableVisible: false,
       disabled: false,
+      dialogVisible: false,
       childDisabled: false,
       show: false,
       total: 0,
@@ -335,7 +336,8 @@ export default {
         manualPolicyDetail: [],
       }],
       companys: [],
-      childCompanys: []
+      childCompanys: [],
+      activeNames: ['1', '2', '3', '4', '5'],//折叠面板默认显示
     };
   },
   methods: {
@@ -467,6 +469,15 @@ export default {
         this.policyDetail.manualPolicyDetail = res.data.manualPolicyDTO;
       });
     },
+    formatGender (row) {
+      let gender = row.gender;
+      if (gender == 'M') {
+        return '男';
+      } else if (gender == 'F') {
+        return '女';
+      }
+      return '';
+    }
   },
   mounted () {
     // this.getFirstLevelBank();
