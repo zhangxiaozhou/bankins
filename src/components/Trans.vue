@@ -477,6 +477,17 @@ export default {
         return '女';
       }
       return '';
+    },
+    dateDiffer (d_begin, d_end) {
+      //date1结束时间
+      let date1 = new Date(d_begin);
+      //date2当前时间
+      let date2 = new Date(d_end);
+      date1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+      date2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+      const diff = date2.getTime() - date1.getTime(); //目标时间减去当前时间
+      const diffDate = diff / (24 * 60 * 60 * 1000); // eslint-disable-line no-unused-vars	
+      return diffDate;
     }
   },
   mounted () {
