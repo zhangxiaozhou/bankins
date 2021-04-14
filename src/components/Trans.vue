@@ -288,6 +288,7 @@
             </el-collapse-item>
           </el-collapse>
         </el-dialog>
+      </div>
     </el-main>
   </el-container>
 </template>
