@@ -362,8 +362,8 @@ export default {
       }
       this.loading = true;
       this.$http({
-        method: "get",
-        url: "/buss-process/api/manualPolicy/v1/getList",
+        method: "post",
+        url: "/buss-process/api/v1/manually/getList",
         data: this.form,
       }).then((res) => {
         console.log(res.data);
