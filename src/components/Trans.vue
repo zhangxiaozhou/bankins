@@ -100,7 +100,8 @@
     <el-main>
       <div>
         <el-table :data="tableData"
-                  style="width: 100%">
+                  style="width: 100%"
+                  v-loading="loading">
           <el-table-column prop="bank"
                            label="银行代码"> </el-table-column>
           <el-table-column prop="zone"
@@ -110,7 +111,8 @@
           <el-table-column prop="transDate"
                            label="交易日期"> </el-table-column>
           <el-table-column prop="transCate"
-                           label="交易分类"> </el-table-column>
+                           label="交易分类"
+                           :formatter="transCateFormatter"> </el-table-column>
           <el-table-column prop="sendCode"
                            label="投保单号">
             <template slot-scope="scope">
@@ -124,7 +126,8 @@
           <el-table-column prop="acceptDate"
                            label="承保日期"> </el-table-column>
           <el-table-column prop="applyStatus"
-                           label="受理状态"> </el-table-column>
+                           label="受理状态"
+                           :formatter="applyStatusFormatter"> </el-table-column>
           <el-table-column prop="policyStatus"
                            label="投保单状态"> </el-table-column>
         </el-table>
@@ -469,6 +472,36 @@ export default {
         this.policyDetail.manualPolicyDetail = res.data.manualPolicyDTO;
       });
     },
+    applyStatusFormatter (row) {
+      let applyStatus = row.applyStatus;
+      switch (applyStatus) {
+        case '-1':
+          applyStatus = '已取消'
+          break;
+        case '1':
+          applyStatus = '待处理'
+          break;
+        case '2':
+          applyStatus = '已处理'
+          break;
+        case '3':
+          applyStatus = '已回馈'
+          break;
+        case '4':
+          applyStatus = '已打印待签收'
+          break;
+        case '5':
+          applyStatus = '已打印已签收'
+          break;
+        case '6':
+          applyStatus = '已缴费待打印'
+          break;
+        default:
+          applyStatus = ''
+          break;
+      }
+      return applyStatus;
+    },
     formatGender (row) {
       let gender = row.gender;
       if (gender == 'M') {
@@ -477,6 +510,27 @@ export default {
         return '女';
       }
       return '';
+    },
+    transCateFormatter (row) {
+      let bankCode = row.bank;
+      let transCate = row.transCate;
+      if (bankCode == '0013') {
+        return '直连补录'
+      } if (bankCode == '0008' || bankCode == '0012') {
+        if (transCate == '3') {
+          return '集中出单'
+        } else if (transCate == '4') {
+          return '手工单补录'
+        }
+      } else {
+        if (transCate == '1') {
+          return '实时拒保转入'
+        } else if (transCate == '2') {
+          return '非实时险种'
+        } else if (transCate == '3') {
+          return '直接申请'
+        }
+      }
     },
     dateDiffer (d_begin, d_end) {
       //date1结束时间
